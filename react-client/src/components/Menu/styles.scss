@@ -1,0 +1,51 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+
+.menu {
+    width: $leftMenuWidth;
+    min-width: $leftMenuWidth;
+    height: 100vh;
+    @include displayFlex(column, nowrap, flex-start, center);
+    @include padding(1rem 0);
+    gap: 2rem;
+    background-color: $red-orange;
+
+    &__group {
+        width: 100%;
+        height: auto;
+        margin-top: 1rem;
+        @include displayFlex(column, nowrap, center, center);
+        gap: 0.5rem;
+
+        &--last {
+            margin-top: auto;
+        }
+
+        img { 
+            max-width: 34px;
+        }
+
+        a { 
+            padding: 0.5rem 1rem;
+            color: $white;
+            @include displayFlex(column, nowrap, center, center);
+        }
+        a.active {
+            position: relative;
+            color: $white;
+            border-radius: 10px;
+
+            &::after {
+                position: absolute;
+                content: '';
+                left: -5px;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 80%;
+                width: 3px;
+                background-color: $white;
+                border-radius: 0 5px 5px 0;
+            }
+        }
+    }
+}

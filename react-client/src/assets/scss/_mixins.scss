@@ -1,0 +1,61 @@
+
+
+// STYLING MIXINS
+@mixin padding($padding: 0){
+    box-sizing: border-box;
+    padding: $padding;
+}
+
+@mixin displayFlex($direc: column, $wrap: nowrap, $justy: center, $align: center) {
+    display: flex;
+    flex-direction: $direc;
+    justify-content: $justy;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+
+@mixin displayFlexImportant($direc: column, $wrap: nowrap, $justy: center, $align: center) {
+    display: flex!important;
+    flex-direction: $direc!important;
+    justify-content: $justy!important;
+    align-items: $align!important;
+    flex-wrap: $wrap!important;
+}
+
+@mixin displayGridAutoFit($width: 250px, $alignItems: flex-start) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($width, 1fr));
+    align-items: $alignItems;
+}
+
+@mixin ScrollBarCustom() {
+    &::-webkit-scrollbar{
+        -webkit-appearance: none;
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: rgb(235, 234, 234);
+        border-radius: 5px;
+    }
+}
+
+@mixin oneLineTextOverflow($maxWidth: 100%) {
+    max-width: $maxWidth;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// MEDIA QUERIES DESKTOP FIRST
+@mixin maxWidth($value) {
+    @media screen and (max-width: $value) {
+        @content;
+    }
+}
+
+// MEDIA QUERIES MOBILE FIRST
+@mixin minWidth($value) {
+    @media screen and (min-width: $value) {
+        @content;
+    }
+}

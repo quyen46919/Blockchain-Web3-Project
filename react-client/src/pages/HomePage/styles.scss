@@ -1,0 +1,165 @@
+.App {
+    text-align: center;
+    color: #0363c4;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #09d3ac;
+  }
+  
+  form {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .App__line {
+    width: auto;
+    height: auto;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .App__line input {
+    width: 300px;
+    padding: 0.4rem 0.6rem;
+    outline: none;
+    border: none;
+    border: 2px solid grey;
+    color: grey;
+    font-weight: 500;
+    border-radius: 6px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .App__line input:target,
+  .App__line input:focus {
+    border-color: #007FFF;
+    color: #0363c4;
+  }
+  
+  
+  button {
+    background-color: #007FFF;
+    border: 1px solid #007FFF;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    outline: 0;
+    padding: 10px 14px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  button:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  }
+  
+  .web3__your-address {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: #24292F;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  
+  .web3__posted-items {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    overflow-x: hidden;
+    padding: 1rem 0;
+  }
+  
+  .web3__item-block,
+  .web3__item-deliveried {
+    width: 460px;
+    height: auto;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+  }
+  
+  .web3__item-block p,
+  .web3__item-deliveried p { 
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .web3__trigger {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+  
+  .web3__trigger-noti {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 140px;
+    height: auto;
+    background-color: #DDF4FF;
+    color: #0969DA;
+    padding: 0.4rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .14s;
+    font-size: 12px;
+  }
+  
+  .web3__trigger-noti:hover {
+    background-color: #cfebf8;
+  }
+  
+  .web3__item-deliveried {
+    background-color: #DDF4FF;
+    color: #0969DA;
+  }

@@ -1,0 +1,83 @@
+
+
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+
+.avatar{
+    width: 100%;
+    @include displayFlex();
+
+    input {
+        display: none;
+    }
+
+    &__note{
+       p {
+            text-transform: initial!important;
+            margin: 0;
+            letter-spacing: 0.005em;
+       }
+       span{
+           color: red;
+       }
+    }
+    &__image-wrapper{
+        width: 100%;
+        @include displayFlex(column);
+        @include padding(1rem);
+    }
+    &__base-btn{
+        display: flex;
+    }
+    &__upload-wrapper{
+        width: 100%;
+        @include displayFlex(row,wrap,center,flex-start);
+        gap: 1rem;
+        padding-top: 1.5rem;
+
+        button {
+            margin-top: 0.5rem;
+            margin-left: 0.2rem;
+        }
+    }
+    &__btns {
+        @include displayFlex(row);
+        gap: 1rem;
+    }
+    &__preview {
+        width: 300px;
+        height: 300px;
+        background-position: center;
+        background-size: cover;
+        border-radius: 50%;
+        margin-top: 1rem;
+    }
+
+    &__progress {
+        width: 400px;
+        margin-top: 1rem;
+    }
+}
+@media (max-width: 1240px){
+    .avatar{
+        &__block{
+            width: 900px;
+        }
+    }
+}
+@media (max-width: 850px){
+    .avatar{
+        &__block{
+            width: 400px;
+        }
+    }
+}
+@media (max-width: 400px){
+    .avatar{
+        align-items: flex-start;
+        margin: 0 auto;
+        p{
+            width: 300px;
+        }
+    }
+}

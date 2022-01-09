@@ -1,0 +1,27 @@
+@import 'assets/scss/variables';
+
+.custom-tabs{
+    .MuiTabs-flexContainer{
+        justify-content: flex-start!important;
+    }
+
+    .MuiTabs-flexContainer .Mui-selected {
+        color: $red-orange!important;
+    }
+    
+    .MuiTabs-indicator {
+        background-color: $red-orange!important;
+    }
+
+    .MuiTab-wrapper {
+        align-items: center;
+    }
+    .MuiPaper-elevation4, .MuiAppBar-colorDefault{
+        box-shadow: unset!important;
+    }
+
+    button {
+        width: auto!important;
+        min-width: auto!important;
+    }
+}
