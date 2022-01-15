@@ -9,4 +9,11 @@
   * {
     font-family: 'Montserrat', sans-serif!important;
   }
+
+  &__nested-routes {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    @include displayFlex();
+  }
 }

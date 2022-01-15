@@ -1,0 +1,101 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+
+$filterPanel: 300px;
+$detailPanel: 360px;
+.homepage2 {
+    width: 100%;
+    height: 700px;
+    @include displayFlex(row, nowrap, flex-start, center);
+
+    &__filter-panel {
+        width: $filterPanel;
+        min-width: $filterPanel;
+        height: 100%;
+        border-right: 1px solid red;
+        @include padding(0.5rem 1rem 1rem 2rem);
+        @include displayFlex(column, nowrap, flex-start, flex-start);
+        gap: 1rem;
+    }
+
+    &__line-column {
+        width: 100%;
+        @include displayFlex(column, nowrap, center, flex-start);
+        gap: 0.6rem;
+    }
+
+    &__price-range {
+        width: 100%;
+        height: auto;
+        @include displayFlex(row);
+        gap: 0.5rem;
+
+        input {
+            height: 10px!important;
+            max-height: 10px!important;
+            font-size: 15px!important;
+        }
+    }
+
+    &__content {
+        width: calc(100% - #{$filterPanel});
+        height: 100%;
+        @include displayFlex(column, nowrap, flex-start, flex-start);
+        @include padding(1rem);
+        transition: $primary-transition;
+
+        &.open {
+            width: calc(100% - #{$filterPanel} - #{$detailPanel});
+        }
+    }
+
+    &__filter-row {
+        width: 100%;
+        @include displayFlex(row, nowrap, flex-start, center);
+
+        &--btn {
+            border-radius: none!important;
+            border: 2px solid $gray-text-color!important;
+            color: $gray-text-color;
+            background-color: white!important;
+            padding: 0.4rem 0.8rem!important;
+        }
+
+        &--select {
+            height: 42px!important;
+            max-height: 42px!important;
+
+            fieldset { border: 2px solid $gray-text-color!important; }
+        }
+
+        button.Mui-selected {
+            color: $white;
+            background-color: $dark-green!important;
+            border: 2px solid $dark-green!important;
+        }
+
+        button.MuiButtonBase-root.MuiToggleButton-root.Mui-selected.MuiToggleButton-sizeMedium.MuiToggleButton-standard {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+    }
+
+    &__list-item {
+        width: 100%;
+        height: 460px;
+        overflow-x: scroll;
+        overflow-x: hidden;
+        @include customScrollBar(10px);
+        @include displayGridAutoFit();
+        gap: 1.4rem;
+        margin-top: 1rem;
+    }
+
+    &__detail-panel {
+        width: $detailPanel;
+        height: 100%;
+        border-left: 1px solid red;
+    }
+}
