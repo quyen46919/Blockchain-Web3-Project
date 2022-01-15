@@ -28,10 +28,10 @@
     align-items: $alignItems;
 }
 
-@mixin ScrollBarCustom() {
+@mixin customScrollBar($width: 10px) {
     &::-webkit-scrollbar{
         -webkit-appearance: none;
-        width: 6px;
+        width: $width;
     }
     &::-webkit-scrollbar-thumb{
         background: rgb(235, 234, 234);
