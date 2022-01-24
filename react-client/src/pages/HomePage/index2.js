@@ -163,7 +163,7 @@ function HomePage2() {
                 </div>
                 <div className="homepage2__list-item">
                     {
-                        Array.from(new Array(39)).map((item, index) => (
+                        Array.from(new Array(11)).map((item, index) => (
                             <CardItem key={index} handleShowDetailPanel={handleShowDetailPanel}/>
                         ))
                     }

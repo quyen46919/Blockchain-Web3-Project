@@ -6,12 +6,11 @@ $filterPanel: 270px;
 $detailPanel: 360px;
 .homepage2 {
     width: 100%;
-    height: 700px;
+    height: calc(100vh - #{$headerHeight});
     @include displayFlex(row, nowrap, flex-start, center);
-    font-family: 'Nunito Sans', sans-serif;
     // font-weight: bold;
     // font-style: italic;
-
+    font-family: 'Nunito Sans', sans-serif;
     &__filter-panel {
         width: $filterPanel;
         min-width: $filterPanel;

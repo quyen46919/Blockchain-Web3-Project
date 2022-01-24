@@ -75,7 +75,7 @@
         height: 100%;
         // background-color: orange;
         @include displayFlex(row, nowrap, end);
-        gap: 1rem;
+        gap: 1.2rem;
         img{
             cursor: pointer;
         }

@@ -1,0 +1,12 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,800,800i,900i&display=swap');
+.adminPage{
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: bold;
+    // font-style: italic;
+    width: 100%;
+    height:700px;
+    background-color: rgba(245, 239, 239, 0.712);
+    @include displayFlex(row, nowrap, center, center);
+}
