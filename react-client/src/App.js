@@ -1,6 +1,8 @@
 import Header from 'components/Header';
 import AccountPage from 'pages/AccountPage';
-import HomePage from 'pages/HomePage/index2';
+import detailProduct from 'pages/detailProduct';
+import HomePage2 from 'pages/HomePage/index2';
+// import HomePage from 'pages/HomePage/index2';
 import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
 import {
@@ -18,9 +20,11 @@ function App() {
                         // user ? (
                         <div className="app__nested-routes">
                             <Header/>
+                            {/* <detailProduct/> */}
                             <Switch>
-                                <Route path="/" component={HomePage} exact />
-                                <Route path="/home" component={HomePage} exact />
+                                <Route path="/" component={HomePage2} exact />
+                                <Route path="/home" component={HomePage2} exact />
+                                <Route path="/product" component={detailProduct} exact />
                             </Switch>
                         </div>
                         // ) : ( <Redirect to="/account"/> )

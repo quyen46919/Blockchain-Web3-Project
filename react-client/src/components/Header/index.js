@@ -1,5 +1,5 @@
 import React from 'react';
-// import img from 'assets/images/logo.png';
+import img from 'assets/images/logo.png';
 import avatar from 'assets/images/image8.jpg';
 import { NavLink } from 'react-router-dom';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
@@ -11,14 +11,15 @@ function Header() {
     return (
         <div className="header">
             <div className="header__logo">
-                {/* <img src={img} alt="img logo"/> */}
-                IMG Ở ĐÂY
+                <div className="header__image">
+                    <img src={img} alt="img logo"/>
+                </div>
             </div>
             <div className="header__links">
                 <NavLink to="/" exact>
                   Home page
                 </NavLink>
-                <NavLink to="/workshop" exact>
+                <NavLink to="/product" exact>
                   Workshop
                 </NavLink>
                 <NavLink to="/care" exact>

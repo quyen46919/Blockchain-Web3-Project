@@ -16,6 +16,9 @@ import { styled } from '@mui/system';
 import CardItem from 'components/CardItem';
 import React from 'react';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import image from 'assets/images/image8.jpg';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -70,7 +73,7 @@ function HomePage2() {
                 <p>Filter</p>
                 <Box sx={{ display: 'flex' }}>
                     <FormControl component="fieldset" variant="standard">
-                        <FormLabel component="legend">Category</FormLabel>
+                        <FormLabel className="homepage2__category" component="legend">Category</FormLabel>
                         <FormGroup>
                             <FormControlLabel
                                 control={
@@ -108,13 +111,13 @@ function HomePage2() {
                         Contained
                     </Button>
                 </div>
-                <div>
+                <div className='homepage2__rating'>
                     <FormLabel component="div">Rating</FormLabel>
                     <Rating name="size-large" defaultValue={2} size="large" />
                 </div>
             </div>
             <div className={showDetail ? 'homepage2__content open' : 'homepage2__content'}>
-                <FormControl sx={{ m: 1, width: '400px' }}>
+                <FormControl sx={{ m: 1, width: '600px' }}>
                     <OutlinedInput
                         type="text"
                         startAdornment={
@@ -168,7 +171,33 @@ function HomePage2() {
             </div>
             {
                 showDetail && <div className="homepage2__detail-panel">
-                    this is detail panel
+                    <div className="homepage2__detail-panel__img">
+                        <img src={image} alt="item card image"/>
+                    </div>
+                    <div className="homepage2__detail-panel__title">
+                        Item name
+                    </div>
+                    <div className="homepage2__detail-panel__desc">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe neque ipsa amet blanditiis, fugit magni ducimus cumque, incidunt veritatis dignissimos consequuntur vero dolorum eius accusantium? Optio quos laboriosam non maxime! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid laboriosam porro atque numquam eum iusto reprehenderit a praesentium at impedit! Qui minus nisi corrupti libero nihil autem ullam, velit dolores!
+                        </p>
+                    </div>
+                    <div className="homepage2__detail-panel__column">
+                        <div className="homepage2__detail-panel__link">
+                            <NavLink to="/" exact>
+                                Detail
+                            </NavLink>
+                            <NavLink to="" exact>
+                                Reviews
+                            </NavLink>
+                        </div>
+                        <div className="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, blanditiis laboriosam! Vero tenetur voluptatem sapiente quasi aut, perferendis quisquam nam ullam, doloremque aperiam praesentium eligendi, debitis suscipit molestias sit ea.</div>
+                    </div>
+                    <div className="homepage2__detail-panel__bottom">
+                        <FavoriteIcon className='icon'/>
+                        <Button variant="outlined" className='homepage2--add' >add to cart
+                        </Button>
+                    </div>
                 </div>
             }
         </div>
