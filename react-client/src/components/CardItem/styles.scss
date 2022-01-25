@@ -3,7 +3,7 @@
 
 .card-item {
     width: 100%;
-    border: 1px solid $gray-text-color;
+    border: 1px solid $gray-border-color;
     border-radius: 14px;
     @include padding(1rem);
     @include displayFlex(column, nowrap, flex-start, flex-start);
@@ -39,6 +39,7 @@
     button{
         color: $black;
         font-weight: 900;
-        border: 0.5px solid $gray-text-color;
+        border: 0.5px solid $gray-border-color;
+        border-radius: 15px;
     }
 }

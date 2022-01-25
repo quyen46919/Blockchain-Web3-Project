@@ -39,11 +39,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 
 function HomePage2() {
     const [state, setState] = React.useState({
-        gilad: true,
-        jason: false,
-        antoine: false
+        gardening: true,
+        plant: false,
+        seed: false,
+        planter: false
     });
-    const { gilad, jason, antoine } = state;
+    const { gardening, plant, seed, planter } = state;
     const [alignment, setAlignment] = React.useState('left');
     const [age, setAge] = React.useState(10);
     const [showDetail, setShowDetail] = useState(false);
@@ -77,25 +78,42 @@ function HomePage2() {
                         <FormGroup>
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
+                                    <Checkbox
+                                        checked={gardening}
+                                        onChange={handleChange}
+                                        name="gardening"
+                                    />
                                 }
-                                label="Gilad Gray"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox checked={jason} onChange={handleChange} name="jason" />
-                                }
-                                label="Jason Killian"
+                                label="Gardening"
                             />
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={antoine}
+                                        checked={plant}
                                         onChange={handleChange}
-                                        name="antoine"
+                                        name="plant" />
+                                }
+                                label="Plants"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={seed}
+                                        onChange={handleChange}
+                                        name="seed"
                                     />
                                 }
-                                label="Antoine Llorca"
+                                label="Seeds"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={planter}
+                                        onChange={handleChange}
+                                        name="planter"
+                                    />
+                                }
+                                label="Planters"
                             />
                         </FormGroup>
                     </FormControl>

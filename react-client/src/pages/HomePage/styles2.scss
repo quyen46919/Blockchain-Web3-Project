@@ -70,6 +70,12 @@ $detailPanel: 360px;
         &.open {
             width: calc(100% - #{$filterPanel} - #{$detailPanel});
         }
+        span{
+            @include padding(1rem 0);
+        }
+    }
+    .MuiFormControl-root.css-u4cvaf-MuiFormControl-root {
+        margin: 0;
     }
 
     &__filter-row {
@@ -85,8 +91,8 @@ $detailPanel: 360px;
         }
 
         &--select {
-            height: 42px!important;
-            max-height: 42px!important;
+            height: 37px!important;
+            max-height: 37px!important;
 
             fieldset { border: 2px solid $gray-text-color!important; }
         }
@@ -103,6 +109,30 @@ $detailPanel: 360px;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
         }
+    }
+    .css-x2fs5v-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped:first-of-type {
+        border-radius: 15px;
+        height: 35px;
+    }
+    .css-x2fs5v-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped:not(:first-of-type) {
+        border-radius: 15px;
+        height: 35px;
+    }
+    .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+        border-radius: 15px;
+        height: 35px;
+    }
+    button.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation.MuiButton-fullWidth.MuiButtonBase-root.css-1y3no4h-MuiButtonBase-root-MuiButton-root {
+        border-radius: 10px;
+    }
+    .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiInputBase-adornedStart.css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root {
+        padding: 0;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .MuiInputAdornment-root.MuiInputAdornment-positionStart.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium.css-ittuaa-MuiInputAdornment-root {
+        padding-left: 20px;
     }
     &__rating{
         width: 100%;
@@ -245,7 +275,6 @@ $detailPanel: 360px;
                 cursor: pointer;
                 color: rgb(212, 51, 51);
                 border-radius: 10px;
-                font-size: 20px!important;
                 transition: $primary-transition;
             }
             .icon:hover{
@@ -254,5 +283,9 @@ $detailPanel: 360px;
             }
             
         }
+        button.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.homepage2--add.css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
+            border-radius: 15px;
+        }
     }
+    
 }
