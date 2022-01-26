@@ -7,7 +7,7 @@
     width: 100%;
     height: calc(100vh - #{$headerHeight});
     // background-color: rgba(245, 239, 239, 0.712);
-    @include displayFlex(column, nowrap, start, center);
+    @include displayFlex(column, nowrap, flex-start, center);
     @include padding(1rem 2rem);
     &__savings{
         height: auto;
@@ -127,7 +127,7 @@
         color: $subtitle-text-color;
     }
     &__custom{
-        @include displayFlex(row, nowrap, start, center);
+        @include displayFlex(row, nowrap, flex-start, center);
     }
     .css-i4bv87-MuiSvgIcon-root {
         cursor: pointer;
@@ -157,7 +157,7 @@
             width: 100%;
             background-color:rgb(228, 232, 241); 
             @include padding(0 2rem);
-            @include displayFlex(column, nowrap, start, start);
+            @include displayFlex(column, nowrap, flex-start, flex-start);
 
         }
         .MuiFormControl-root {
@@ -169,7 +169,7 @@
         height: 15%;
         width: 100%;
         text-transform: uppercase;
-        @include displayFlex(row, nowrap, start, center);
+        @include displayFlex(row, nowrap, flex-start, center);
         @include padding(0 2rem);
         color: $subtitle-text-color;
         &--content{
@@ -178,15 +178,7 @@
             background-color:rgb(228, 232, 241); 
             @include padding(0 2rem);
         }
-        .MuiFormControl-root.css-ngsesf-MuiFormControl-root {
-            margin: 0;
-            width: 198px;
-            max-width: 200px;
-            padding-bottom: 20px;
-            /* min-height: 38px; */
-            /* height: 21px; */
-            background: red;
-        }
+
         .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
             padding-right: 32px;
             /* width: 152px; */

@@ -154,7 +154,7 @@ $detailPanel: 360px;
         height: 100%;
         // border-left: 1px solid red;
         // background-color: $cyan-blue-1;
-        @include displayFlex(column, nowrap, start, start);
+        @include displayFlex(column, nowrap, flex-start, flex-start);
         @include padding(2rem);
         gap: 1rem;
         &__img{

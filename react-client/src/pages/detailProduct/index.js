@@ -18,20 +18,20 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
     {
         imgPath:
-        'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+        'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60'
     },
     {
         imgPath:
-        'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+        'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60'
     },
     {
         imgPath:
-        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80'
     },
     {
         imgPath:
-        'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-    },
+        'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60'
+    }
 ];
 
 
@@ -71,7 +71,7 @@ function DetailProduct() {
                                             display: 'block',
                                             maxWidth: 800,
                                             // overflow: 'hidden',
-                                            width: '100%',
+                                            width: '100%'
                                         }}
                                         src={step.imgPath}
                                         alt={step.label}
@@ -117,7 +117,7 @@ function DetailProduct() {
                 <h1>Name Product</h1>
                 <div className="detail-page__rating">
                     <Stack spacing={1}>
-                    <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+                        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
                     </Stack>
                     <p>(Reviewer)</p>
                 </div>

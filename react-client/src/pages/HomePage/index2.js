@@ -1,5 +1,6 @@
 import { Search } from '@mui/icons-material';
-import { Button, Card, Rating, TextField } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Button, Rating, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -13,12 +14,10 @@ import Select from '@mui/material/Select';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled } from '@mui/system';
-import CardItem from 'components/CardItem';
-import React from 'react';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import image from 'assets/images/image8.jpg';
+import CardItem from 'components/CardItem';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({

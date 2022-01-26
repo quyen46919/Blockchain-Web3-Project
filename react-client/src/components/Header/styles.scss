@@ -18,7 +18,7 @@
     }
     &__image{
         width: 100%;
-        @include displayFlex(row, nowrap, start);
+        @include displayFlex(row, nowrap, flex-start);
         height: 100%;
         cursor: pointer;
         img{
@@ -74,7 +74,7 @@
         width: calc(100% / 6);
         height: 100%;
         // background-color: orange;
-        @include displayFlex(row, nowrap, end);
+        @include displayFlex(row, nowrap, flex-end);
         gap: 1.2rem;
         img{
             cursor: pointer;

@@ -28,7 +28,7 @@
     &__list{
         height: 100%;
         width: 100%;
-        @include displayFlex(column,nowrap,start,center);
+        @include displayFlex(column, nowrap, flex-start, center);
         gap: 1rem;
         @include padding(1rem 0)
     }
@@ -45,13 +45,13 @@
         @include padding(2rem);
     }
     &__rating{
-        @include displayFlex(row, nowrap, start, center);
+        @include displayFlex(row, nowrap,  flex-start, center);
         gap: 2rem;
     }
     &__icon{
         height: 20px;
         width: 100%;
-        @include displayFlex(row, nowrap,start, center);
+        @include displayFlex(row, nowrap, flex-start, center);
         color: blue;
         p{
             @include padding(0 0 0 1rem);
@@ -78,7 +78,7 @@
     &__left{
         width: 50%;
         height: 100%;
-        @include displayFlex(row,nowrap,start,center);
+        @include displayFlex(row,nowrap, flex-start,center);
         @include padding(0 3rem);
         gap: 2rem;
         img{
@@ -100,7 +100,7 @@
         float: left;
         width: 50%;
         height: 100%;
-        @include displayFlex(row,nowrap,end,center);
+        @include displayFlex(row, nowrap, flex-end, center);
         @include padding(0 3rem);
         gap: 2rem;
         // background-color: $blue;
