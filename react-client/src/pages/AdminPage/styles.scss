@@ -1,0 +1,197 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+
+.admin-page{
+    font-weight: bolder;
+    // font-style: italic;
+    width: 100%;
+    height: calc(100vh - #{$headerHeight});
+    // background-color: rgba(245, 239, 239, 0.712);
+    @include displayFlex(column, nowrap, start, center);
+    @include padding(1rem 2rem);
+    &__savings{
+        height: auto;
+        width: 100%;
+        // background-color: $cyan;
+        border-bottom: 1px solid rgb(240, 229, 229);
+        h3{
+            padding-bottom: .5rem;
+        }
+        span{
+            font-size: 15px;
+            color: $gray-text-color;
+        }
+    }
+    &__totals{
+        height: 30%;
+        // background-color: $dark-red-orange;
+        margin-top: 1rem;
+        @include padding(1rem 0);
+        @include displayFlex(row, nowrap, space-between, center);
+    }
+    &__element{
+        width: 25%;
+        height: 100%;
+        // background-color: $blue;
+        @include displayFlex(column, nowrap, center, flex-start);
+        gap: 0.3rem;
+        p{
+            margin: 0;
+            font-size: 15px;
+            color: $gray-text-color;
+        }
+        h2{
+            margin: 0;
+            font-size: 30px;
+        }
+        
+    }
+    &__possible{
+        color: $blue;
+    }
+    
+    &__items{
+        height: 50%;
+        width: 100%;
+        // background-color: $cyan-blue-1;
+    }
+    h3{
+        height: 10%;
+        // background-color: $dark-green;
+    }
+    &__row{
+        height: 80%;
+        width: 100%;
+        // background-color: $blue;
+        @include displayFlex(row, nowrap, space-between, center);
+        gap: .5rem;
+        overflow: hidden;
+    }
+    &__project{
+        height: 100%;
+        width: 25%;
+        // background-color: red;
+        @include displayFlex(column);
+        gap: .2rem;
+        &--content{
+            height: 85%;
+            width: 100%;
+            background-color:rgb(228, 232, 241); 
+            @include padding(0 2rem);
+            p{
+                padding-top: 15px;
+                margin-bottom: 0;
+                color: $subtitle-text-color;
+            }
+            h3{
+                margin-top: 5px;
+                color: $main-text-color;
+            }
+    
+        }
+    }
+    
+    &__instances{
+        width: 50%;
+        height: 100%;
+        // background-color: $dark-green;
+        @include displayFlex(column);
+        gap: .2rem;
+        &--content{
+            height: 85%;
+            width: 100%;
+            background-color:rgb(228, 232, 241); 
+            @include padding(2rem 0 0 2rem);
+            @include displayFlex(row, nowrap, space-between, center);
+            gap: 0.4rem;
+            
+        }
+    }
+    &__type{
+        height: 100%;
+        width: 33%;
+        color: $subtitle-text-color;
+        font-weight: 700;
+    }
+    &__length{
+        height: 100%;
+        width: 33%;
+        // background-color: $dark-green;
+        color: $subtitle-text-color;
+    }
+    .css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+        font-weight: 600;
+    }
+    label#demo-customized-radios {
+        font-weight: 700;
+        color: $subtitle-text-color;
+    }
+    &__custom{
+        @include displayFlex(row, nowrap, start, center);
+    }
+    .css-i4bv87-MuiSvgIcon-root {
+        cursor: pointer;
+        margin-left: 20px;
+        font-size: 17px;
+        transition: $primary-transition;
+    }
+    .css-i4bv87-MuiSvgIcon-root:hover{
+        background-color: rgb(228, 224, 224);
+        border-radius: 5px;
+    }
+    &__offering{
+        height: 100%;
+        width: 33%;
+        color: $subtitle-text-color;
+        font-weight: 700;
+        // background-color: $cyan-blue-1;
+    }
+    &__checkout{
+        width: 25%;
+        height: 100%;
+        // background-color: rgb(0, 204, 255);
+        @include displayFlex(column);
+        gap: .2rem;
+        &--content{
+            height: 85%;
+            width: 100%;
+            background-color:rgb(228, 232, 241); 
+            @include padding(0 2rem);
+            @include displayFlex(column, nowrap, start, start);
+
+        }
+        .MuiFormControl-root {
+            margin-left: 0!important;
+        }
+    }
+    &__title{
+        background-color:rgb(228, 232, 241); 
+        height: 15%;
+        width: 100%;
+        text-transform: uppercase;
+        @include displayFlex(row, nowrap, start, center);
+        @include padding(0 2rem);
+        color: $subtitle-text-color;
+        &--content{
+            height: 85%;
+            width: 100%;
+            background-color:rgb(228, 232, 241); 
+            @include padding(0 2rem);
+        }
+        .MuiFormControl-root.css-ngsesf-MuiFormControl-root {
+            margin: 0;
+            width: 198px;
+            max-width: 200px;
+            padding-bottom: 20px;
+            /* min-height: 38px; */
+            /* height: 21px; */
+            background: red;
+        }
+        .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+            padding-right: 32px;
+            /* width: 152px; */
+            width: 235px;
+        }
+    }
+
+}

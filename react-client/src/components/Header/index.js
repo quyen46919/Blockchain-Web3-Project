@@ -1,36 +1,37 @@
-import React from 'react';
-// import img from 'assets/images/logo.png';
-import avatar from 'assets/images/image8.jpg';
-import { NavLink } from 'react-router-dom';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-import './styles.scss';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Avatar, IconButton } from '@mui/material';
+import avatar from 'assets/images/image8.jpg';
+import img from 'assets/images/logo.png';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './styles.scss';
 
 function Header() {
     return (
         <div className="header">
             <div className="header__logo">
-                {/* <img src={img} alt="img logo"/> */}
-                IMG Ở ĐÂY
+                <div className="header__image">
+                    <img src={img} alt="img logo"/>
+                </div>
             </div>
             <div className="header__links">
                 <NavLink to="/" exact>
                   Home page
                 </NavLink>
-                <NavLink to="/workshop" exact>
-                  Workshop
+                <NavLink to="/product" exact>
+                  Product
                 </NavLink>
-                <NavLink to="/care" exact>
-                  Care
+                <NavLink to="/admin" exact>
+                  Admin
                 </NavLink>
             </div>
             <div className="header__user">
                 <IconButton>
-                    <AccessAlarmIcon/>
+                    <ShoppingCartOutlinedIcon/>
                 </IconButton>
                 <IconButton>
-                    <AddPhotoAlternateOutlinedIcon/>
+                    <NotificationsNoneIcon/>
                 </IconButton>
                 <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 30, height: 30 }}/>
             </div>

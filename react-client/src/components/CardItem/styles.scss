@@ -3,11 +3,11 @@
 
 .card-item {
     width: 100%;
-    border: 1px solid $gray-text-color;
+    border: 1px solid $gray-border-color;
     border-radius: 14px;
     @include padding(1rem);
     @include displayFlex(column, nowrap, flex-start, flex-start);
-    gap: 0.4rem;
+    gap: 1.4rem;
     
     img {
         width: 100%;
@@ -18,6 +18,8 @@
 
     &__title {
         margin: 0;
+        font-weight: 700;
+        color: $black;
         text-transform: uppercase;
         @include oneLineTextOverflow();
     }
@@ -33,5 +35,11 @@
             color: $gray-text-color;
             margin: 0;
         }
+    }
+    button{
+        color: $black;
+        font-weight: 900;
+        border: 0.5px solid $gray-border-color;
+        border-radius: 15px;
     }
 }

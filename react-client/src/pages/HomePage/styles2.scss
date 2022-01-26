@@ -1,39 +1,58 @@
 @import 'assets/scss/variables';
 @import 'assets/scss/mixins';
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,800,800i,900i&display=swap');
 
-$filterPanel: 300px;
+$filterPanel: 270px;
 $detailPanel: 360px;
 .homepage2 {
     width: 100%;
-    height: 700px;
+    height: calc(100vh - #{$headerHeight});
     @include displayFlex(row, nowrap, flex-start, center);
-
+    // font-weight: bold;
+    // font-style: italic;
+    font-family: 'Nunito Sans', sans-serif;
     &__filter-panel {
         width: $filterPanel;
         min-width: $filterPanel;
         height: 100%;
-        border-right: 1px solid red;
+        border-right: 0.5px solid $silver-border;
         @include padding(0.5rem 1rem 1rem 2rem);
         @include displayFlex(column, nowrap, flex-start, flex-start);
         gap: 1rem;
+        p{
+            font-weight: 700;
+        }
+
+    }
+    label{
+        font-weight: 900;
+        // color: $blue;
     }
 
     &__line-column {
-        width: 100%;
+        width: 85%;
         @include displayFlex(column, nowrap, center, flex-start);
-        gap: 0.6rem;
+        gap: 0.8rem;
+        font-weight: 700;
+        @include padding(0 0 1rem 0);
     }
-
+    .css-u4tvz2-MuiFormLabel-root{
+        font-weight: 700;
+        color: $black;
+    }
     &__price-range {
-        width: 100%;
+        width: 97%;
         height: auto;
-        @include displayFlex(row);
+        @include displayFlex(row, nowrap, flex-end);
         gap: 0.5rem;
+        // background-color: red;
 
         input {
-            height: 10px!important;
-            max-height: 10px!important;
-            font-size: 15px!important;
+            width: 50px!important;
+            height: 5px!important;
+            max-height: 5px!important;
+            font-size: 20px!important;
+            // padding-left: 10px;
         }
     }
 
@@ -43,10 +62,20 @@ $detailPanel: 360px;
         @include displayFlex(column, nowrap, flex-start, flex-start);
         @include padding(1rem);
         transition: $primary-transition;
+        
+        overflow-x: scroll;
+        overflow-x: hidden;
+        @include customScrollBar(10px);
 
         &.open {
             width: calc(100% - #{$filterPanel} - #{$detailPanel});
         }
+        span{
+            @include padding(1rem 0);
+        }
+    }
+    .MuiFormControl-root.css-u4cvaf-MuiFormControl-root {
+        margin: 0;
     }
 
     &__filter-row {
@@ -62,8 +91,8 @@ $detailPanel: 360px;
         }
 
         &--select {
-            height: 42px!important;
-            max-height: 42px!important;
+            height: 37px!important;
+            max-height: 37px!important;
 
             fieldset { border: 2px solid $gray-text-color!important; }
         }
@@ -81,13 +110,40 @@ $detailPanel: 360px;
             border-bottom-left-radius: 10px;
         }
     }
+    .css-x2fs5v-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped:first-of-type {
+        border-radius: 15px;
+        height: 35px;
+    }
+    .css-x2fs5v-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped:not(:first-of-type) {
+        border-radius: 15px;
+        height: 35px;
+    }
+    .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+        border-radius: 15px;
+        height: 35px;
+    }
+    button.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation.MuiButton-fullWidth.MuiButtonBase-root.css-1y3no4h-MuiButtonBase-root-MuiButton-root {
+        border-radius: 10px;
+    }
+    .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiInputBase-adornedStart.css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root {
+        padding: 0;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .MuiInputAdornment-root.MuiInputAdornment-positionStart.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium.css-ittuaa-MuiInputAdornment-root {
+        padding-left: 20px;
+    }
+    &__rating{
+        width: 100%;
+        height: 200px;
+        @include displayFlex(column, nowrap, flex-start, flex-start);
+        gap: 1rem;
+    }
 
     &__list-item {
         width: 100%;
         height: 460px;
-        overflow-x: scroll;
-        overflow-x: hidden;
-        @include customScrollBar(10px);
         @include displayGridAutoFit();
         gap: 1.4rem;
         margin-top: 1rem;
@@ -96,6 +152,140 @@ $detailPanel: 360px;
     &__detail-panel {
         width: $detailPanel;
         height: 100%;
-        border-left: 1px solid red;
+        // border-left: 1px solid red;
+        // background-color: $cyan-blue-1;
+        @include displayFlex(column, nowrap, start, start);
+        @include padding(2rem);
+        gap: 1rem;
+        &__img{
+            width: 100%;
+            height: 50%;
+            // background-color: red;
+            img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 20px;
+            }
+        }
+        &__title{
+            width: 100%;
+            height: 5%;
+            // background-color: yellow;
+            margin: 0;
+            font-weight: bolder;
+            color: $black;
+            text-transform: uppercase;
+            @include oneLineTextOverflow();
+        }
+        &__desc{
+            width: 100%;
+            height: 10%;
+            
+            p{
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+    
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin: 0;
+            }
+        }
+        &__column{
+            width: 100%;
+            height: 25%;
+            // background-color: yellow;
+            @include displayFlex(column, nowrap, flex-start, flex-start);
+            // @include padding(0 2rem);
+            gap: 1rem;
+            overflow: hidden;
+
+            // background-color: rgb(151, 151, 40);
+        }
+        &__link{
+            width: 100%;
+            // height: 25%;
+            // background-color: rgb(119, 119, 48);
+            @include displayFlex(row, nowrap, space-around, flex-start);
+            @include padding(0 2rem);
+            gap: 1rem;
+            // background-color: rgb(151, 151, 40);
+            a {
+                text-decoration: none;
+                color: $gray-text-color;
+                font-weight: 700;
+                position: relative;
+                transition: $primary-transition;
+                
+    
+                &::after {
+                    position: absolute;
+                    content: '';
+                    left: 0;
+                    bottom: -10px;
+                    width: 0;
+                    height: 5px;
+                    // background-color: $blue;
+                    transition: all $primary-transition;
+                }
+            }
+            a.active { 
+                color: $main-text-color;
+                transition: $primary-transition;
+    
+                &::after {
+                    position: absolute;
+                    content: '';
+                    left: 0;
+                    bottom: -10px;
+                    width: 100%;
+                    height: 3px;
+                    background-color: $dark-green;
+                    transition: $primary-transition;
+                }
+            }
+            
+        }
+        .text{
+            width: 100%;
+            // background-color: $blue;
+            transition: $primary-transition;
+            
+            overflow-x: scroll;
+            overflow-x: hidden;
+            @include customScrollBar(2px);
+        }
+        &__bottom{
+            width: 100%;
+            height: 5%;
+            // background-color: $blue;
+            @include displayFlex(row, nowrap, space-around, center);
+            button{
+                color: $black;
+                background-color: $dark-green;
+                width: 220px!important;
+                font-weight: 900;
+                border: 0.5px solid $gray-text-color;
+            }
+            .icon{
+                height: 40px;
+                width: 40px;
+                cursor: pointer;
+                color: rgb(212, 51, 51);
+                border-radius: 10px;
+                transition: $primary-transition;
+            }
+            .icon:hover{
+                
+                background-color: rgb(228, 220, 205);
+            }
+            
+        }
+        button.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.homepage2--add.css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
+            border-radius: 15px;
+        }
     }
+    
 }
