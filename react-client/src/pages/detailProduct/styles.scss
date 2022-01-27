@@ -7,7 +7,7 @@
     // font-style: italic;
     width: 100%;
     height:calc(100vh - #{$headerHeight});
-    background-color: rgb(247, 239, 239);
+    background-color: #f2f2f7;
     @include displayFlex(row, nowrap, center, center);
     gap: 2rem;
     @include padding(0 0 0 2rem);
@@ -30,92 +30,121 @@
         width: 100%;
         @include displayFlex(column, nowrap, flex-start, center);
         gap: 1rem;
-        @include padding(1rem 0)
+        @include padding(1rem 0);
+        svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium{
+            font-size: 50px;
+        }
     }
-    .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiMobileStepper-root.MuiMobileStepper-positionStatic.detail-page__button.css-rh92k-MuiPaper-root-MuiMobileStepper-root {
-        // background: rgb(222, 236, 238);
+    // .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiMobileStepper-root.MuiMobileStepper-positionStatic.detail-page__button.css-rh92k-MuiPaper-root-MuiMobileStepper-root {
+    //     // background: rgb(222, 236, 238);
+    //     background-color: transparent;
+    //     // border: 20px;
+    //     border-radius: 20px;
+    // }
+    .MuiPaper-root.MuiPaper-elevation{
         background-color: transparent;
-        // border: 20px;
-        border-radius: 20px;
+        width: 50vw;
+        position: absolute;
+        top: 40%;
+        font-size: 30px;
     }
+    .MuiMobileStepper-dots.css-1384nzf-MuiMobileStepper-dots{
+        visibility: hidden;
+    }
+    
     &__content{
         height: 100%;
         width: 50%;
         background-color: $white;
-        @include padding(2rem);
+        @include displayFlex();
     }
-    &__rating{
-        @include displayFlex(row, nowrap,  flex-start, center);
-        gap: 2rem;
+    &__cover{
+        height: 80%;
+        width: 50%;
+        background-color: $white;
+        // @include padding(2rem);
     }
     &__icon{
-        height: 20px;
+        height: 100px;
         width: 100%;
         @include displayFlex(row, nowrap, flex-start, center);
-        color: blue;
+        svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium{
+            font-size: 15px;
+
+        }
+    
         p{
-            @include padding(0 0 0 1rem);
-            color: blue;
+            @include padding(0 0 0 .2rem);
             font-weight: 700;
+            font-size: 12px;
+        }
+        button{
+            @include displayFlex(row);
+            height: 30px;
+            cursor: pointer;
+            border: 0;
+            background-color: transparent;
+            transition: $primary-transition;
+        }
+        button:hover{
+            background-color: #f2f2f7;
         }
     }
     h1{
         font-weight: 900;
     }
-    &__bottom{
-        position: absolute;
-        // float: left;
-        height: 15vh;
-        width: 80%;
-        background-color: $cyan-blue-1;
-        bottom: 20px;
-        border-radius: 10px;
-        
-        background-color: $white;
-        box-shadow: rgba(197, 202, 206, 0.2) 2px 1px 24px;
-        @include displayFlex(row, nowrap, center, center);
-    }
-    &__left{
-        width: 50%;
-        height: 100%;
-        @include displayFlex(row,nowrap, flex-start,center);
-        @include padding(0 3rem);
-        gap: 2rem;
-        img{
-            height: 70px;
-            width: 70px;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-    }
-    &__title{
+    &__des{
         p{
-            color: $gray-text-color;
-        }
-        h2{
-            margin-bottom: 0;
+            font-weight: 500;
+            font-size: 15px;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
-    &__right{
-        float: left;
-        width: 50%;
-        height: 100%;
-        @include displayFlex(row, nowrap, flex-end, center);
-        @include padding(0 3rem);
-        gap: 2rem;
-        // background-color: $blue;
-        button{
-            color: $white;
-            background-color: $dark-blue-1;
-            width: 220px!important;
-            font-weight: 900;
-            border: 0.5px solid $gray-text-color;
+    &__footer{
+        height: 30px;
+        width: 100%;
+        @include displayFlex( row, nowrap, flex-start, center);
+        gap: 1rem;
+        p{
+            font-weight: 500;
+            font-size: 17px;
         }
-        button:hover{
-            color:$black;
-        }
-        
     }
-    
-
+    &__price{
+        height: 100px;
+        width: 100%;
+        @include displayFlex(row, nowrap, space-between, center);
+    }
+    &__quant{
+        @include displayFlex(row, nowrap, flex-start, center);
+        gap: 1rem;
+    }
+    &__buy{
+        float: right;
+    }
+    &__minus, &__add{
+        border: 0;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        @include displayFlex();
+        transition: $primary-transition;
+        background-color: rgb(243, 234, 234);
+        cursor: pointer;
+    }
+    &__minus:hover, &__add:hover{
+        background-color: rgb(221, 208, 208);
+    }
+    button.MuiButton-root.MuiButton-contained{
+        background-color: #487ee4;
+        transition: $primary-transition;
+    }
+    button.MuiButton-root.MuiButton-contained:hover{
+        background-color: #376cce;
+    }
 }

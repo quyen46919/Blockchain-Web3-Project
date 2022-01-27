@@ -10,20 +10,20 @@
     @include displayFlex(column, nowrap, flex-start, center);
     @include padding(1rem 2rem);
     &__savings{
-        height: auto;
+        height: 35%;
         width: 100%;
         // background-color: $cyan;
         border-bottom: 1px solid rgb(240, 229, 229);
         h3{
-            padding-bottom: .5rem;
+            padding-bottom: 1rem;
         }
         span{
             font-size: 15px;
-            color: $gray-text-color;
+            color: #c6cccf;
         }
     }
     &__totals{
-        height: 30%;
+        height: 35%;
         // background-color: $dark-red-orange;
         margin-top: 1rem;
         @include padding(1rem 0);
@@ -47,7 +47,7 @@
         
     }
     &__possible{
-        color: $blue;
+        color: #0c6aee;
     }
     
     &__items{
@@ -76,7 +76,7 @@
         &--content{
             height: 85%;
             width: 100%;
-            background-color:rgb(228, 232, 241); 
+            background-color:#f8fafb; 
             @include padding(0 2rem);
             p{
                 padding-top: 15px;
@@ -100,7 +100,7 @@
         &--content{
             height: 85%;
             width: 100%;
-            background-color:rgb(228, 232, 241); 
+            background-color:#f8fafb; 
             @include padding(2rem 0 0 2rem);
             @include displayFlex(row, nowrap, space-between, center);
             gap: 0.4rem;
@@ -144,7 +144,6 @@
         width: 33%;
         color: $subtitle-text-color;
         font-weight: 700;
-        // background-color: $cyan-blue-1;
     }
     &__checkout{
         width: 25%;
@@ -155,7 +154,7 @@
         &--content{
             height: 85%;
             width: 100%;
-            background-color:rgb(228, 232, 241); 
+            background-color:#f8fafb; 
             @include padding(0 2rem);
             @include displayFlex(column, nowrap, flex-start, flex-start);
 
@@ -163,10 +162,16 @@
         .MuiFormControl-root {
             margin-left: 0!important;
         }
+        button.MuiButton-root.MuiButton-contained {
+            background: #0a6bf0;
+        }
+        button.MuiButton-root.MuiButton-contained:hover{
+            background-color: #0e60d3;
+        }
     }
     &__title{
-        background-color:rgb(228, 232, 241); 
-        height: 15%;
+        background-color:#f8fafb; 
+        height: 25%;
         width: 100%;
         text-transform: uppercase;
         @include displayFlex(row, nowrap, flex-start, center);
@@ -175,7 +180,7 @@
         &--content{
             height: 85%;
             width: 100%;
-            background-color:rgb(228, 232, 241); 
+            background-color:#f8fafb; 
             @include padding(0 2rem);
         }
 
@@ -183,6 +188,7 @@
             padding-right: 32px;
             /* width: 152px; */
             width: 235px;
+            background-color: #0c6aee;
         }
     }
 

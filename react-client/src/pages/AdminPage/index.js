@@ -8,6 +8,7 @@ import * as React from 'react';
 import './styles.scss';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import MenuItem from '@mui/material/MenuItem';
+import { motion } from 'framer-motion/dist/framer-motion';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
@@ -52,7 +53,6 @@ const BpCheckedIcon = styled(BpIcon)({
         backgroundColor: 'rgb(0, 204, 255)'
     }
 });
-
 // Inspired by blueprintjs
 function BpRadio(props) {
     return (
@@ -77,7 +77,12 @@ function AdminPage() {
         setAge(event.target.value);
     };
     return (
-        <div className="admin-page">
+        <motion.div
+            exit={{ opacity: 0 }}
+            initial = {{ y: -60, opacity: 0 }}
+            animate = {{ y: 0, opacity: 1 }}
+            transition = {{ delay: .2 }}
+            className="admin-page">
             <div className="admin-page__savings">
                 <h3>Yearly Savings</h3>
                 <span>Upload March 25/01/2022 12:20 am</span>
@@ -191,7 +196,7 @@ function AdminPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
