@@ -1,10 +1,8 @@
 @import 'assets/scss/variables';
 @import 'assets/scss/mixins';
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,800,800i,900i&display=swap');
+
 .detail-page{
-    font-family: 'Nunito Sans', sans-serif;
     font-weight: bold;
-    // font-style: italic;
     width: 100%;
     height:calc(100vh - #{$headerHeight});
     background-color: #f2f2f7;
@@ -38,22 +36,13 @@
     &__position-image{
         height: 15%;
         width: 80%;
-        // background-color: #487ee4;
         @include displayFlex(row);
         padding:(0 0 2rem 0);
-        
-        // -webkit-filter: blur(5px);
-        // -moz-filter: blur(5px);
-        // -o-filter: blur(5px);
-        // -ms-filter: blur(5px);
     }
     &__item1{
         height: 100%;
         width: 20%;
         background-image: url('https://www.bigc.vn/img/application/sme/belve.png');
-        // background-repeat: no-repeat;
-        // background-attachment: fixed;
-        // background-position: center; 
         background-size: cover;
         filter: blur(2px);
         &.active{
@@ -64,9 +53,6 @@
         height: 100%;
         width: 20%;
         background-image: url('https://www.bigc.vn/img/application/sme/hatdieurang.png');
-        // background-repeat: no-repeat;
-        // background-attachment: fixed;
-        // background-position: center; 
         background-size: cover;
         
         filter: blur(2px);
@@ -78,9 +64,6 @@
         height: 100%;
         width: 20%;
         background-image: url('https://www.bigc.vn/img/application/sme/traxanhthainguyen.png');
-        // background-repeat: no-repeat;
-        // background-attachment: fixed;
-        // background-position: center; 
         background-size: cover;
         
         filter: blur(2px);
@@ -92,9 +75,6 @@
         height: 100%;
         width: 20%;
         background-image: url('https://www.bigc.vn/img/application/sme/mamchinhtuy.png');
-        // background-repeat: no-repeat;
-        // background-attachment: fixed;
-        // background-position: center; 
         background-size: cover;
         
         filter: blur(2px);
@@ -102,12 +82,7 @@
             filter: blur(0);
         }
     }
-    // .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiMobileStepper-root.MuiMobileStepper-positionStatic.detail-page__button.css-rh92k-MuiPaper-root-MuiMobileStepper-root {
-    //     // background: rgb(222, 236, 238);
-    //     background-color: transparent;
-    //     // border: 20px;
-    //     border-radius: 20px;
-    // }
+
     .MuiPaper-root.MuiPaper-elevation{
         background-color: transparent;
         width: 50vw;
@@ -135,28 +110,8 @@
         height: 100px;
         width: 100%;
         @include displayFlex(row, nowrap, flex-start, center);
-        svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium{
-            font-size: 15px;
-
-        }
-    
-        p{
-            @include padding(0 0 0 .2rem);
-            font-weight: 700;
-            font-size: 12px;
-        }
-        button{
-            @include displayFlex(row);
-            height: 30px;
-            cursor: pointer;
-            border: 0;
-            background-color: transparent;
-            transition: $primary-transition;
-        }
-        button:hover{
-            background-color: #f2f2f7;
-        }
     }
+
     h1{
         font-weight: 900;
     }
@@ -206,12 +161,5 @@
     }
     &__minus:hover, &__add:hover{
         background-color: rgb(221, 208, 208);
-    }
-    button.MuiButton-root.MuiButton-contained{
-        background-color: #487ee4;
-        transition: $primary-transition;
-    }
-    button.MuiButton-root.MuiButton-contained:hover{
-        background-color: #376cce;
     }
 }
