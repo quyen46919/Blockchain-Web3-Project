@@ -7,13 +7,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import { motion } from 'framer-motion/dist/framer-motion';
+import { wrap } from 'popmotion';
 import React, { useState } from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
 import './styles.scss';
-
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
     {
@@ -34,25 +33,44 @@ const images = [
     }
 ];
 
+const variants = {
+    enter: (direction) => {
+        return {
+            x: direction > 0 ? 300 : -300,
+            opacity: 0
+        };
+    },
+    center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1
+    },
+    exit: (direction) => {
+        return {
+            zIndex: 0,
+            x: direction < 0 ? 300 : -300,
+            opacity: 0
+        };
+    }
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset, velocity) => {
+    return Math.abs(offset) * velocity;
+};
+
 
 function DetailProduct() {
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = images.length;
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleStepChange = (step) => {
-        setActiveStep(step);
-    };
-
     const [amount, setAmount] = useState(1);
+    const [[page, direction], setPage] = useState([0, 0]);
+    const imageIndex = wrap(0, images.length, page);
+
+    const paginate = (newDirection) => {
+        setPage([page + newDirection, newDirection]);
+    };
+
     return (
         <motion.div
             exit={{ opacity: 0 }}
@@ -62,42 +80,40 @@ function DetailProduct() {
             className="detail-page">
             <div className="detail-page__image">
                 {/* <img src={image} alt="" /> */}
-                <Box className='detail-page__list' sx={{ maxWidth: 500, flexGrow: 1 }}>
-                    <AutoPlaySwipeableViews
-                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                        index={activeStep}
-                        onChangeIndex={handleStepChange}
-                        enableMouseEvents
-                    >
-                        {images.map((step, index) => (
-                            <div key={step.label}>
-                                {Math.abs(activeStep - index) <= 2 ? (
-                                    <Box
-                                        component="img"
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            maxWidth: 500,
-                                            // overflow: 'hidden',
-                                            width: '100%'
-                                        }}
-                                        src={step.imgPath}
-                                        alt={step.label}
-                                    />
-                                ) : null}
-                            </div>
-                        ))}
-                    </AutoPlaySwipeableViews>
+                <Box className='detail-page__list' sx={{ maxWidth: 300, flexGrow: 1 }}>
+                    <motion.img
+                        key={page}
+                        src={images[imageIndex].imgPath}
+                        custom={direction}
+                        variants={variants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                            x: { type: 'spring', stiffness: 300, damping: 30 },
+                            opacity: { duration: 0.2 }
+                        }}
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={1}
+                        onDragEnd={(e, { offset, velocity }) => {
+                            const swipe = swipePower(offset.x, velocity.x);
+
+                            if (swipe < -swipeConfidenceThreshold) {
+                                paginate(1);
+                            } else if (swipe > swipeConfidenceThreshold) {
+                                paginate(-1);
+                            }
+                        }}
+                    />
                     <MobileStepper
                         steps={maxSteps}
                         position="static"
-                        activeStep={activeStep}
+                        activeStep={imageIndex}
                         nextButton={
                             <Button
                                 size="medium"
-                                onClick={handleNext}
-                                disabled={activeStep === maxSteps - 1}
+                                onClick={() => paginate(1)}
                             >
                                 {theme.direction === 'rtl' ? (
                                     <KeyboardArrowLeft />
@@ -107,7 +123,10 @@ function DetailProduct() {
                             </Button>
                         }
                         backButton={
-                            <Button size="medium" onClick={handleBack} disabled={activeStep === 0}>
+                            <Button
+                                size="medium"
+                                onClick={() => paginate(-1)}
+                            >
                                 {theme.direction === 'rtl' ? (
                                     <KeyboardArrowRight />
                                 ) : (
@@ -117,6 +136,20 @@ function DetailProduct() {
                         }
                     />
                 </Box>
+                <div className="detail-page__position-image">
+                    <Tabs value={imageIndex} aria-label="icon label tabs example">
+                        {
+                            images.map((image, index) => (
+                                <Tab
+                                    label={<img src={image.imgPath} alt = '' className='active'/>}
+                                    key={index}
+                                    style={{ height: '100px' }}
+                                    onClick={() => setPage([index, 0])}
+                                />
+                            ))
+                        }
+                    </Tabs>
+                </div>
             </div>
             <div className="detail-page__content">
                 <div className="detail-page__cover">

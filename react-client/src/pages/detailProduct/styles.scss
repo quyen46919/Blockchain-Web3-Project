@@ -15,7 +15,7 @@
         height: 100%;
         width: 50%;
         background-color: transparent;
-        @include displayFlex(row, nowrap, center, center);
+        @include displayFlex(column, nowrap, flex-start, center);
         @include padding(1rem);
         img{
             height: 100%;
@@ -26,13 +26,80 @@
         }
     }
     &__list{
-        height: 100%;
+        height: 50%;
         width: 100%;
         @include displayFlex(column, nowrap, flex-start, center);
         gap: 1rem;
-        @include padding(1rem 0);
+        // @include padding(1rem 0);
         svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium{
             font-size: 50px;
+        }
+    }
+    &__position-image{
+        height: 15%;
+        width: 80%;
+        // background-color: #487ee4;
+        @include displayFlex(row);
+        padding:(0 0 2rem 0);
+        
+        // -webkit-filter: blur(5px);
+        // -moz-filter: blur(5px);
+        // -o-filter: blur(5px);
+        // -ms-filter: blur(5px);
+    }
+    &__item1{
+        height: 100%;
+        width: 20%;
+        background-image: url('https://www.bigc.vn/img/application/sme/belve.png');
+        // background-repeat: no-repeat;
+        // background-attachment: fixed;
+        // background-position: center; 
+        background-size: cover;
+        filter: blur(2px);
+        &.active{
+            filter: blur(0);
+        }
+    }
+    &__item2{
+        height: 100%;
+        width: 20%;
+        background-image: url('https://www.bigc.vn/img/application/sme/hatdieurang.png');
+        // background-repeat: no-repeat;
+        // background-attachment: fixed;
+        // background-position: center; 
+        background-size: cover;
+        
+        filter: blur(2px);
+        &.active{
+            filter: blur(0);
+        }
+    }
+    &__item3{
+        height: 100%;
+        width: 20%;
+        background-image: url('https://www.bigc.vn/img/application/sme/traxanhthainguyen.png');
+        // background-repeat: no-repeat;
+        // background-attachment: fixed;
+        // background-position: center; 
+        background-size: cover;
+        
+        filter: blur(2px);
+        &.active{
+            filter: blur(0);
+        }
+    }
+    &__item4{
+        height: 100%;
+        width: 20%;
+        background-image: url('https://www.bigc.vn/img/application/sme/mamchinhtuy.png');
+        // background-repeat: no-repeat;
+        // background-attachment: fixed;
+        // background-position: center; 
+        background-size: cover;
+        
+        filter: blur(2px);
+        &.active{
+            filter: blur(0);
         }
     }
     // .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiMobileStepper-root.MuiMobileStepper-positionStatic.detail-page__button.css-rh92k-MuiPaper-root-MuiMobileStepper-root {
