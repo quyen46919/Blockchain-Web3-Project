@@ -3,11 +3,17 @@
 
 .card-item {
     width: 100%;
-    border: 1px solid $gray-border-color;
+    border: 1px solid $silver-background-4;
     border-radius: 14px;
-    @include padding(1rem);
+    transition: $primary-transition;
+    @include padding(1.2rem 1.4rem);
     @include displayFlex(column, nowrap, flex-start, flex-start);
-    gap: 1.4rem;
+    gap: 0.4rem;
+
+    &:hover {
+        box-shadow: $secondary-box-shadow;
+        transform: translateY(-6px);
+    }
     
     img {
         width: 100%;
@@ -17,29 +23,37 @@
     }
 
     &__title {
-        margin: 0;
+        margin: 0!important;
         font-weight: 700;
-        color: $black;
-        text-transform: uppercase;
-        @include oneLineTextOverflow();
+        color: $main-text-color;
+        font-size: 16px;
+        display: -webkit-box;
+        @include multipleLineTextOverflow(2);
     }
 
     &__line {
         width: 100%;
-        @include displayFlex(row, nowrap, space-between, center);
+        @include displayFlex(row, nowrap, space-between, flex-end);
+        margin-top: 0.4rem;
+    }
+
+    &__time {
+        font-size: 14px;
+        margin: 0;
+        color: $subtitle-text-color;
     }
 
     &__prices {
-        p {
-            font-weight: 600;
-            color: $gray-text-color;
+        span {
+            color: $subtitle-text-color;
             margin: 0;
+            font-size: 14px;
         }
-    }
-    button{
-        color: $black;
-        font-weight: 900;
-        border: 0.5px solid $gray-border-color;
-        border-radius: 15px;
+        p {
+            margin: 0;
+            font-size: 17px;
+            color: $main-text-color;
+            font-weight: 700;
+        }
     }
 }

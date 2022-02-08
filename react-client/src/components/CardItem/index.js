@@ -3,6 +3,7 @@ import image from 'assets/images/image8.jpg';
 import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
+import { green } from '@mui/material/colors';
 
 CardItem.propTypes = {
     handleShowDetailPanel: PropTypes.func.isRequired
@@ -15,15 +16,29 @@ function CardItem(props) {
             <div className="card-item__img">
                 <img src={image} alt="item card image"/>
             </div>
-            <p className="card-item__title">item name </p>
+            <div>
+                <p className="card-item__title">
+                    Sản phẩm đồ gia dụng thông minh Sản phẩm đồ gia dụng thông minh Sản phẩm đồ gia dụng thông minh
+                </p>
+                <span className="card-item__time">
+                    Đăng tải vào 1 giờ trước
+                </span>
+            </div>
             <div className="card-item__line">
                 <div className="card-item__prices">
-                    <p>Price</p>
-                    <span>0.2 ether</span>
+                    <span>Giá</span>
+                    <p>0.2 ether</p>
                 </div>
-                <Button variant="outlined" onClick={handleShowDetailPanel}>
-                    Show detail
-                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={handleShowDetailPanel}
+                    sx={{
+                        textTransform: 'initial',
+                        borderRadius: 3,
+                        color: green[600],
+                        borderColor: `${green[600]}!important`
+                    }}
+                > Xem mô tả </Button>
             </div>
         </div>
     );
