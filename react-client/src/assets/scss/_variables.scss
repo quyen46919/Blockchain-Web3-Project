@@ -22,7 +22,7 @@ $red-orange: #FE725D;
 $dark-red-orange: #c95b4a;
 $purple: #9DA6FF;
 $light-green: #90EB9E;
-$green: #36C857;
+$green: #47A359;
 $dark-green:#4DA85C;
 $cyan-green:#42BF8A;
 $black: #373737;
@@ -39,12 +39,16 @@ $gray-text-color: #A4ACB8;
 $subtitle-text-color: #878691;
 $main-text-color: #5B556D;
 
+$header-unactive-link-color: #DADADA;
+$header-active-link-color: #535656;
+
 
 // TRANSITION
 $primary-transition: all .25s ease;
 
 
 $primary-box-shadow: rgba(197, 202, 206, 0.2) 0px 8px 24px;
+$secondary-box-shadow: rgba(131, 136, 141, 0.2) 0px 8px 24px;
 
 // DECLARE SIZE GLOBAL VARIABLE
 $xs: 0px;
