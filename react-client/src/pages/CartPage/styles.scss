@@ -1,0 +1,78 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+
+$width-item: 800px;
+
+.cart-page{
+    height: 100vh;
+    width: 100%;
+    // background-color: $blue;
+    @include displayFlex(column, nowrap, flex-start, center);
+    padding-top: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    @include customScrollBar(6px);
+    h1{
+        color: $main-text-color;
+    }
+    &__top{
+        height: auto;
+        width: 80%;
+        // background-color: $cyan-blue-1;
+        @include displayFlex(column, nowrap, flex-start, flex-start);
+        padding-bottom: 20px;
+        border-bottom: 1px solid $gray-border-color;
+    }
+    &__content{
+        height: auto;
+        width: 100%;
+        // background-color: red;
+        @include displayFlex(row, nowrap, flex-start, flex-start);
+        gap: 2rem;
+    }
+    &__left{
+        height: auto;
+        width: $width-item;
+        @include displayFlex(column, nowrap, flex-start, flex-start);
+        gap: 1.5rem;
+        h4{
+            font-weight: 200;
+            font-size: 19px;
+            margin-bottom: 0;
+            color: $main-text-color;
+        }
+    }
+    &__right{
+        width: 30%;
+        height: auto;
+        // background-color: $blue;
+        h4{
+            font-weight: 200;
+            font-size: 19px;
+            margin-bottom: 5px;
+            color: $main-text-color;
+        }
+        h1{
+            margin: 10px 0;
+            font-size: 40px;
+            font-weight: 500;
+            color: $main-text-color;
+        }
+        h5{
+            margin: 15px 0;
+            font-size: 15px;
+            color: $main-text-color;
+        }
+    }
+    &__empty{
+        height: calc( 100% - $headerHeight);
+        width: 100%;
+        @include displayFlex();
+        gap: 5rem;
+        h1{
+            @include padding(20px 0);
+            color: $gray-text-color;
+        }
+        // background-color: $blue;
+    }
+}

@@ -1,6 +1,7 @@
 import Header from 'components/Header';
 import AccountPage from 'pages/AccountPage';
 import AdminPage from 'pages/AdminPage';
+import CartPage from 'pages/CartPage';
 import DetailProduct from 'pages/DetailProduct';
 import HomePage2 from 'pages/HomePage/index2';
 // import HomePage from 'pages/HomePage/index2';
@@ -28,6 +29,7 @@ function App() {
                                 <Route path="/home" component={HomePage2} exact />
                                 <Route path="/product" component={DetailProduct} exact />
                                 <Route path="/admin" component={AdminPage} exact />
+                                <Route path="/cart" component={CartPage} exact />
                             </Switch>
                         </div>
                         // ) : ( <Redirect to="/account"/> )

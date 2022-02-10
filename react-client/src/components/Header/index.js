@@ -5,7 +5,7 @@ import avatar from 'assets/images/image8.jpg';
 import img from 'assets/images/new-logo.jpg';
 import imgTitle from 'assets/images/logo-title.jpg';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './styles.scss';
 import { grey } from '@mui/material/colors';
 
@@ -31,9 +31,11 @@ function Header() {
             </div>
             <div className="header__user">
                 <Tooltip title="Giỏ hàng">
-                    <IconButton>
-                        <ShoppingCartOutlinedIcon sx={{ color: grey[500] }}/>
-                    </IconButton>
+                    <Link
+                        to="/cart"
+                    ><IconButton>
+                            <ShoppingCartOutlinedIcon sx={{ color: grey[500] }} to={'/cart'}/>
+                        </IconButton></Link>
                 </Tooltip>
                 <Tooltip title="Thông báo">
                     <IconButton>
