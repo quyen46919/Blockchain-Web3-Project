@@ -1,8 +1,8 @@
 import { Logout, Person, Settings } from '@mui/icons-material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Avatar, Badge, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { green, grey } from '@mui/material/colors';
 import imgTitle from 'assets/images/logo-title.jpg';
 import img from 'assets/images/new-logo.jpg';
 import { AuthContext } from 'context/AuthContext';
@@ -11,7 +11,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './styles.scss';
 
 function Header() {
-    const { user, dispatch } = useContext(AuthContext);
+    const { user, dispatch, shoppingCart } = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -55,9 +55,20 @@ function Header() {
                     user
                         ? <>
                             <Tooltip title="Giỏ hàng">
-                                <IconButton>
-                                    <ShoppingCartOutlinedIcon sx={{ color: grey[500] }}/>
-                                </IconButton>
+                                <Link exact="true" to="/cart">
+                                    <IconButton>
+                                        <Badge badgeContent={shoppingCart.length}
+                                            sx={{
+                                                '& span': {
+                                                    backgroundColor: green[600],
+                                                    color: 'white'
+                                                }
+                                            }}
+                                        >
+                                            <ShoppingCartOutlinedIcon sx={{ color: grey[500] }}/>
+                                        </Badge>
+                                    </IconButton>
+                                </Link>
                             </Tooltip>
                             <Tooltip title="Thông báo">
                                 <IconButton>

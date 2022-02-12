@@ -121,6 +121,7 @@ $detailPanel: 360px;
         position: relative;
         overflow-x: hidden;
         overflow-y: scroll;
+        border-left: 1px solid $silver-background-4;
         @include customScrollBar();
 
         &__img{

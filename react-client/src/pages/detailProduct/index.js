@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { green, grey } from '@mui/material/colors';
@@ -11,36 +10,15 @@ import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { motion } from 'framer-motion/dist/framer-motion';
-import { wrap } from 'popmotion';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './styles.scss';
-import { Typography } from '@mui/material';
+import { AuthContext } from 'context/AuthContext';
+import { motion } from 'framer-motion/dist/framer-motion';
+import { useSnackbar } from 'notistack';
+import { wrap } from 'popmotion';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { convertState } from 'utils/convertState';
-import Web3 from 'web3';
-
-const images = [
-    {
-        imgPath:
-        'https://www.bigc.vn/img/application/sme/belve.png'
-    },
-    {
-        imgPath:
-        'https://www.bigc.vn/img/application/sme/hatdieurang.png'
-    },
-    {
-        imgPath:
-        'https://www.bigc.vn/img/application/sme/traxanhthainguyen.png'
-    },
-    {
-        imgPath:
-        'https://www.bigc.vn/img/application/sme/mamchinhtuy.png'
-    }
-];
+import './styles.scss';
 
 const variants = {
     enter: (direction) => {
@@ -73,10 +51,12 @@ function DetailProduct() {
     const [[page, direction], setPage] = useState([0, 0]);
     const [imageIndex, setImageIndex] = useState(wrap(0, 0, page));
     const [maxSteps, setMaxSteps] = useState(0);
+    const { enqueueSnackbar } = useSnackbar();
     // var maxSteps = images.length;
     // var imageIndex = wrap(0, images.length, page);
     let { productId } = useParams();
     const [item, setItem] = useState();
+    const { dispatch, shoppingCart } = useContext(AuthContext);
 
     const paginate = (newDirection) => {
         setPage([page + newDirection, newDirection]);
@@ -87,19 +67,21 @@ function DetailProduct() {
         const fetchItem = async () => {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/${productId}`);
-                console.log(res.data);
                 setItem(res.data);
                 setMaxSteps(res.data.images.length);
                 setImageIndex(wrap(0, res.data.images.length, page));
             } catch (err) {
-                console.log(err);
+                enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
+                    variant: 'error'
+                });
             }
         };
         fetchItem();
     }, []);
 
-    console.log(imageIndex);
-    console.log(maxSteps);
+    const handleAddItemToCart = async () => {
+        dispatch({ type: 'ADD_TO_CART', payload: item });
+    };
 
     return (
         <motion.div
@@ -119,7 +101,6 @@ function DetailProduct() {
                         animate="center"
                         exit="exit"
                         transition={{
-                            // x: { type: 'spring', stiffness: 300, damping: 30 },
                             opacity: { duration: 0.2 }
                         }}
                         drag="x"
@@ -270,6 +251,8 @@ function DetailProduct() {
                                 backgroundColor: green[600]
                             }
                         }}
+                        onClick={handleAddItemToCart}
+                        disabled={shoppingCart.find((itemInCart) => itemInCart.id === item?.id) ? true : false}
                     >
                         Thêm vào giỏ hàng
                     </Button>
