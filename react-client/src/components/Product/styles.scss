@@ -1,0 +1,57 @@
+@import 'assets/scss/variables';
+@import 'assets/scss/mixins';
+.cart-item-page__item{
+    @include displayFlex(row, nowrap, space-between, flex-start);
+    gap: 1rem;
+    width: 100%;
+    border: solid 1px $gray-border-color;
+    @include padding(1rem);
+}
+.cart-item-page__title{
+    width: 60%;
+    @include displayFlex(column, nowrap, flex-start, flex-start);
+    h5{
+        margin: 0;
+        font-size: 14px;
+        font-weight: 550;
+        color: $main-text-color;
+    }
+    p{
+        margin: 8px 0px;
+        font-size: 14px;
+        color: $gray-text-color-2;
+    }
+    span.MuiRating-root.MuiRating-sizeMedium.MuiRating-readyOnly.css-ryrseu-MuiRating-root {
+        font-size: 15px;
+    }
+}
+.cart-item-page__date{
+    @include displayFlex(row, nowrap, flex-start, flex-start);
+    gap: 1rem;
+    p{
+        margin: 0;
+        color: $gray-text-color-2;
+    }
+}
+.cart-item-page__image{
+    height: 100px;
+    width: 150px;
+    object-fit: cover;
+    background-color: rgb(240, 240, 240);
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}
+h3{
+    color: $main-text-color;
+    margin: 5px 0;
+    font-size: 15px;
+    color: #43a047;
+}
+h5{
+    margin: 15px 0;
+    font-size: 15px;
+    color: $main-text-color;
+    text-transform: uppercase;
+}
