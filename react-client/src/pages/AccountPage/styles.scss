@@ -22,6 +22,10 @@
         }
     }
     
+    &__redirect {
+        width: 100%;
+        @include displayFlex(row, nowrap, flex-start);
+    }
 
     .MuiOutlinedInput-root.MuiInputBase-root {
         gap: 0.5rem;
@@ -103,7 +107,7 @@
         }
         
         * { 
-            border-color: $red-orange!important;
+            border-color: $MUIgreen600!important;
             border-radius: 10px!important;
         }
 
@@ -122,10 +126,6 @@
         color: $main-text-color;
     }
 
-    &__submit {
-        background-color: $red-orange!important;
-    }
-
     &__line {
         width: 100%;
         @include displayFlex(row, nowrap, space-between, center);
@@ -135,11 +135,6 @@
             flex-wrap: wrap!important;
             gap: 0.25rem;
         }
-    }
-&__other-login {
-        background-color: $red-orange!important;
-        color: $white!important;
-        svg { color: $white!important; }
     }
 
     &__right {

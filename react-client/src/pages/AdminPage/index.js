@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { green, grey, red } from '@mui/material/colors';
 import FormControl from '@mui/material/FormControl';
@@ -17,6 +17,12 @@ import { useState } from 'react';
 import requestLoadMetamask from 'assets/images/req_load_metamask.jpg';
 import { ethers } from 'ethers';
 import './styles.scss';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { AuthContext } from 'context/AuthContext';
+import { useContext } from 'react';
+import Web3 from 'web3';
+import { convertState } from 'utils/convertState';
 
 const BpIcon = styled('span')(({ theme }) => ({
     borderRadius: '50%',
@@ -81,6 +87,9 @@ function AdminPage() {
     const [errorMessage, setErrorMessage] = useState(null);
     const [defaultAccount, setDefaultAccount] = useState(null);
     const [userBalance, setUserBalance] = useState(null);
+    const [defaultAccountInfo, setDefaultAccountInfo] = useState();
+    const [postedItems, setPostedItems] = useState([]);
+    const { dispatch, metamaskAddress } = useContext(AuthContext);
 
     const connectWallet = () => {
         if (window.ethereum) {
@@ -93,9 +102,25 @@ function AdminPage() {
         }
     };
 
+    useEffect(() => {
+        connectWallet();
+        const fetchAllItemByOwnerId = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/owner/${metamaskAddress}`);
+                console.log(res.data);
+                setPostedItems(res.data.items);
+                setDefaultAccountInfo(Web3.utils.fromWei(res.data.infos.totalPrice.toString(), 'ether'));
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllItemByOwnerId();
+    }, []);
+
     const handleAccountChange = (newAccount) => {
         setDefaultAccount(newAccount);
         getUserBalance(newAccount.toString());
+        dispatch({ type: 'CHANGE_METAMASK', payload: newAccount });
     };
 
     const getUserBalance = (address) => {
@@ -117,6 +142,8 @@ function AdminPage() {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+
+    console.log(defaultAccountInfo);
 
     return (
         <motion.div
@@ -208,23 +235,23 @@ function AdminPage() {
                             <div className="admin-page__totals">
                                 <div className="admin-page__element">
                                     <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
-                            Tổng số ether giao dịch
+                                        Tổng số ether của các sản phẩm bạn đăng tải
                                     </Typography>
-                                    <h2 className='admin-page__possible'>12.4 ethers</h2>
+                                    <h2 className='admin-page__possible'>{defaultAccountInfo} ethers</h2>
                                 </div>
-                                <div className="admin-page__element">
+                                {/* <div className="admin-page__element">
                                     <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
-                            Tổng số phí
+                                        Tổng số phí
                                     </Typography>
                                     <h2>0.4214412 ethers</h2>
-                                </div>
-                                <div className="admin-page__element"></div>
-                                <div className="admin-page__element">
+                                </div> */}
+                                {/* <div className="admin-page__element"></div> */}
+                                {/* <div className="admin-page__element">
                                     <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
-                                        Tổng cộng
+                                        Tổng số ethers bạn đã tiêu
                                     </Typography>
-                                    <h2>13.1241512 ethers</h2>
-                                </div>
+                                    <h2>0 ethers</h2>
+                                </div> */}
                             </div>
                         </div>
                         <Box
@@ -265,7 +292,7 @@ function AdminPage() {
                                     <div className="admin-page__instances--content">
                                         <div className="admin-page__type">
                                             <FormControl>
-                                                <FormLabel id="demo-customized-radios">Type</FormLabel>
+                                                <FormLabel id="demo-customized-radios">Danh mục</FormLabel>
                                                 <RadioGroup
                                                     defaultValue="no"
                                                     aria-labelledby="demo-customized-radios"
@@ -276,9 +303,11 @@ function AdminPage() {
                                                         }
                                                     }}
                                                 >
+                                                    <FormControlLabel value="asd" control={<BpRadio />} label="Tất cả" />
                                                     <FormControlLabel value="no" control={<BpRadio />} label="Hàng tiêu dùng" />
                                                     <FormControlLabel value="partial" control={<BpRadio />} label="Linh kiện điện tử" />
                                                     <FormControlLabel value="all" control={<BpRadio />} label="Thực phẩm" />
+                                                    <FormControlLabel value="asfll" control={<BpRadio />} label="Khác" />
                                                 </RadioGroup>
                                             </FormControl>
                                         </div>
@@ -297,6 +326,7 @@ function AdminPage() {
                                                         }
                                                     }}
                                                 >
+                                                    <FormControlLabel value="all" control={<BpRadio />} label="Tất cả" />
                                                     <FormControlLabel value="stand" control={<BpRadio />} label="Đã tạo" />
                                                     <FormControlLabel value="convert" control={<BpRadio />} label="Đã thanh toán" />
                                                     <FormControlLabel value="value3" control={<BpRadio />} label="Đã giao hàng" />
@@ -318,6 +348,7 @@ function AdminPage() {
                                                         }
                                                     }}
                                                 >
+                                                    <FormControlLabel value="sad" control={<BpRadio />} label="Mặc định" />
                                                     <FormControlLabel value="oneYear" control={<BpRadio />} label="Từ thấp đến cao" />
                                                     <FormControlLabel value="threeYears" control={<BpRadio />} label="Từ cao xuống thấp" />
                                                 </RadioGroup>
@@ -375,18 +406,58 @@ function AdminPage() {
                                     color: green[600]
                                 }}
                             >
-                                Sản phẩm của bạn (12)
+                                Sản phẩm của bạn ({postedItems.length})
                             </Typography>
                         </Box>
-                        <div className="homepage2__list-item">
-                            {
-                                Array.from(new Array(11)).map((item, index) => (
-                                    <CardItem key={index}/>
-                                ))
-                            }
-                        </div>
                     </>
             }
+            <div className="admin-page__list">
+                {
+                    postedItems?.map((item) => (
+                        <Box key={item.id}
+                            elevation={0}
+                            sx={{
+                                width: '100%',
+                                height: '100%',
+                                boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+                                boxSizing: 'border-box',
+                                borderRadius: 1,
+                                border: item.state === 0
+                                    ? '2px solid #0288d1' : item.state === 2
+                                        ? '2px solid #43a047' : '2px solid #f44336',
+                                p: 2,
+                                color: item.state === 2 ? grey[400] : 'inherit'
+                            }}
+                        >
+                            <Typography sx={{ textTransform: 'uppercase' }}>
+                                {item.identify}
+                            </Typography>
+                            <Typography>
+                                Giá: {item.price} wei
+                            </Typography>
+                            <Typography>
+                                Danh mục: {item.category}
+                            </Typography>
+                            <Typography>
+                                Trạng thái: {convertState(item.state)}
+                            </Typography>
+                            <Typography>
+                                Item address: {item.itemAddress}
+                            </Typography>
+                            {
+                                item.state == 1 && <Button variant="outlined" color="warning" sx={{ mt: 1 }}>
+                                    Giao hàng
+                                </Button>
+                            }
+                            {
+                                item.state === 2 && <Typography sx={{ color: green[600], fontWeight: 600, fontSize: 20 }}>
+                                    Đã giao hàng
+                                </Typography>
+                            }
+                        </Box>
+                    ))
+                }
+            </div>
         </motion.div>
     );
 }

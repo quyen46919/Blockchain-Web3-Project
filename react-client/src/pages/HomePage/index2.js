@@ -14,9 +14,11 @@ import Select from '@mui/material/Select';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled } from '@mui/system';
-import image from 'assets/images/image8.jpg';
+import axios from 'axios';
 import CardItem from 'components/CardItem';
-import React, { useState } from 'react';
+import { AuthContext } from 'context/AuthContext';
+import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -68,16 +70,31 @@ export const marks = [
 
 function HomePage2() {
     const [category, setState] = useState({
-        'Hàng tiêu dùng': false,
-        'Thực phẩm': false,
-        'Đồ công nghệ': false,
-        'Khác': false
+        'Hàng tiêu dùng': true,
+        'Thực phẩm': true,
+        'Đồ công nghệ': true,
+        'Khác': true
     });
     const [alignment, setAlignment] = useState('left');
     const [select, setSelect] = useState(0);
     const [showDetail, setShowDetail] = useState(false);
     const [startPrice, setStartPrice] = useState(0);
     const [endPrice, setEndPrice] = useState(6);
+    const [items, setItems] = useState([]);
+    const [targetItem, setTargetItem] = useState();
+    const { dispatch, shoppingCart } = useContext(AuthContext);
+
+    useEffect(() => {
+        const fetchAllItem = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/`);
+                setItems(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllItem();
+    }, []);
 
     const handlePriceChange = (event, newValue) => {
         setStartPrice(newValue[0]);
@@ -107,9 +124,16 @@ function HomePage2() {
         });
     };
 
-    const handleShowDetailPanel = () => {
+    const handleShowDetailPanel = (item) => {
         setShowDetail(true);
+        setTargetItem(item);
     };
+
+    const handleAddItemToCart = () => {
+        dispatch({ type: 'ADD_TO_CART', payload: targetItem });
+    };
+
+    console.log(shoppingCart);
 
     return (
         <div className='homepage2'>
@@ -125,7 +149,7 @@ function HomePage2() {
                                         <Checkbox
                                             checked={category[index]}
                                             onChange={handleChange}
-                                            name={name}
+                                            name="category"
                                             sx={{
                                                 color: '#878691',
                                                 '& svg': {
@@ -153,11 +177,6 @@ function HomePage2() {
                 </FormControl>
                 <div className="homepage2__line-column">
                     <p className='homepage2__label-title'>Giá</p>
-                    {/* <div className="homepage2__price-range">
-                        <TextField variant="outlined" type="number"/>
-                        -
-                        <TextField variant="outlined" type="number"/>
-                    </div> */}
                     <div>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -306,8 +325,8 @@ function HomePage2() {
                 </div>
                 <div className="homepage2__list-item">
                     {
-                        Array.from(new Array(11)).map((item, index) => (
-                            <CardItem key={index} handleShowDetailPanel={handleShowDetailPanel}/>
+                        items.map((item, index) => (
+                            <CardItem key={index} handleShowDetailPanel={handleShowDetailPanel} item={item}/>
                         ))
                     }
                 </div>
@@ -339,32 +358,30 @@ function HomePage2() {
                         <Close/>
                     </IconButton>
                     <div className="homepage2__detail-panel__img">
-                        <img src={image} alt="item card image"/>
+                        <img src={targetItem.images[0]} alt="item card image"/>
                     </div>
                     <div className="homepage2__detail-panel__others-img">
                         {
-                            Array.from(new Array(6)).map((img, index) => (
-                                <img src={image} key={index} alt="item card image"/>
+                            targetItem.images.map((img, index) => (
+                                <img src={img} key={index} alt="item card image"/>
                             ))
                         }
                     </div>
                     <div className="homepage2__detail-panel__title">
-                        Sản phẩm đồ gia dụng thông minh
+                        {targetItem.identify}
                     </div>
-                    <div className="homepage2__detail-panel__desc">
-                        Day la mo ta san pham! Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe neque ipsa amet blanditiis, fugit magni ducimus cumque, incidunt veritatis dignissimos consequuntur vero dolorum eius act dolores!
+                    <div className="homepage2__list-text">
+                        <p>Giá</p>
+                        {targetItem.price} wei
                     </div>
-                    {/* <div className="homepage2__detail-panel__column">
-                        <div className="homepage2__detail-panel__link">
-                            <NavLink to="/" exact>
-                                Detail
-                            </NavLink>
-                            <NavLink to="" exact>
-                                Reviews
-                            </NavLink>
-                        </div>
-                        <div className="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, blanditiis laboriosam! Vero tenetur voluptatem sapiente quasi aut, perferendis quisquam nam ullam, doloremque aperiam praesentium eligendi, debitis suscipit molestias sit ea.</div>
-                    </div> */}
+                    <div className="homepage2__list-text">
+                        <p>Mô tả sản phẩm</p>
+                        {targetItem.description}
+                    </div>
+                    <div className="homepage2__list-text">
+                        <p>Đăng tải vào</p>
+                        {targetItem.created_at}
+                    </div>
                     <div className="homepage2__detail-panel__bottom">
                         <IconButton sx={{ backgroundColor: '#FFF1F2!important', borderRadius: 2 }}>
                             <FavoriteIcon fontSize='small' sx={{ color: '#FD6B6C' }} />
@@ -379,8 +396,9 @@ function HomePage2() {
                                 border: 'none!important',
                                 borderRadius: 3
                             }}
+                            onClick={handleAddItemToCart}
                         >
-                            Thêm vào giỏ hàng
+                            { shoppingCart.find((item) => item.id === targetItem.id) ? 'Đi tới giỏ hàng': 'Thêm vào giỏ hàng' }
                         </Button>
                     </div>
                 </div>

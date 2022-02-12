@@ -9,16 +9,17 @@
     @include displayFlex(row, nowrap, center, center);
     gap: 2rem;
     @include padding(0 0 0 2rem);
+
     &__image{
         height: 100%;
         width: 50%;
         background-color: transparent;
         @include displayFlex(column, nowrap, flex-start, center);
         @include padding(1rem);
+    
         img{
             height: 100%;
             width: 100%;
-            border-radius: 30px;
             object-fit: cover;
             transition: $primary-transition;
         }
@@ -39,49 +40,6 @@
         @include displayFlex(row);
         padding:(0 0 2rem 0);
     }
-    &__item1{
-        height: 100%;
-        width: 20%;
-        background-image: url('https://www.bigc.vn/img/application/sme/belve.png');
-        background-size: cover;
-        filter: blur(2px);
-        &.active{
-            filter: blur(0);
-        }
-    }
-    &__item2{
-        height: 100%;
-        width: 20%;
-        background-image: url('https://www.bigc.vn/img/application/sme/hatdieurang.png');
-        background-size: cover;
-        
-        filter: blur(2px);
-        &.active{
-            filter: blur(0);
-        }
-    }
-    &__item3{
-        height: 100%;
-        width: 20%;
-        background-image: url('https://www.bigc.vn/img/application/sme/traxanhthainguyen.png');
-        background-size: cover;
-        
-        filter: blur(2px);
-        &.active{
-            filter: blur(0);
-        }
-    }
-    &__item4{
-        height: 100%;
-        width: 20%;
-        background-image: url('https://www.bigc.vn/img/application/sme/mamchinhtuy.png');
-        background-size: cover;
-        
-        filter: blur(2px);
-        &.active{
-            filter: blur(0);
-        }
-    }
 
     .MuiPaper-root.MuiPaper-elevation{
         background-color: transparent;
@@ -100,14 +58,9 @@
         background-color: $white;
         @include displayFlex();
     }
-    &__cover{
-        height: 80%;
-        width: 50%;
-        background-color: $white;
-        // @include padding(2rem);
-    }
+
     &__icon{
-        height: 100px;
+        height: 50px;
         width: 100%;
         @include displayFlex(row, nowrap, flex-start, center);
     }
@@ -118,7 +71,7 @@
     &__des{
         p{
             font-weight: 500;
-            font-size: 15px;
+            font-size: 17px;
             word-break: break-all;
             display: -webkit-box;
             -webkit-line-clamp: 4;
@@ -128,13 +81,13 @@
         }
     }
     &__footer{
-        height: 30px;
+        margin: 0.2rem 0;
         width: 100%;
-        @include displayFlex( row, nowrap, flex-start, center);
-        gap: 1rem;
+
         p{
             font-weight: 500;
             font-size: 17px;
+            color: $main-text-color;
         }
     }
     &__price{
