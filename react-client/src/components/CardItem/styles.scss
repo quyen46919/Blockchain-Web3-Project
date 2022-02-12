@@ -3,6 +3,7 @@
 
 .card-item {
     width: 100%;
+    height: 100%;
     border: 1px solid $silver-background-4;
     border-radius: 14px;
     transition: $primary-transition;
@@ -14,6 +15,8 @@
         box-shadow: $secondary-box-shadow;
         transform: translateY(-6px);
     }
+
+    a { width: 100%; }
     
     img {
         width: 100%;
@@ -33,8 +36,9 @@
 
     &__line {
         width: 100%;
-        @include displayFlex(row, nowrap, space-between, flex-end);
-        margin-top: 0.4rem;
+        @include displayFlex(row, wrap, space-between, flex-end);
+        gap: 0.4rem;
+        margin-top: auto;
     }
 
     &__time {

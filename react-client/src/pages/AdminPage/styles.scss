@@ -3,74 +3,58 @@
 
 .admin-page{
     font-weight: bolder;
-    // font-style: italic;
     width: 100%;
     height: calc(100vh - #{$headerHeight});
-    // background-color: rgba(245, 239, 239, 0.712);
     @include displayFlex(column, nowrap, flex-start, center);
     @include padding(1rem 2rem);
+    overflow-y: scroll;
+    @include customScrollBar();
+
     &__savings{
-        height: 35%;
         width: 100%;
-        // background-color: $cyan;
-        border-bottom: 1px solid rgb(240, 229, 229);
-        h3{
+
+        h3 {
             padding-bottom: 1rem;
-        }
-        span{
-            font-size: 15px;
-            color: #c6cccf;
         }
     }
     &__totals{
-        height: 35%;
-        // background-color: $dark-red-orange;
         margin-top: 1rem;
         @include padding(1rem 0);
         @include displayFlex(row, nowrap, space-between, center);
     }
     &__element{
-        width: 25%;
+        width: 50%;
         height: 100%;
-        // background-color: $blue;
         @include displayFlex(column, nowrap, center, flex-start);
         gap: 0.3rem;
-        p{
-            margin: 0;
-            font-size: 15px;
-            color: $gray-text-color;
-        }
+        
         h2{
             margin: 0;
             font-size: 30px;
+            color: $MUIgreen600;
         }
         
     }
     &__possible{
-        color: #0c6aee;
+        color: $MUIgreen600;
     }
     
     &__items{
         height: 50%;
         width: 100%;
-        // background-color: $cyan-blue-1;
     }
     h3{
         height: 10%;
-        // background-color: $dark-green;
     }
     &__row{
-        height: 80%;
         width: 100%;
-        // background-color: $blue;
-        @include displayFlex(row, nowrap, space-between, center);
+        @include displayFlex(row, nowrap, space-between, flex-start);
         gap: .5rem;
         overflow: hidden;
     }
     &__project{
         height: 100%;
         width: 25%;
-        // background-color: red;
         @include displayFlex(column);
         gap: .2rem;
         &--content{
@@ -94,7 +78,6 @@
     &__instances{
         width: 50%;
         height: 100%;
-        // background-color: $dark-green;
         @include displayFlex(column);
         gap: .2rem;
         &--content{
@@ -116,39 +99,28 @@
     &__length{
         height: 100%;
         width: 33%;
-        // background-color: $dark-green;
         color: $subtitle-text-color;
     }
-    .css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
-        font-weight: 600;
-    }
+
     label#demo-customized-radios {
         font-weight: 700;
         color: $subtitle-text-color;
     }
+
     &__custom{
         @include displayFlex(row, nowrap, flex-start, center);
     }
-    .css-i4bv87-MuiSvgIcon-root {
-        cursor: pointer;
-        margin-left: 20px;
-        font-size: 17px;
-        transition: $primary-transition;
-    }
-    .css-i4bv87-MuiSvgIcon-root:hover{
-        background-color: rgb(228, 224, 224);
-        border-radius: 5px;
-    }
+
     &__offering{
         height: 100%;
         width: 33%;
         color: $subtitle-text-color;
         font-weight: 700;
     }
+
     &__checkout{
         width: 25%;
         height: 100%;
-        // background-color: rgb(0, 204, 255);
         @include displayFlex(column);
         gap: .2rem;
         &--content{
@@ -171,25 +143,20 @@
     }
     &__title{
         background-color:#f8fafb; 
-        height: 25%;
+        height: 70px;
+        min-height: 70px;
+        max-height: 70px;
         width: 100%;
         text-transform: uppercase;
         @include displayFlex(row, nowrap, flex-start, center);
         @include padding(0 2rem);
         color: $subtitle-text-color;
-        &--content{
-            height: 85%;
-            width: 100%;
-            background-color:#f8fafb; 
-            @include padding(0 2rem);
-        }
-
-        .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-            padding-right: 32px;
-            /* width: 152px; */
-            width: 235px;
-            background-color: #0c6aee;
-        }
     }
 
+    &__list {
+        margin: 1rem 0;
+        width: 100%;
+        @include displayGridAutoFit(32%);
+        gap: 1rem;
+    }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -5,6 +6,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { green, grey } from '@mui/material/colors';
 import MobileStepper from '@mui/material/MobileStepper';
 import { useTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
@@ -12,7 +14,14 @@ import Tabs from '@mui/material/Tabs';
 import { motion } from 'framer-motion/dist/framer-motion';
 import { wrap } from 'popmotion';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './styles.scss';
+import { Typography } from '@mui/material';
+import { convertState } from 'utils/convertState';
+import Web3 from 'web3';
 
 const images = [
     {
@@ -36,7 +45,7 @@ const images = [
 const variants = {
     enter: (direction) => {
         return {
-            x: direction > 0 ? 300 : -300,
+            x: direction > 0 ? 200 : -200,
             opacity: 0
         };
     },
@@ -48,49 +57,69 @@ const variants = {
     exit: (direction) => {
         return {
             zIndex: 0,
-            x: direction < 0 ? 300 : -300,
+            x: direction < 0 ? 200 : -200,
             opacity: 0
         };
     }
 };
 
-const swipeConfidenceThreshold = 10000;
+const swipeConfidenceThreshold = 1000;
 const swipePower = (offset, velocity) => {
     return Math.abs(offset) * velocity;
 };
 
-
 function DetailProduct() {
     const theme = useTheme();
-    const maxSteps = images.length;
-    const [amount, setAmount] = useState(1);
     const [[page, direction], setPage] = useState([0, 0]);
-    const imageIndex = wrap(0, images.length, page);
+    const [imageIndex, setImageIndex] = useState(wrap(0, 0, page));
+    const [maxSteps, setMaxSteps] = useState(0);
+    // var maxSteps = images.length;
+    // var imageIndex = wrap(0, images.length, page);
+    let { productId } = useParams();
+    const [item, setItem] = useState();
 
     const paginate = (newDirection) => {
         setPage([page + newDirection, newDirection]);
+        setImageIndex(wrap(0, item?.images.length, page + newDirection));
     };
+
+    useEffect(() => {
+        const fetchItem = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/${productId}`);
+                console.log(res.data);
+                setItem(res.data);
+                setMaxSteps(res.data.images.length);
+                setImageIndex(wrap(0, res.data.images.length, page));
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchItem();
+    }, []);
+
+    console.log(imageIndex);
+    console.log(maxSteps);
 
     return (
         <motion.div
             exit={{ opacity: 0 }}
-            initial = {{ y: -60, opacity: 0 }}
-            animate = {{ y: 0, opacity: 1 }}
+            initial = {{ opacity: 0 }}
+            animate = {{ opacity: 1 }}
             transition = {{ delay: .2 }}
             className="detail-page">
             <div className="detail-page__image">
-                {/* <img src={image} alt="" /> */}
-                <Box className='detail-page__list' sx={{ maxWidth: 300, flexGrow: 1 }}>
+                <Box className='detail-page__list' sx={{ maxWidth: '80%', flexGrow: 1 }}>
                     <motion.img
                         key={page}
-                        src={images[imageIndex].imgPath}
+                        src={item?.images[imageIndex]}
                         custom={direction}
                         variants={variants}
                         initial="enter"
                         animate="center"
                         exit="exit"
                         transition={{
-                            x: { type: 'spring', stiffness: 300, damping: 30 },
+                            // x: { type: 'spring', stiffness: 300, damping: 30 },
                             opacity: { duration: 0.2 }
                         }}
                         drag="x"
@@ -98,7 +127,6 @@ function DetailProduct() {
                         dragElastic={1}
                         onDragEnd={(e, { offset, velocity }) => {
                             const swipe = swipePower(offset.x, velocity.x);
-
                             if (swipe < -swipeConfidenceThreshold) {
                                 paginate(1);
                             } else if (swipe > swipeConfidenceThreshold) {
@@ -110,6 +138,11 @@ function DetailProduct() {
                         steps={maxSteps}
                         position="static"
                         activeStep={imageIndex}
+                        sx={{
+                            '& svg': {
+                                color: green[600]
+                            }
+                        }}
                         nextButton={
                             <Button
                                 size="medium"
@@ -137,13 +170,18 @@ function DetailProduct() {
                     />
                 </Box>
                 <div className="detail-page__position-image">
-                    <Tabs value={imageIndex} aria-label="icon label tabs example">
+                    <Tabs value={imageIndex} sx={{ '& span.MuiTabs-indicator': { backgroundColor: green[600] } }}>
                         {
-                            images.map((image, index) => (
+                            item?.images.map((image, index) => (
                                 <Tab
-                                    label={<img src={image.imgPath} alt = '' className='active'/>}
+                                    label={<img src={image} alt='img'/>}
                                     key={index}
-                                    style={{ height: '100px' }}
+                                    sx={{
+                                        '& img': {
+                                            height: 50,
+                                            width: 100
+                                        }
+                                    }}
                                     onClick={() => setPage([index, 0])}
                                 />
                             ))
@@ -154,21 +192,54 @@ function DetailProduct() {
             <div className="detail-page__content">
                 <div className="detail-page__cover">
                     <div className="detail-page__icon">
-                        <button>
-                            <ArrowBackIcon/>
-                            <p>Trở về</p>
-                        </button>
+                        <Button variant="outlined" startIcon={<ArrowBackIcon />}
+                            sx={{
+                                border: 'none!important',
+                                textTransform: 'initial',
+                                fontSize: 18,
+                                color: green[600],
+                                '& a': {
+                                    textDecoration: 'none',
+                                    color: 'inherit'
+                                }
+                            }}
+                        >
+                            <Link to="/" exact="true">Trở về</Link>
+                        </Button>
                     </div>
-                    <h1>Name Product</h1>
-                    <div className="detail-page__des">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas voluptatibus molestiae omnis dolorum saepe unde, commodi non, vel consectetur explicabo sapiente modi debitis dolores porro sint? Aliquam atque amet molestias.</p>
+                    <Typography
+                        sx={{
+                            fontSize: 32,
+                            fontWeight: 500,
+                            color: grey[800],
+                            mb: 2
+                        }}
+                    >
+                        {item?.identify}
+                    </Typography>
+                    {/* <div className="detail-page__des">
+                        <p>Mô tả sản phẩm: {item?.description}</p>
+                    </div> */}
+                    <div className="detail-page__footer">
+                        <p>Mô tả sản phẩm: {item?.description}</p>
                     </div>
                     <div className="detail-page__footer">
-                        <p>Soy Free</p>
-                        <p>Gluten Free</p>
+                        <p>Danh mục: {item?.category}</p>
+                    </div>
+                    <div className="detail-page__footer">
+                        <p>Ngày đăng: {item?.created_at}</p>
+                    </div>
+                    <div className="detail-page__footer">
+                        <p>Địa chỉ người bán: {item?.ownerId}</p>
+                    </div>
+                    <div className="detail-page__footer">
+                        <p>Địa chỉ sản phẩm: {item?.itemAddress}</p>
+                    </div>
+                    <div className="detail-page__footer">
+                        <p>Trạng thái: {convertState(item?.state)}</p>
                     </div>
                     <div className="detail-page__price">
-                        <div className="detail-page__quant">
+                        {/* <div className="detail-page__quant">
                             <button className="detail-page__minus"
                                 onClick={() => {if ( amount < 2) return; (setAmount(x => x - 1));} }
                             >
@@ -180,11 +251,27 @@ function DetailProduct() {
                             >
                                 <AddIcon/>
                             </button>
-                        </div>
-                        <div className="detail-page__buy">$39.99</div>
+                        </div> */}
+                        <Typography
+                            sx={{
+                                color: green[600],
+                                fontWeight: 600
+                            }}
+                        >
+                            Giá: {item?.price} wei
+                        </Typography>
                     </div>
-                    <Button variant="contained" disableElevation>
-                        Add to cart
+                    <Button variant="contained" disableElevation
+                        sx={{
+                            backgroundColor: green[600],
+                            textTransform: 'initial',
+                            fontSize: 18,
+                            '&:hover': {
+                                backgroundColor: green[600]
+                            }
+                        }}
+                    >
+                        Thêm vào giỏ hàng
                     </Button>
                 </div>
             </div>

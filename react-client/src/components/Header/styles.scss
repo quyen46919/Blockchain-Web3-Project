@@ -13,7 +13,6 @@
     &__logo {
         width: calc(100% / 6);
         height: 100%;
-        // background-color: red;
         @include displayFlex(row, nowrap, flex-start);
     }
     &__image{

@@ -6,6 +6,7 @@ import DetailProduct from 'pages/DetailProduct';
 import HomePage2 from 'pages/HomePage/index2';
 // import HomePage from 'pages/HomePage/index2';
 import NotFoundPage from 'pages/NotFoundPage';
+import PostItemPage from 'pages/PostItemPage';
 import React from 'react';
 import {
     BrowserRouter as Router, Route, Switch
@@ -27,8 +28,9 @@ function App() {
                             <Switch>
                                 <Route path="/" component={HomePage2} exact />
                                 <Route path="/home" component={HomePage2} exact />
-                                <Route path="/product" component={DetailProduct} exact />
+                                <Route path="/product/:productId" component={DetailProduct} exact />
                                 <Route path="/admin" component={AdminPage} exact />
+                                <Route path="/post" component={PostItemPage} exact />
                                 <Route path="/cart" component={CartPage} exact />
                             </Switch>
                         </div>
