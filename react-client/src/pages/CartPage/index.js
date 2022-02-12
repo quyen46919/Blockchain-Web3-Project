@@ -1,47 +1,34 @@
 import React from 'react';
 import './styles.scss';
 import { motion } from 'framer-motion/dist/framer-motion';
-import image1 from 'assets/images/product_01.png';
-import image2 from 'assets/images/product_02.png';
-import image3 from 'assets/images/product_03.png';
-import image4 from 'assets/images/product_04.png';
 import noProduct from 'assets/images/noProduct.png';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Product from 'components/Product';
 import { green } from '@mui/material/colors';
+import { useContext } from 'react';
+import { AuthContext } from 'context/AuthContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import Web3 from 'web3';
 
 
 function CartPage() {
-    const listCart = [
-        {
-            name: 'Dua muoi an ngon ghe Dua ',
-            image: image1,
-            price: '2',
-            date: '02/03/2021'
-        },
-        {
-            name: 'Ca phe sua chua duong',
-            image: image2,
-            price: '0.0002',
-            date: '02/03/2022'
-        },
-        {
-            name: 'Dua muoi an ngon ghe',
-            image: image3,
-            price: '0.00000000000000002',
-            date: '02/03/2023'
-        },
-        {
-            name: 'Dua muoi an ngon ghe',
-            image: image4,
-            price: '0.0000000000000000002',
-            date: '02/03/2024'
-        }
-    ];
+    const { shoppingCart } = useContext(AuthContext);
+    const [totalPrice, setTotalPrice] = useState();
+
+    useEffect(() => {
+        let sum = 0;
+        shoppingCart.forEach((item) => {
+            sum += item.price;
+        });
+        setTotalPrice(Web3.utils.fromWei(sum.toString(), 'ether'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <>
-            {listCart.length === 0
+            {shoppingCart.length === 0
                 ? <motion.div
                     exit={{ opacity: 0 }}
                     initial = {{ y: -60, opacity: 0 }}
@@ -56,22 +43,22 @@ function CartPage() {
                     initial = {{ y: -60, opacity: 0 }}
                     animate = {{ y: 0, opacity: 1 }}
                     transition = {{ delay: .2 }}
-                    className={ listCart ? 'cart-page' : 'cart-page__empty'}>
+                    className={ shoppingCart ? 'cart-page' : 'cart-page__empty'}>
                     <div className='cart-page__top'>
                         <h1>Giỏ Hàng</h1>
                         <div className='cart-page__content'>
                             <div className="cart-page__content">
                                 <div className="cart-page__left">
-                                    <h4>Bạn có {listCart.length} sản phẩm trong giỏ hàng</h4>
+                                    <h4>Bạn có {shoppingCart.length} sản phẩm trong giỏ hàng</h4>
                                     {
-                                        listCart.map((info, index) => (
+                                        shoppingCart.map((info, index) => (
                                             <Product info={info} key={index} />
                                         ))
                                     }
                                 </div>
                                 <div className="cart-page__right">
                                     <h4>Tổng</h4>
-                                    <h1>$39.99</h1>
+                                    <h1>{totalPrice} ethers</h1>
                                     <Button
                                         fullWidth
                                         sx={{
@@ -84,10 +71,9 @@ function CartPage() {
                                             color: 'white'
                                         }}
                                     >
-                            Thanh Toán
+                                        Thanh Toán
                                     </Button>
                                     <h5>Khuyến mãi</h5>
-
                                     <Box
                                         sx={{
                                             display: 'flex',

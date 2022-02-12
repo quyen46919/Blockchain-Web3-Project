@@ -10,13 +10,17 @@ const ContextReducer = (state, action) => {
         return {
             user: action.payload,
             isFetching: false,
-            error: false
+            error: false,
+            metamaskAddress: state.metamaskAddress,
+            shoppingCart: state.shoppingCart
         };
     case 'LOGIN_FAILURE': case 'LOGOUT':
         return {
             user: null,
             isFetching: false,
-            error: true
+            error: true,
+            metamaskAddress: [],
+            shoppingCart: []
         };
     case 'UPDATE_PROFILE':
         return {
@@ -26,20 +30,22 @@ const ContextReducer = (state, action) => {
         };
     case 'ADD_TO_CART':
         if (state.shoppingCart.find((item) => item.id === action.payload.id)) {
-            console.log('item da trung!');
             return {
                 user: state.user,
-                shoppingCart: state.shoppingCart
+                shoppingCart: state.shoppingCart,
+                metamaskAddress: state.metamaskAddress
             };
         }
         return {
             user: state.user,
-            shoppingCart: [...state.shoppingCart, action.payload]
+            shoppingCart: [...state.shoppingCart, action.payload],
+            metamaskAddress: state.metamaskAddress
         };
     case 'REMOVE_ITEM_IN_CART':
         return {
             user: state.user,
-            shoppingCart: state.shoppingCart.filter((item) => item.id !== action.payload.id)
+            shoppingCart: state.shoppingCart.filter((item) => item.id !== action.payload),
+            metamaskAddress: state.metamaskAddress
         };
     case 'CHANGE_METAMASK':
         return {

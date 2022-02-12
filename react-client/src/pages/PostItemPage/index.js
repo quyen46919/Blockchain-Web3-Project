@@ -51,20 +51,16 @@ function PostItemPage() {
                 dispatch({ type: 'CHANGE_METAMASK', payload: accounts.result[0] });
             }
         } catch (error) {
-            console.log('Failed to load web3, accounts, or contract. Check console for details.');
+            enqueueSnackbar('Không tìm thấy web3 trong trình duyệt, vui lòng F5 và thử lại!', {
+                variant: 'error'
+            });
         }
     };
 
     useEffect(() => {
         onInit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // useEffect(() => {
-    //     window.ethereum.on('accountsChanged', function (accounts) {
-    //         setAccount(accounts[0]);
-    //         dispatch({ type: 'CHANGE_METAMASK', payload: accounts[0] });
-    //     });
-    // }, [account]);
 
     if (window.ethereum) {
         window.ethereum.on('accountsChanged', (accounts) => {
@@ -134,15 +130,12 @@ function PostItemPage() {
                     images: uploadedImages,
                     description: values.description
                 });
-            console.log('get hash string!');
-            console.log('metamaskAddress', metamaskAddress);
 
             const result = await itemManagerContract.methods.createItem(
                 metamaskAddress, values.identify, values.price.toString(), hashString.data
             ).send({ from: metamaskAddress });
 
             const newItem = result.events.SupplyChainStep.returnValues;
-            console.log('posted item into blockchain');
 
             const newItemToCreate = {
                 createUserId: user.user.id,
@@ -153,10 +146,10 @@ function PostItemPage() {
                 price: values.price,
                 images: uploadedImages,
                 description: values.description,
-                history: [hashString.data]
+                history: [hashString.data],
+                itemIndex: newItem._itemIndex
             };
-            const createdItem = await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/items/`, newItemToCreate);
-            console.log('createdItem = ', createdItem);
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/items/`, newItemToCreate);
 
             enqueueSnackbar('Đăng sản phẩm thành công', {
                 variant: 'success'
@@ -166,8 +159,7 @@ function PostItemPage() {
             setFiles([]);
 
         } catch (err) {
-            console.log(err);
-            enqueueSnackbar('Có lỗi xảy ra, vui lòng thử lại sau!', {
+            enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
                 variant: 'error'
             });
         } finally {
@@ -185,8 +177,6 @@ function PostItemPage() {
             </div>
         </div>
     ));
-
-    console.log('account', account);
 
     return (
         <form className="post-item-page" onSubmit={form.handleSubmit(handleSubmit)}>

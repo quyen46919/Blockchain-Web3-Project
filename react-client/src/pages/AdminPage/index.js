@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { green, grey, red } from '@mui/material/colors';
 import FormControl from '@mui/material/FormControl';
@@ -10,19 +10,19 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Select from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import CardItem from 'components/CardItem';
-import { motion } from 'framer-motion/dist/framer-motion';
-import * as React from 'react';
-import { useState } from 'react';
 import requestLoadMetamask from 'assets/images/req_load_metamask.jpg';
-import { ethers } from 'ethers';
-import './styles.scss';
-import { useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from 'context/AuthContext';
-import { useContext } from 'react';
-import Web3 from 'web3';
+import ItemManagerContract from 'contracts/ItemManager.json';
+import { ethers } from 'ethers';
+import { motion } from 'framer-motion/dist/framer-motion';
+import getWeb3 from 'getWeb3';
+import { useSnackbar } from 'notistack';
+import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { convertState } from 'utils/convertState';
+import Web3 from 'web3';
+import './styles.scss';
 
 const BpIcon = styled('span')(({ theme }) => ({
     borderRadius: '50%',
@@ -85,13 +85,28 @@ function BpRadio(props) {
 function AdminPage() {
     const [age, setAge] = useState(10);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [defaultAccount, setDefaultAccount] = useState(null);
+    const { dispatch, metamaskAddress } = useContext(AuthContext);
+    const [defaultAccount, setDefaultAccount] = useState(metamaskAddress);
     const [userBalance, setUserBalance] = useState(null);
     const [defaultAccountInfo, setDefaultAccountInfo] = useState();
     const [postedItems, setPostedItems] = useState([]);
-    const { dispatch, metamaskAddress } = useContext(AuthContext);
+    const [itemManagerContract, setItemManagerContract] = useState();
+    const { enqueueSnackbar } = useSnackbar();
 
-    const connectWallet = () => {
+    const connectWallet = async () => {
+        try {
+            const web3 = await getWeb3();
+            const networkId = await web3.eth.net.getId();
+            const itemManager = new web3.eth.Contract(
+                ItemManagerContract.abi,
+                ItemManagerContract.networks[networkId] && ItemManagerContract.networks[networkId].address
+            );
+            setItemManagerContract(itemManager);
+        } catch (error) {
+            enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
+                variant: 'error'
+            });
+        }
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then(result => {
@@ -107,14 +122,16 @@ function AdminPage() {
         const fetchAllItemByOwnerId = async () => {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/owner/${metamaskAddress}`);
-                console.log(res.data);
                 setPostedItems(res.data.items);
                 setDefaultAccountInfo(Web3.utils.fromWei(res.data.infos.totalPrice.toString(), 'ether'));
             } catch (err) {
-                console.log(err);
+                enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
+                    variant: 'error'
+                });
             }
         };
         fetchAllItemByOwnerId();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleAccountChange = (newAccount) => {
@@ -143,7 +160,20 @@ function AdminPage() {
         setAge(event.target.value);
     };
 
-    console.log(defaultAccountInfo);
+    const handleTriggerPayment = async (item) => {
+        try {
+            await itemManagerContract.methods.triggerDelivery(item.itemIndex).send({ from: metamaskAddress });
+            await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/items/${item.id}`, { state: 2 });
+            enqueueSnackbar('Giao hàng thành công', {
+                variant: 'success'
+            });
+            window.location.reload();
+        } catch (err) {
+            enqueueSnackbar('Giao hàng thất bại, vui lòng F5 và thử lại!', {
+                variant: 'error'
+            });
+        }
+    };
 
     return (
         <motion.div
@@ -239,19 +269,6 @@ function AdminPage() {
                                     </Typography>
                                     <h2 className='admin-page__possible'>{defaultAccountInfo} ethers</h2>
                                 </div>
-                                {/* <div className="admin-page__element">
-                                    <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
-                                        Tổng số phí
-                                    </Typography>
-                                    <h2>0.4214412 ethers</h2>
-                                </div> */}
-                                {/* <div className="admin-page__element"></div> */}
-                                {/* <div className="admin-page__element">
-                                    <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
-                                        Tổng số ethers bạn đã tiêu
-                                    </Typography>
-                                    <h2>0 ethers</h2>
-                                </div> */}
                             </div>
                         </div>
                         <Box
@@ -409,55 +426,57 @@ function AdminPage() {
                                 Sản phẩm của bạn ({postedItems.length})
                             </Typography>
                         </Box>
+                        <div className="admin-page__list">
+                            {
+                                postedItems?.sort((a, b) => a.created_at > b.created_at).map((item) => (
+                                    <Box key={item.id}
+                                        elevation={0}
+                                        sx={{
+                                            width: '100%',
+                                            height: '100%',
+                                            boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+                                            boxSizing: 'border-box',
+                                            borderRadius: 1,
+                                            border: item.state === 0
+                                                ? '2px solid #0288d1' : item.state === 2
+                                                    ? '2px solid #43a047' : '2px solid #f44336',
+                                            p: 2,
+                                            color: item.state === 2 ? grey[400] : 'inherit'
+                                        }}
+                                    >
+                                        <Typography sx={{ textTransform: 'uppercase' }}>
+                                            {item.identify}
+                                        </Typography>
+                                        <Typography>
+                                            Giá: {item.price} wei
+                                        </Typography>
+                                        <Typography>
+                                            Danh mục: {item.category}
+                                        </Typography>
+                                        <Typography>
+                                            Trạng thái: {convertState(item.state)}
+                                        </Typography>
+                                        <Typography>
+                                            Item address: {item.itemAddress}
+                                        </Typography>
+                                        {
+                                            item.state == 1 && <Button variant="outlined" color="warning" sx={{ mt: 1 }}
+                                                onClick={() => handleTriggerPayment(item)}
+                                            >
+                                    Giao hàng
+                                            </Button>
+                                        }
+                                        {
+                                            item.state === 2 && <Typography sx={{ color: green[600], fontWeight: 600, fontSize: 20 }}>
+                                    Đã giao hàng
+                                            </Typography>
+                                        }
+                                    </Box>
+                                ))
+                            }
+                        </div>
                     </>
             }
-            <div className="admin-page__list">
-                {
-                    postedItems?.map((item) => (
-                        <Box key={item.id}
-                            elevation={0}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
-                                boxSizing: 'border-box',
-                                borderRadius: 1,
-                                border: item.state === 0
-                                    ? '2px solid #0288d1' : item.state === 2
-                                        ? '2px solid #43a047' : '2px solid #f44336',
-                                p: 2,
-                                color: item.state === 2 ? grey[400] : 'inherit'
-                            }}
-                        >
-                            <Typography sx={{ textTransform: 'uppercase' }}>
-                                {item.identify}
-                            </Typography>
-                            <Typography>
-                                Giá: {item.price} wei
-                            </Typography>
-                            <Typography>
-                                Danh mục: {item.category}
-                            </Typography>
-                            <Typography>
-                                Trạng thái: {convertState(item.state)}
-                            </Typography>
-                            <Typography>
-                                Item address: {item.itemAddress}
-                            </Typography>
-                            {
-                                item.state == 1 && <Button variant="outlined" color="warning" sx={{ mt: 1 }}>
-                                    Giao hàng
-                                </Button>
-                            }
-                            {
-                                item.state === 2 && <Typography sx={{ color: green[600], fontWeight: 600, fontSize: 20 }}>
-                                    Đã giao hàng
-                                </Typography>
-                            }
-                        </Box>
-                    ))
-                }
-            </div>
         </motion.div>
     );
 }

@@ -1,30 +1,82 @@
 import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import { AuthContext } from 'context/AuthContext';
+import getWeb3 from 'getWeb3';
+import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
 import './styles.scss';
 
 Product.propTypes = {
     info: PropTypes.object.isRequired
 };
 
-
 function Product(props) {
     const { info } = props;
-    const { image, name, price, date } = info;
+    const { images, identify, price, description, created_at, category, id, itemAddress } = info;
+    const { dispatch, metamaskAddress } = useContext(AuthContext);
+    const [web3Instance, setWeb3Instance] = useState();
+    const { enqueueSnackbar } = useSnackbar();
+
+    const handleRemoveItem = () => {
+        dispatch({ type: 'REMOVE_ITEM_IN_CART', payload: id });
+    };
+
+    const onInit = async () => {
+        try {
+            const web3 = await getWeb3();
+            setWeb3Instance(web3);
+        } catch (error) {
+            enqueueSnackbar('Có lỗi xảy ra, vui lòng thử lại!', {
+                variant: 'error'
+            });
+        }
+    };
+
+    useEffect(() => {
+        onInit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleBuyItem = async () => {
+        try {
+            const params = {
+                from: metamaskAddress,
+                to: itemAddress,
+                value: price
+            };
+
+            await web3Instance.eth.sendTransaction(params);
+            await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/items/${id}`, { state: 1 });
+
+            enqueueSnackbar('Thanh toán thành công', {
+                variant: 'success'
+            });
+            dispatch({ type: 'REMOVE_ITEM_IN_CART', payload: id });
+        } catch (err) {
+            enqueueSnackbar('Thanh toán thất bại, vui lòng thử lại sau', {
+                variant: 'error'
+            });
+        }
+    };
+
     return (
         <div className="cart-item-page__item">
             <div className="cart-item-page__image">
-                <img src={image} alt="" />
+                <img src={images[0]} alt="" />
             </div>
             <div className="cart-item-page__title">
-                <h5>{name}</h5>
-                <h3>Giá: {price} ethers</h3>
-                <p>By Hoang Huu Tai, em dep lam! </p>
+                <h5>{identify}</h5>
+                <h3>Giá: {price} wei</h3>
+                <p>Mô tả: {description}</p>
                 <div className="cart-item-page__date">
-                    <p>Ngày tải lên: {date}</p>
+                    <p>Ngày tải lên: {created_at}</p>
                 </div>
-                <p>57 hours*em cung dep lam</p>
+                <p>Danh mục: {category}</p>
                 <Box
                     sx={{
                         '& h3':{
@@ -56,9 +108,8 @@ function Product(props) {
                     }
                 }}
             >
-                <Button>Xóa</Button>
-                <Button>Lưu lại</Button>
-                <Button>Yêu thích</Button>
+                <Button onClick={handleRemoveItem}>Xóa</Button>
+                <Button onClick={handleBuyItem}>Mua hàng</Button>
             </Box>
         </div>
     );

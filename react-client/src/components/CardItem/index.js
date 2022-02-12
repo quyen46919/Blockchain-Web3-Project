@@ -15,7 +15,6 @@ CardItem.propTypes = {
 
 function CardItem(props) {
     const { handleShowDetailPanel, item } = props;
-    console.log(item);
     return (
         <div className="card-item">
             <div className="card-item__img">

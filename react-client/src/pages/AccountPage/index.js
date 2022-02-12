@@ -83,7 +83,6 @@ function AccountPage() {
         try {
             setIsSubmitting(true);
             const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/auth/login`, values);
-            console.log(res);
             dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
             enqueueSnackbar('Đăng nhập thành công', {
                 variant: 'success'

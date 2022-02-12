@@ -17,6 +17,7 @@ import { styled } from '@mui/system';
 import axios from 'axios';
 import CardItem from 'components/CardItem';
 import { AuthContext } from 'context/AuthContext';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import './styles2.scss';
@@ -83,6 +84,7 @@ function HomePage2() {
     const [items, setItems] = useState([]);
     const [targetItem, setTargetItem] = useState();
     const { dispatch, shoppingCart } = useContext(AuthContext);
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         const fetchAllItem = async () => {
@@ -90,10 +92,13 @@ function HomePage2() {
                 const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/`);
                 setItems(res.data);
             } catch (err) {
-                console.log(err);
+                enqueueSnackbar('Có lỗi xảy ra, vui lòng thử F5 trình duyệt của bạn!', {
+                    variant: 'error'
+                });
             }
         };
         fetchAllItem();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handlePriceChange = (event, newValue) => {
@@ -132,8 +137,6 @@ function HomePage2() {
     const handleAddItemToCart = () => {
         dispatch({ type: 'ADD_TO_CART', payload: targetItem });
     };
-
-    console.log(shoppingCart);
 
     return (
         <div className='homepage2'>
@@ -330,7 +333,7 @@ function HomePage2() {
                         ))
                     }
                 </div>
-                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Button
                         variant='outlined'
                         sx={{
@@ -343,7 +346,7 @@ function HomePage2() {
                     >
                         Tải thêm
                     </Button>
-                </Box>
+                </Box> */}
             </div>
             {
                 showDetail && <div className="homepage2__detail-panel">
