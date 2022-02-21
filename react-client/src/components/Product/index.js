@@ -31,7 +31,7 @@ function Product(props) {
             const web3 = await getWeb3();
             setWeb3Instance(web3);
         } catch (error) {
-            enqueueSnackbar('Có lỗi xảy ra, vui lòng thử lại!', {
+            enqueueSnackbar('Không tìm thấy web3 trong trình duyệt, vui lòng F5 và thử lại!', {
                 variant: 'error'
             });
         }
@@ -49,8 +49,10 @@ function Product(props) {
                 to: itemAddress,
                 value: price
             };
+            console.log('params = ', params);
 
             await web3Instance.eth.sendTransaction(params);
+            console.log('send transaction successfully!');
             await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/items/${id}`, { state: 1 });
 
             enqueueSnackbar('Thanh toán thành công', {

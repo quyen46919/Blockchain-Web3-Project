@@ -64,7 +64,6 @@ function HomePage() {
 
     useEffect(() => {
         window.ethereum.on('accountsChanged', function (accounts) {
-            console.log('Account changed', accounts);
             setAccount(accounts[0]);
             // currentAccount.current = accounts[0];
         });
@@ -78,7 +77,6 @@ function HomePage() {
     };
 
     const handleSubmit = async () => {
-        console.log(itemInfo);
         const result = await itemManagerContract.methods.createItem(
             account, itemInfo.itemName, itemInfo.cost).send({ from: account }
         );
@@ -99,8 +97,7 @@ function HomePage() {
     const listenToPaymentEvent = () => {
         // TẠO MỚI 1 ITEM
         itemManagerContract.events.SupplyChainStep().on('data', async function(evt) {
-            const res = await itemManagerContract.methods.items(evt.returnValues._itemIndex).call();
-            console.log(res);
+            await itemManagerContract.methods.items(evt.returnValues._itemIndex).call();
             alert('have item change state');
         });
     };
