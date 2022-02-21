@@ -57,6 +57,7 @@
         width: 50%;
         background-color: $white;
         @include displayFlex();
+        @include padding(2rem);
     }
 
     &__icon{

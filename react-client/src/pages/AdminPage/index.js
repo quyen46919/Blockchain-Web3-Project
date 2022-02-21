@@ -88,9 +88,10 @@ function AdminPage() {
     const { dispatch, metamaskAddress } = useContext(AuthContext);
     const [defaultAccount, setDefaultAccount] = useState(metamaskAddress);
     const [userBalance, setUserBalance] = useState(null);
-    const [defaultAccountInfo, setDefaultAccountInfo] = useState();
+    const [defaultAccountInfo, setDefaultAccountInfo] = useState(0);
     const [postedItems, setPostedItems] = useState([]);
     const [itemManagerContract, setItemManagerContract] = useState();
+    const [paidAmount, setPaidAmount] = useState(0);
     const { enqueueSnackbar } = useSnackbar();
 
     const connectWallet = async () => {
@@ -103,9 +104,9 @@ function AdminPage() {
             );
             setItemManagerContract(itemManager);
         } catch (error) {
-            enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
-                variant: 'error'
-            });
+            // enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
+            //     variant: 'error'
+            // });
         }
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -121,13 +122,18 @@ function AdminPage() {
         connectWallet();
         const fetchAllItemByOwnerId = async () => {
             try {
+                console.log(metamaskAddress);
                 const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/owner/${metamaskAddress}`);
+                console.log(res);
                 setPostedItems(res.data.items);
-                setDefaultAccountInfo(Web3.utils.fromWei(res.data.infos.totalPrice.toString(), 'ether'));
+                setDefaultAccountInfo(Web3.utils.fromWei(res.data.infos.totalPrice[0].totalAmount.toString(), 'ether'));
+
+                const x = res.data.items.filter((x) => x.state === 2).map(item => item.price).reduce((prev, next) => prev + next);
+                setPaidAmount(Web3.utils.fromWei(x.toString(), 'ether'));
             } catch (err) {
-                enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
-                    variant: 'error'
-                });
+                // enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
+                //     variant: 'error'
+                // });
             }
         };
         fetchAllItemByOwnerId();
@@ -184,7 +190,7 @@ function AdminPage() {
             className="admin-page"
         >
             {
-                !defaultAccount ?
+                defaultAccount === '' ?
                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                         <Box
                             sx={{
@@ -268,6 +274,12 @@ function AdminPage() {
                                         Tổng số ether của các sản phẩm bạn đăng tải
                                     </Typography>
                                     <h2 className='admin-page__possible'>{defaultAccountInfo} ethers</h2>
+                                </div>
+                                <div className="admin-page__element">
+                                    <Typography sx={{ color: grey[400], fontSize: 18, fontWeight: 500 }}>
+                                        Tổng số ether của hàng hóa đã bán
+                                    </Typography>
+                                    <h2 className='admin-page__possible'>{paidAmount} ethers</h2>
                                 </div>
                             </div>
                         </div>

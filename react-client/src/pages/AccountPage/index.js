@@ -351,7 +351,7 @@ function AccountPage() {
                                     height: 50
                                 }}
                             >
-                                Đăng nhập
+                                Đăng ký
                             </Button>
                         </form>
                         {/* <Formik

@@ -20,6 +20,7 @@ import { AuthContext } from 'context/AuthContext';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
+import Web3 from 'web3';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -70,27 +71,41 @@ export const marks = [
 ];
 
 function HomePage2() {
-    const [category, setState] = useState({
-        'Hàng tiêu dùng': true,
-        'Thực phẩm': true,
-        'Đồ công nghệ': true,
-        'Khác': true
-    });
+    // const [category, setState] = useState({
+    //     'Hàng tiêu dùng': true,
+    //     'Thực phẩm': true,
+    //     'Đồ công nghệ': false,
+    //     'Khác': true
+    // });
+    const [category, setCategory] = useState('');
     const [alignment, setAlignment] = useState('left');
     const [select, setSelect] = useState(0);
     const [showDetail, setShowDetail] = useState(false);
     const [startPrice, setStartPrice] = useState(0);
-    const [endPrice, setEndPrice] = useState(6);
+    const [endPrice, setEndPrice] = useState(0);
     const [items, setItems] = useState([]);
+    const [initialItems, setInitialItems] = useState([]);
     const [targetItem, setTargetItem] = useState();
     const { dispatch, shoppingCart } = useContext(AuthContext);
     const { enqueueSnackbar } = useSnackbar();
+    const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
         const fetchAllItem = async () => {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/`);
+                const params = {
+                    category: category
+                };
+                for (const key of Object.keys(params)) {
+                    if (params[key] === '') {
+                        delete params[key];
+                    }
+                }
+                console.log(params);
+                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/`, { params });
+                console.log(res.data);
                 setItems(res.data);
+                setInitialItems(res.data);
             } catch (err) {
                 enqueueSnackbar('Có lỗi xảy ra, vui lòng thử F5 trình duyệt của bạn!', {
                     variant: 'error'
@@ -99,7 +114,20 @@ function HomePage2() {
         };
         fetchAllItem();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [category]);
+
+    useEffect(() => {
+        if (startPrice !== 0 && endPrice !== 0) {
+            const newItemsList = items.filter(
+                (item) => parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) >= startPrice
+                && parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) <= endPrice
+            );
+            setItems(newItemsList);
+        } else {
+            setItems(initialItems);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [startPrice, endPrice]);
 
     const handlePriceChange = (event, newValue) => {
         setStartPrice(newValue[0]);
@@ -122,11 +150,8 @@ function HomePage2() {
         setAlignment(newAlignment);
     };
 
-    const handleChange = (event) => {
-        setState({
-            ...category,
-            [event.target.name]: event.target.checked
-        });
+    const handleChange = (name) => {
+        setCategory(name);
     };
 
     const handleShowDetailPanel = (item) => {
@@ -138,6 +163,16 @@ function HomePage2() {
         dispatch({ type: 'ADD_TO_CART', payload: targetItem });
     };
 
+    const handleFilterItem = () => {
+        setCategory('');
+        setStartPrice(0);
+        setEndPrice(0);
+    };
+
+    const handleSearchTextChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     return (
         <div className='homepage2'>
             <div className="homepage2__filter-panel">
@@ -145,13 +180,13 @@ function HomePage2() {
                     <p className='homepage2__label-title'>Danh mục</p>
                     <FormGroup sx={{ width: '100%' }}>
                         {
-                            Array.from(['Hàng tiêu dùng', 'Thực phẩm', 'Đồ công nghệ', 'Khác']).map((name, index) => (
+                            Array.from(['', 'Hàng tiêu dùng', 'Thực phẩm', 'Đồ công nghệ', 'Khác']).map((name, index) => (
                                 <FormControlLabel
                                     key={name}
                                     control={
                                         <Checkbox
-                                            checked={category[index]}
-                                            onChange={handleChange}
+                                            checked={name === category}
+                                            onChange={() => handleChange(name)}
                                             name="category"
                                             sx={{
                                                 color: '#878691',
@@ -172,7 +207,7 @@ function HomePage2() {
                                             color: grey[800]
                                         }
                                     }}
-                                    label={name}
+                                    label={name === '' ? 'Tất cả': name}
                                 />
                             ))
                         }
@@ -224,8 +259,9 @@ function HomePage2() {
                             background: `${green[600]}!important`,
                             textTransform: 'initial'
                         }}
+                        onClick={handleFilterItem}
                     >
-                        Tìm kiếm
+                        Xóa lựa chọn
                     </Button>
                 </div>
                 {/* <div className='homepage2__rating'>
@@ -263,6 +299,7 @@ function HomePage2() {
                             color: grey[600]
                         }}
                         spellCheck="false"
+                        onChange={handleSearchTextChange}
                     />
                 </FormControl>
                 <div className="homepage2__filter-row">
@@ -328,7 +365,7 @@ function HomePage2() {
                 </div>
                 <div className="homepage2__list-item">
                     {
-                        items.map((item, index) => (
+                        items.filter((item) => item.identify.includes(searchText)).map((item, index) => (
                             <CardItem key={index} handleShowDetailPanel={handleShowDetailPanel} item={item}/>
                         ))
                     }
