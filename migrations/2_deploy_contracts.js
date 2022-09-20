@@ -1,5 +1,5 @@
-var ItemManager = artifacts.require("./ItemManager.sol");
+var ItemManager = artifacts.require('./ItemManager.sol');
 
-module.exports = function(deployer) {
+module.exports = function (deployer) {
   deployer.deploy(ItemManager);
 };
