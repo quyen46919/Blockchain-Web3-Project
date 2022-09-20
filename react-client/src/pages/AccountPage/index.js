@@ -14,6 +14,7 @@ import { green } from '@mui/material/colors';
 import bg from 'assets/images/market.jpg';
 import axios from 'axios';
 import { AuthContext } from 'context/AuthContext';
+import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useContext } from 'react';
@@ -34,7 +35,9 @@ function AccountPage() {
     const { dispatch } = useContext(AuthContext);
 
     const signupSchema = Yup.object().shape({
-        email: Yup.string().email('Email không hợp lệ').required('Thông tin này là bắt buộc'),
+        email: Yup.string()
+            .email('Email không hợp lệ')
+            .required('Thông tin này là bắt buộc'),
         password: Yup.string()
             .required('Thông tin này là bắt buộc')
             .min(6, 'Mật khẩu quá ngắn!')
@@ -43,7 +46,9 @@ function AccountPage() {
     });
 
     const signinSchema = Yup.object().shape({
-        username: Yup.string().min(6, 'Tên đăng nhập quá ngắn').required('Thông tin này là bắt buộc'),
+        username: Yup.string()
+            .min(6, 'Tên đăng nhập quá ngắn')
+            .required('Thông tin này là bắt buộc'),
         password: Yup.string()
             .min(6, 'Mật khẩu quá ngắn!')
             .max(50, 'Mật khẩu quá dài!')
@@ -82,7 +87,10 @@ function AccountPage() {
     const handleSubmit = async (values) => {
         try {
             setIsSubmitting(true);
-            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/auth/login`, values);
+            const res = await axios.post(
+                `${process.env.REACT_APP_SERVER_URL}/v1/auth/login`,
+                values
+            );
             dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
             enqueueSnackbar('Đăng nhập thành công', {
                 variant: 'success'
@@ -100,28 +108,35 @@ function AccountPage() {
 
     const handleSignupSubmit = async (values) => {
         try {
-            await axios.post(`${process.env.REACT_APP_SERVER_URL}/v1/auth/register`, values);
+            await axios.post(
+                `${process.env.REACT_APP_SERVER_URL}/v1/auth/register`,
+                values
+            );
             enqueueSnackbar('Đăng ký thành công', {
                 variant: 'success'
             });
             signupForm.reset();
         } catch (err) {
             // console.log(err.response.data.message);
-            enqueueSnackbar(err.response.data.message || 'Có lỗi xảy ra, vui lòng thử lại!', {
-                variant: 'error'
-            });
+            enqueueSnackbar(
+                err.response.data.message || 'Có lỗi xảy ra, vui lòng thử lại!',
+                {
+                    variant: 'error'
+                }
+            );
         }
     };
 
     return (
-        <div className="account">
+        <div>
             <div className="account__left">
                 {isLogin ? (
                     <div className="account__login-form">
                         <h3 className="account__title">Bắt đầu</h3>
                         <div className="account__redirect">
                             {'Bạn chưa có tài khoản'} &nbsp;
-                            <Typography onClick={handleClick}
+                            <Typography
+                                onClick={handleClick}
                                 sx={{
                                     textDecoration: 'underline',
                                     color: green[500],
@@ -177,7 +192,7 @@ function AccountPage() {
                         >
                             <label className="account__label">Email</label>
                             <TextField
-                                { ...signinForm.register('username') }
+                                {...signinForm.register('username')}
                                 autoFocus
                                 autoComplete="true"
                                 fullWidth
@@ -193,7 +208,9 @@ function AccountPage() {
                                 name="username"
                                 type="text"
                                 error={!!signinForm.formState.errors.username}
-                                helperText={signinForm.formState.errors.username?.message ?? ''}
+                                helperText={
+                                    signinForm.formState.errors.username?.message ?? ''
+                                }
                             />
                             <label className="account__label">Mật khẩu</label>
                             <TextField
@@ -209,9 +226,11 @@ function AccountPage() {
                                 placeholder="Input your password"
                                 type="password"
                                 name="password"
-                                { ...signinForm.register('password') }
+                                {...signinForm.register('password')}
                                 error={!!signinForm.formState.errors.email}
-                                helperText={signinForm.formState.errors.email?.message ?? ''}
+                                helperText={
+                                    signinForm.formState.errors.email?.message ?? ''
+                                }
                             />
                             <div className="account__line">
                                 <FormControlLabel
@@ -244,7 +263,7 @@ function AccountPage() {
                                     height: 50
                                 }}
                             >
-                                { !isSubmitting ? 'Đăng nhập' : 'Đang đăng nhập' }
+                                {!isSubmitting ? 'Đăng nhập' : 'Đang đăng nhập'}
                             </Button>
                         </form>
                     </div>
@@ -253,7 +272,8 @@ function AccountPage() {
                         <h3 className="account__title">Đăng ký</h3>
                         <div className="account__redirect">
                             Bạn đã có tài khoản? &nbsp;
-                            <Typography onClick={handleClick}
+                            <Typography
+                                onClick={handleClick}
                                 sx={{
                                     textDecoration: 'underline',
                                     color: green[500],
@@ -270,7 +290,7 @@ function AccountPage() {
                         >
                             <label className="account__label">Tên đăng nhập</label>
                             <TextField
-                                { ...signupForm.register('username') }
+                                {...signupForm.register('username')}
                                 autoFocus
                                 autoComplete="true"
                                 fullWidth
@@ -286,7 +306,9 @@ function AccountPage() {
                                 name="username"
                                 type="text"
                                 error={!!signupForm.formState.errors.username}
-                                helperText={signupForm.formState.errors.username?.message ?? ''}
+                                helperText={
+                                    signupForm.formState.errors.username?.message ?? ''
+                                }
                             />
                             <label className="account__label">Email</label>
                             <TextField
@@ -302,9 +324,11 @@ function AccountPage() {
                                 placeholder="Nhập địa chỉ email"
                                 type="email"
                                 name="email"
-                                { ...signupForm.register('email') }
+                                {...signupForm.register('email')}
                                 error={!!signupForm.formState.errors.email}
-                                helperText={signupForm.formState.errors.email?.message ?? ''}
+                                helperText={
+                                    signupForm.formState.errors.email?.message ?? ''
+                                }
                             />
                             <label className="account__label">Mật khẩu</label>
                             <TextField
@@ -320,9 +344,11 @@ function AccountPage() {
                                 placeholder="Nhập mật khẩu"
                                 type="password"
                                 name="password"
-                                { ...signupForm.register('password') }
+                                {...signupForm.register('password')}
                                 error={!!signupForm.formState.errors.password}
-                                helperText={signupForm.formState.errors.password?.message ?? ''}
+                                helperText={
+                                    signupForm.formState.errors.password?.message ?? ''
+                                }
                             />
                             <div className="account__line">
                                 <FormControlLabel
@@ -354,7 +380,7 @@ function AccountPage() {
                                 Đăng ký
                             </Button>
                         </form>
-                        {/* <Formik
+                        <Formik
                             // khởi tạo giá trị mặc định cho 2 trường trong field
                             initialValues={{ email: '', password: '', username: '' }}
                             // tạo validate cho 2 trường đó
@@ -486,7 +512,7 @@ function AccountPage() {
                                     </Button>
                                 </form>
                             )}
-                        </Formik> */}
+                        </Formik>
                     </div>
                 )}
             </div>
@@ -494,7 +520,7 @@ function AccountPage() {
                 <div
                     className="account__right"
                     style={{ backgroundImage: `url('${bg}')` }}
-                ></div>
+                />
             )}
             {showDialog && (
                 <NotificateDialog
