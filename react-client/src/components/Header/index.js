@@ -78,7 +78,7 @@ function Header() {
                             <Tooltip title="Cài đặt">
                                 <Avatar
                                     alt="Remy Sharp"
-                                    src={user.user.avatar}
+                                    src={user?.user?.avatar}
                                     sx={{ width: 30, height: 30 }}
                                     className="header__user--avatar"
                                     onClick={handleClick}
