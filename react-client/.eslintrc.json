@@ -29,10 +29,10 @@
     "no-multiple-empty-lines": 1,
     "space-before-blocks": ["error", "always"],
     "object-curly-spacing": [1, "always"],
-		"indent": ["warn", 4],
+    "indent": ["warn", 4],
     "linebreak-style": 0,
     "semi": [2, "always"],
-		"quotes": ["error", "single"], //["error", "single"] / "off"
+    "quotes": ["warn", "single"], //["error", "single"] / "off"
     "no-unexpected-multiline": "warn",
     "react/prop-types": 0,
     "react/display-name": 0,
