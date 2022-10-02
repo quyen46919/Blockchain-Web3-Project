@@ -1,5 +1,6 @@
+// contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity ^0.8.0;
 
 contract Migrations {
   address public owner;
@@ -9,7 +10,7 @@ contract Migrations {
     if (msg.sender == owner) _;
   }
 
-  constructor() public {
+  constructor() {
     owner = msg.sender;
   }
 

@@ -1,4 +1,6 @@
-pragma solidity ^0.6.0;
+// contracts/GLDToken.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 import "./Ownable.sol";
 import "./Item.sol";
@@ -94,7 +96,7 @@ contract ItemManager is Ownable {
         );
     }
 
-    function compareStrings(string memory a, string memory b) internal returns (bool) {
+    function compareStrings(string memory a, string memory b) pure internal returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
