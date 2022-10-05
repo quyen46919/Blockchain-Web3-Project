@@ -1,6 +1,6 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.1;
 
 import "./Ownable.sol";
 import "./Item.sol";
@@ -38,12 +38,13 @@ contract ItemManager is Ownable {
         string _otherInfos
     );
 
-
     // FUNCTIONS
-    function createItem(address owner, string memory identifier, uint256 itemPrice, string memory otherInfos)
-        public
-        onlyOwner
-    {
+    function createItem(
+        address owner,
+        string memory identifier,
+        uint256 itemPrice,
+        string memory otherInfos
+    ) public onlyOwner {
         Item item = new Item(this, itemPrice, itemIndex);
         items[itemIndex]._owner = owner;
         items[itemIndex]._item = item;
@@ -72,7 +73,7 @@ contract ItemManager is Ownable {
             "Item is further in the chain!"
         );
         items[_itemIndex]._state = SupplyChainState.Paid;
-    
+
         emit SupplyChainStep(
             _itemIndex,
             uint256(items[_itemIndex]._state),
@@ -96,11 +97,19 @@ contract ItemManager is Ownable {
         );
     }
 
-    function compareStrings(string memory a, string memory b) pure internal returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+    function compareStrings(string memory a, string memory b)
+        internal
+        pure
+        returns (bool)
+    {
+        return (keccak256(abi.encodePacked((a))) ==
+            keccak256(abi.encodePacked((b))));
     }
 
-    function updateInfos(uint256 _itemIndex, string memory infos) public onlyOwner {
+    function updateInfos(uint256 _itemIndex, string memory infos)
+        public
+        onlyOwner
+    {
         require(
             items[_itemIndex]._state != SupplyChainState.Paid,
             "Paid item cannot update info!"
