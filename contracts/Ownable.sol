@@ -1,12 +1,12 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.6.2;
 
 contract Ownable {
     address payable _owner;
 
-    constructor() {
-        _owner = payable(msg.sender);
+    constructor() public {
+        _owner = msg.sender;
     }
 
     modifier onlyOwner() {
