@@ -1,52 +1,40 @@
-// const { expect } = require('chai');
+const Token = artifacts.require('MyToken');
+const MyTokenSale = artifacts.require('MyTokenSale');
+const BN = web3.utils.BN;
+const chai = require('../chai.setup');
+const expect = chai.expect;
+require('dotenv').config({ path: '../.env' });
 
-// describe('Test crowdsale', () => {
-//   beforeEach(async () => {
-//     [owner, signer2, signer3] = await ethers.getSigners();
+contract('TokenSale Test', async (accounts) => {
+    const [deployerAccount, recipient, anotherAccount] = accounts;
 
-//     MyToken = await ethers.getContractFactory('MyToken', owner);
-//     MyToken = await MyToken.deploy();
+    it('Should not have any tokens in my deployer account', async () => {
+        let instance = await Token.deployed();
+        return await expect(
+            instance.balanceOf(deployerAccount)
+        ).to.eventually.be.a.bignumber.equal(new BN(0));
+    });
 
-//     Crowdsale = await ethers.getContractFactory('Crowdsale', owner);
-//     crowdSale = await Crowdsale.deploy(2, owner.address, MyToken.address);
-//   });
+    it('All tokens should be in the TokenSale Smart Contract by default', async () => {
+        let instance = await Token.deployed();
+        let balanceOfToken = await instance.balanceOf(MyTokenSale.address);
+        let totalSupply = await instance.totalSupply();
+        expect(balanceOfToken).to.be.a.bignumber.equal(totalSupply);
+    });
 
-//   describe('buyTokens', () => {
-//     it('adds a token symbol', async () => {
-//       let totalSupply;
-//       let signer2Balance;
-//       let signer3Balance;
+    it('Should be possible to buy tokens', async () => {
+        let tokenInstance = await Token.deployed();
+        let tokenSaleInstance = await MyTokenSale.deployed();
+        let initBalance = await tokenInstance.balanceOf(deployerAccount);
 
-//       totalSupply = await MyToken.totalSupply();
-//       signer2Balance = await MyToken.balanceOf(signer2.address);
-//       signer3Balance = await MyToken.balanceOf(signer3.address);
-//       expect(totalSupply).to.be.equal(0);
-//       expect(signer2Balance).to.be.equal(0);
-//       expect(signer3Balance).to.be.equal(0);
-
-//       await MyToken.connect(owner).mint(
-//         crowdSale.address,
-//         ethers.utils.parseEther('10000')
-//       );
-
-//       const ownerEtherBalanceOld = await owner.getBalance();
-
-//       await crowdSale
-//         .connect(signer2)
-//         .buyTokens(signer2.address, { value: ethers.utils.parseEther('10') });
-//       await crowdSale
-//         .connect(signer3)
-//         .buyTokens(signer3.address, { value: ethers.utils.parseEther('20') });
-
-//       totalSupply = await MyToken.totalSupply();
-//       signer2Balance = await MyToken.connect(owner).balanceOf(signer2.address);
-//       signer3Balance = await MyToken.connect(owner).balanceOf(signer3.address);
-//       const ownerEtherBalanceNew = await owner.getBalance();
-
-//       expect(totalSupply).to.be.equal(ethers.utils.parseEther('10000'));
-//       expect(signer2Balance).to.be.equal(ethers.utils.parseEther('20'));
-//       expect(signer3Balance).to.be.equal(ethers.utils.parseEther('40'));
-//       expect(ownerEtherBalanceNew).to.be.above(ownerEtherBalanceOld);
-//     });
-//   });
-// });
+        await expect(
+            tokenSaleInstance.sendTransaction({
+                from: deployerAccount,
+                value: web3.utils.toWei('1', 'wei'),
+            })
+        ).to.be.fulfilled;
+        await expect(
+            tokenInstance.balanceOf(deployerAccount)
+        ).to.eventually.be.a.bignumber.equal(initBalance.add(new BN(1)));
+    });
+});
