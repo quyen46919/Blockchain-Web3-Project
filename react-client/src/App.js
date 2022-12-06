@@ -13,8 +13,11 @@ import {
 } from 'react-router-dom';
 import './app.scss';
 
+import KYCRegisterPage from 'pages/KYCRegisterPage';
+
 function App() {
     // const { user } = useContext(AuthContext);
+
     return (
         <div className="app">
             <Router>
@@ -32,6 +35,7 @@ function App() {
                                 <Route path="/admin" component={AdminPage} exact />
                                 <Route path="/post" component={PostItemPage} exact />
                                 <Route path="/cart" component={CartPage} exact />
+                                <Route path="/kyc" component={KYCRegisterPage} exact />
                             </Switch>
                         </div>
                         // ) : ( <Redirect to="/account"/> )

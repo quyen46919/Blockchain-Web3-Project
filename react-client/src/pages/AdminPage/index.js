@@ -122,9 +122,9 @@ function AdminPage() {
         connectWallet();
         const fetchAllItemByOwnerId = async () => {
             try {
-                console.log(metamaskAddress);
+                // console.log(metamaskAddress);
                 const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/owner/${metamaskAddress}`);
-                console.log(res);
+                // console.log(res);
                 setPostedItems(res.data.items);
                 setDefaultAccountInfo(Web3.utils.fromWei(res.data.infos.totalPrice[0].totalAmount.toString(), 'ether'));
 
