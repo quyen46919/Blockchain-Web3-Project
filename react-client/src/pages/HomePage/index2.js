@@ -21,6 +21,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import Web3 from 'web3';
+import { marks } from 'utils/seed/marks';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -43,40 +44,7 @@ const StyledToggleButton = styled(ToggleButton)(() => ({
     padding: '0 0.8rem'
 }));
 
-export const marks = [
-    {
-        value: 0,
-        label: '0'
-    },
-    {
-        value: 2,
-        label: '2'
-    },
-    {
-        value: 4,
-        label: '4'
-    },
-    {
-        value: 6,
-        label: '6'
-    },
-    {
-        value: 8,
-        label: '8'
-    },
-    {
-        value: 10,
-        label: '10...'
-    }
-];
-
 function HomePage2() {
-    // const [category, setState] = useState({
-    //     'Hàng tiêu dùng': true,
-    //     'Thực phẩm': true,
-    //     'Đồ công nghệ': false,
-    //     'Khác': true
-    // });
     const [category, setCategory] = useState('');
     const [alignment, setAlignment] = useState('left');
     const [select, setSelect] = useState(0);
@@ -101,9 +69,10 @@ function HomePage2() {
                         delete params[key];
                     }
                 }
-                console.log(params);
-                const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/v1/items/`, { params });
-                console.log(res.data);
+                const res = await axios.get(
+                    `${process.env.REACT_APP_SERVER_URL}/v1/items/`,
+                    { params }
+                );
                 setItems(res.data);
                 setInitialItems(res.data);
             } catch (err) {
@@ -113,20 +82,23 @@ function HomePage2() {
             }
         };
         fetchAllItem();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category]);
 
     useEffect(() => {
         if (startPrice !== 0 && endPrice !== 0) {
             const newItemsList = items.filter(
-                (item) => parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) >= startPrice
-                && parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) <= endPrice
+                (item) =>
+                    parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) >=
+                        startPrice &&
+                    parseFloat(Web3.utils.fromWei(item.price.toString(), 'ether')) <=
+                        endPrice
             );
             setItems(newItemsList);
         } else {
             setItems(initialItems);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [startPrice, endPrice]);
 
     const handlePriceChange = (event, newValue) => {
@@ -174,47 +146,55 @@ function HomePage2() {
     };
 
     return (
-        <div className='homepage2'>
+        <div className="homepage2">
             <div className="homepage2__filter-panel">
-                <FormControl component="fieldset" variant="standard" sx={{ width: '100%' }}>
-                    <p className='homepage2__label-title'>Danh mục</p>
+                <FormControl
+                    component="fieldset"
+                    variant="standard"
+                    sx={{ width: '100%' }}
+                >
+                    <p className="homepage2__label-title">Danh mục</p>
                     <FormGroup sx={{ width: '100%' }}>
-                        {
-                            Array.from(['', 'Hàng tiêu dùng', 'Thực phẩm', 'Đồ công nghệ', 'Khác']).map((name, index) => (
-                                <FormControlLabel
-                                    key={name}
-                                    control={
-                                        <Checkbox
-                                            checked={name === category}
-                                            onChange={() => handleChange(name)}
-                                            name="category"
-                                            sx={{
-                                                color: '#878691',
-                                                '& svg': {
-                                                    fontSize: 24,
-                                                    color: grey[400]
-                                                },
-                                                '&.Mui-checked svg': {
-                                                    color: `${green[600]}!important`
-                                                }
-                                            }}
-                                        />
+                        {Array.from([
+                            '',
+                            'Hàng tiêu dùng',
+                            'Thực phẩm',
+                            'Đồ công nghệ',
+                            'Khác'
+                        ]).map((name) => (
+                            <FormControlLabel
+                                key={name}
+                                control={
+                                    <Checkbox
+                                        checked={name === category}
+                                        onChange={() => handleChange(name)}
+                                        name="category"
+                                        sx={{
+                                            color: '#878691',
+                                            '& svg': {
+                                                fontSize: 24,
+                                                color: grey[400]
+                                            },
+                                            '&.Mui-checked svg': {
+                                                color: `${green[600]}!important`
+                                            }
+                                        }}
+                                    />
+                                }
+                                sx={{
+                                    m: 0,
+                                    span: {
+                                        fontSize: 16,
+                                        color: grey[800]
                                     }
-                                    sx={{
-                                        m: 0,
-                                        'span': {
-                                            fontSize: 16,
-                                            color: grey[800]
-                                        }
-                                    }}
-                                    label={name === '' ? 'Tất cả': name}
-                                />
-                            ))
-                        }
+                                }}
+                                label={name === '' ? 'Tất cả' : name}
+                            />
+                        ))}
                     </FormGroup>
                 </FormControl>
                 <div className="homepage2__line-column">
-                    <p className='homepage2__label-title'>Giá</p>
+                    <p className="homepage2__label-title">Giá</p>
                     <div>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -228,7 +208,14 @@ function HomePage2() {
                             sx={{ color: green[600] }}
                         />
                         <div>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    gap: 1
+                                }}
+                            >
                                 <p className="homepage2__normal-label">Từ</p>
                                 <OutlinedInput
                                     name="number"
@@ -236,11 +223,22 @@ function HomePage2() {
                                     id="formatted-numberformat-input"
                                     value={startPrice}
                                     onChange={handleStartPriceChange}
-                                    endAdornment={<InputAdornment position="end">ether</InputAdornment>}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            ether
+                                        </InputAdornment>
+                                    }
                                     size="small"
                                 />
                             </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    gap: 1
+                                }}
+                            >
                                 <p className="homepage2__normal-label">Đến</p>
                                 <OutlinedInput
                                     name="number"
@@ -248,13 +246,20 @@ function HomePage2() {
                                     id="formatted-numberformat-input"
                                     value={endPrice}
                                     onChange={handleEndPriceChange}
-                                    endAdornment={<InputAdornment position="end">ether</InputAdornment>}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            ether
+                                        </InputAdornment>
+                                    }
                                     size="small"
                                 />
                             </Box>
                         </div>
                     </div>
-                    <Button variant="contained" fullWidth disableElevation
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        disableElevation
                         sx={{
                             background: `${green[600]}!important`,
                             textTransform: 'initial'
@@ -269,7 +274,9 @@ function HomePage2() {
                     <Rating name="size-large" defaultValue={2} size="large" />
                 </div> */}
             </div>
-            <div className={showDetail ? 'homepage2__content open' : 'homepage2__content'}>
+            <div
+                className={showDetail ? 'homepage2__content open' : 'homepage2__content'}
+            >
                 <FormControl
                     sx={{
                         mt: 1,
@@ -288,9 +295,9 @@ function HomePage2() {
                         startAdornment={
                             <InputAdornment
                                 position="start"
-                                sx={{ 'svg': { color: grey[600] } }}
+                                sx={{ svg: { color: grey[600] } }}
                             >
-                                <Search/>
+                                <Search />
                             </InputAdornment>
                         }
                         sx={{
@@ -304,7 +311,7 @@ function HomePage2() {
                 </FormControl>
                 <div className="homepage2__filter-row">
                     <p>Sắp xếp theo:</p>
-                    <div style={{ width: '20px' }}/>
+                    <div style={{ width: '20px' }} />
                     <StyledToggleButtonGroup
                         size="small"
                         value={alignment}
@@ -312,13 +319,22 @@ function HomePage2() {
                         onChange={handleAlignment}
                         aria-label="text alignment"
                     >
-                        <StyledToggleButton value="left" className="homepage2__filter-row--btn">
+                        <StyledToggleButton
+                            value="left"
+                            className="homepage2__filter-row--btn"
+                        >
                             Tất cả
                         </StyledToggleButton>
-                        <StyledToggleButton value="center" className="homepage2__filter-row--btn">
+                        <StyledToggleButton
+                            value="center"
+                            className="homepage2__filter-row--btn"
+                        >
                             Mới đăng
                         </StyledToggleButton>
-                        <StyledToggleButton value="right" className="homepage2__filter-row--btn">
+                        <StyledToggleButton
+                            value="right"
+                            className="homepage2__filter-row--btn"
+                        >
                             Giá tốt
                         </StyledToggleButton>
                     </StyledToggleButtonGroup>
@@ -345,30 +361,40 @@ function HomePage2() {
                                     fontSize: 14,
                                     color: grey[600]
                                 }}
-                            >mặc định</MenuItem>
+                            >
+                                mặc định
+                            </MenuItem>
                             <MenuItem
                                 value={10}
                                 sx={{
                                     fontSize: 14,
                                     color: grey[600]
                                 }}
-                            >Giá cao đến thấp</MenuItem>
+                            >
+                                Giá cao đến thấp
+                            </MenuItem>
                             <MenuItem
                                 value={20}
                                 sx={{
                                     fontSize: 14,
                                     color: grey[600]
                                 }}
-                            >Giá thấp đến cao</MenuItem>
+                            >
+                                Giá thấp đến cao
+                            </MenuItem>
                         </Select>
                     </FormControl>
                 </div>
                 <div className="homepage2__list-item">
-                    {
-                        items.filter((item) => item.identify.includes(searchText)).map((item, index) => (
-                            <CardItem key={index} handleShowDetailPanel={handleShowDetailPanel} item={item}/>
-                        ))
-                    }
+                    {items
+                        .filter((item) => item.identify.includes(searchText))
+                        .map((item, index) => (
+                            <CardItem
+                                key={index}
+                                handleShowDetailPanel={handleShowDetailPanel}
+                                item={item}
+                            />
+                        ))}
                 </div>
                 {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Button
@@ -385,8 +411,8 @@ function HomePage2() {
                     </Button>
                 </Box> */}
             </div>
-            {
-                showDetail && <div className="homepage2__detail-panel">
+            {showDetail && (
+                <div className="homepage2__detail-panel">
                     <IconButton
                         sx={{
                             position: 'absolute',
@@ -395,17 +421,15 @@ function HomePage2() {
                         }}
                         onClick={() => setShowDetail(false)}
                     >
-                        <Close/>
+                        <Close />
                     </IconButton>
                     <div className="homepage2__detail-panel__img">
-                        <img src={targetItem.images[0]} alt="item card image"/>
+                        <img src={targetItem.images[0]} alt="item card image" />
                     </div>
                     <div className="homepage2__detail-panel__others-img">
-                        {
-                            targetItem.images.map((img, index) => (
-                                <img src={img} key={index} alt="item card image"/>
-                            ))
-                        }
+                        {targetItem.images.map((img, index) => (
+                            <img src={img} key={index} alt="item card image" />
+                        ))}
                     </div>
                     <div className="homepage2__detail-panel__title">
                         {targetItem.identify}
@@ -423,8 +447,10 @@ function HomePage2() {
                         {targetItem.created_at}
                     </div>
                     <div className="homepage2__detail-panel__bottom">
-                        <IconButton sx={{ backgroundColor: '#FFF1F2!important', borderRadius: 2 }}>
-                            <FavoriteIcon fontSize='small' sx={{ color: '#FD6B6C' }} />
+                        <IconButton
+                            sx={{ backgroundColor: '#FFF1F2!important', borderRadius: 2 }}
+                        >
+                            <FavoriteIcon fontSize="small" sx={{ color: '#FD6B6C' }} />
                         </IconButton>
                         <Button
                             variant="outlined"
@@ -438,11 +464,13 @@ function HomePage2() {
                             }}
                             onClick={handleAddItemToCart}
                         >
-                            { shoppingCart.find((item) => item.id === targetItem.id) ? 'Đi tới giỏ hàng': 'Thêm vào giỏ hàng' }
+                            {shoppingCart.find((item) => item.id === targetItem.id)
+                                ? 'Đi tới giỏ hàng'
+                                : 'Thêm vào giỏ hàng'}
                         </Button>
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
 }

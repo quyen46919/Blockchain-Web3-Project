@@ -1,0 +1,31 @@
+{
+  "name": "blockchainproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chai.setup.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.4.1",
+    "@truffle/hdwallet-provider": "^1.0.18",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "chai-bn": "^0.3.1",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quyen46919/Blockchain-Web3-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quyen46919/Blockchain-Web3-Project/issues"
+  },
+  "homepage": "https://github.com/quyen46919/Blockchain-Web3-Project#readme"
+}

@@ -136,7 +136,7 @@ function PostItemPage() {
             ).send({ from: metamaskAddress });
 
             const newItem = result.events.SupplyChainStep.returnValues;
-            console.log(newItem);
+            // console.log(newItem);
 
             const newItemToCreate = {
                 createUserId: user.user.id,

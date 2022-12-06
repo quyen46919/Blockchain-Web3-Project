@@ -49,10 +49,10 @@ function Product(props) {
                 to: itemAddress,
                 value: price
             };
-            console.log('params = ', params);
+            // console.log('params = ', params);
 
             await web3Instance.eth.sendTransaction(params);
-            console.log('send transaction successfully!');
+            // console.log('send transaction successfully!');
             await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/items/${id}`, { state: 1 });
 
             enqueueSnackbar('Thanh toán thành công', {
