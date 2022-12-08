@@ -12,7 +12,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -57,14 +58,15 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.2+commit.bacdbe57\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"kycCompleted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"setKycCompleted\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"setKycRevoked\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/KycContract.sol\":\"KycContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/KycContract.sol\":{\"keccak256\":\"0xfcfa7ce718087cf3557f38dcfaac6a0326463dac32eff1a1b2a9d30d7f89ca19\",\"urls\":[\"bzz-raw://10d5e282b29238d96df0e675006d8f58292909a2afb5a0b128ddfcfebb7f857f\",\"dweb:/ipfs/QmYB5VtgQYniLJFuApfci3Vi5d3Ad536G5oSX7ToWMgmky\"]},\"project:/contracts/Ownable.sol\":{\"keccak256\":\"0x23de15a06aebbc151e99e2491253f2f26e074c0a2ff6c183359cb007b5f55033\",\"urls\":[\"bzz-raw://1552f3aa5c5df412f57c19dc56bca8bca3cacb8c00741ab68abb267d329358f4\",\"dweb:/ipfs/QmUQmyCQUaQov1o85dCKfhUXzaQuEQYSbWiL6UtLyfjHPk\"]}},\"version\":1}",
-  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506103e3806100536000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c806370c9aedd146100515780638f32d59b14610095578063dc3958cc146100b7578063df235fe4146100fb575b600080fd5b6100936004803603602081101561006757600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610157565b005b61009d61022b565b604051808215151515815260200191505060405180910390f35b6100f9600480360360208110156100cd57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610282565b005b61013d6004803603602081101561011157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610357565b604051808215151515815260200191505060405180910390f35b61015f61022b565b6101d1576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260158152602001807f596f7520617265206e6f7420746865206f776e6572000000000000000000000081525060200191505060405180910390fd5b60018060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b61028a61022b565b6102fc576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260158152602001807f596f7520617265206e6f7420746865206f776e6572000000000000000000000081525060200191505060405180910390fd5b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905091905056fea2646970667358221220caaad085eb6da6c29db5bf160e532c8bd9046bca4312968f5a6885488f570c9464736f6c63430006020033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c806370c9aedd146100515780638f32d59b14610095578063dc3958cc146100b7578063df235fe4146100fb575b600080fd5b6100936004803603602081101561006757600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610157565b005b61009d61022b565b604051808215151515815260200191505060405180910390f35b6100f9600480360360208110156100cd57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610282565b005b61013d6004803603602081101561011157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610357565b604051808215151515815260200191505060405180910390f35b61015f61022b565b6101d1576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260158152602001807f596f7520617265206e6f7420746865206f776e6572000000000000000000000081525060200191505060405180910390fd5b60018060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b61028a61022b565b6102fc576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260158152602001807f596f7520617265206e6f7420746865206f776e6572000000000000000000000081525060200191505060405180910390fd5b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff02191690831515021790555050565b6000600160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905091905056fea2646970667358221220caaad085eb6da6c29db5bf160e532c8bd9046bca4312968f5a6885488f570c9464736f6c63430006020033",
-  "sourceMap": "114:391:10:-:0;;;183:10:14;174:6;;:19;;;;;;;;;;;;;;;;;;114:391:10;;;;;;",
-  "deployedSourceMap": "114:391:10:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;114:391:10;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;193:96;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;193:96:10;;;;;;;;;;;;;;;;;;;:::i;:::-;;312:94:14;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;297:95:10;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;297:95:10;;;;;;;;;;;;;;;;;;;:::i;:::-;;400:102;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;400:102:10;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;193:96;249:9:14;:7;:9::i;:::-;241:43;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;277:4:10::1;260:7:::0;:14:::1;268:5;260:14;;;;;;;;;;;;;;;;:21;;;;;;;;;;;;;;;;;;193:96:::0;:::o;312:94:14:-;352:4;391:6;;;;;;;;;;;377:20;;:10;:20;;;369:29;;312:94;:::o;297:95:10:-;249:9:14;:7;:9::i;:::-;241:43;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;379:5:10::1;362:7;:14;370:5;362:14;;;;;;;;;;;;;;;;:22;;;;;;;;;;;;;;;;;;297:95:::0;:::o;400:102::-;457:4;480:7;:14;488:5;480:14;;;;;;;;;;;;;;;;;;;;;;;;;473:21;;400:102;;;:::o",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.2+commit.bacdbe57\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"kycCompleted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"setKycCompleted\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"}],\"name\":\"setKycRevoked\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/KycContract.sol\":\"KycContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"project:/contracts/KycContract.sol\":{\"keccak256\":\"0xfcfa7ce718087cf3557f38dcfaac6a0326463dac32eff1a1b2a9d30d7f89ca19\",\"urls\":[\"bzz-raw://10d5e282b29238d96df0e675006d8f58292909a2afb5a0b128ddfcfebb7f857f\",\"dweb:/ipfs/QmYB5VtgQYniLJFuApfci3Vi5d3Ad536G5oSX7ToWMgmky\"]},\"project:/contracts/Ownable.sol\":{\"keccak256\":\"0x23de15a06aebbc151e99e2491253f2f26e074c0a2ff6c183359cb007b5f55033\",\"urls\":[\"bzz-raw://1552f3aa5c5df412f57c19dc56bca8bca3cacb8c00741ab68abb267d329358f4\",\"dweb:/ipfs/QmUQmyCQUaQov1o85dCKfhUXzaQuEQYSbWiL6UtLyfjHPk\"]}},\"version\":1}",
+  "bytecode": "0x6080604052600080546001600160a01b03191633179055610240806100256000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c806370c9aedd146100515780638f32d59b14610079578063dc3958cc14610095578063df235fe4146100bb575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b03166100e1565b005b610081610161565b604080519115158252519081900360200190f35b610077600480360360208110156100ab57600080fd5b50356001600160a01b0316610172565b610081600480360360208110156100d157600080fd5b50356001600160a01b03166101ec565b6100e9610161565b61013a576040805162461bcd60e51b815260206004820152601560248201527f596f7520617265206e6f7420746865206f776e65720000000000000000000000604482015290519081900360640190fd5b6001600160a01b03166000908152600160208190526040909120805460ff19169091179055565b6000546001600160a01b0316331490565b61017a610161565b6101cb576040805162461bcd60e51b815260206004820152601560248201527f596f7520617265206e6f7420746865206f776e65720000000000000000000000604482015290519081900360640190fd5b6001600160a01b03166000908152600160205260409020805460ff19169055565b6001600160a01b031660009081526001602052604090205460ff169056fea2646970667358221220f3eb471e3e04debf2698b3700fc3f70f0e055991f7c89830833755f9a455538964736f6c63430006020033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c806370c9aedd146100515780638f32d59b14610079578063dc3958cc14610095578063df235fe4146100bb575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b03166100e1565b005b610081610161565b604080519115158252519081900360200190f35b610077600480360360208110156100ab57600080fd5b50356001600160a01b0316610172565b610081600480360360208110156100d157600080fd5b50356001600160a01b03166101ec565b6100e9610161565b61013a576040805162461bcd60e51b815260206004820152601560248201527f596f7520617265206e6f7420746865206f776e65720000000000000000000000604482015290519081900360640190fd5b6001600160a01b03166000908152600160208190526040909120805460ff19169091179055565b6000546001600160a01b0316331490565b61017a610161565b6101cb576040805162461bcd60e51b815260206004820152601560248201527f596f7520617265206e6f7420746865206f776e65720000000000000000000000604482015290519081900360640190fd5b6001600160a01b03166000908152600160205260409020805460ff19169055565b6001600160a01b031660009081526001602052604090205460ff169056fea2646970667358221220f3eb471e3e04debf2698b3700fc3f70f0e055991f7c89830833755f9a455538964736f6c63430006020033",
+  "sourceMap": "114:391:10:-:0;;;174:6:14;:19;;-1:-1:-1;;;;;;174:19:14;183:10;174:19;;;114:391:10;;;;;;",
+  "deployedSourceMap": "114:391:10:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;114:391:10;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;193:96;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;193:96:10;-1:-1:-1;;;;;193:96:10;;:::i;:::-;;312:94:14;;;:::i;:::-;;;;;;;;;;;;;;;;;;297:95:10;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;297:95:10;-1:-1:-1;;;;;297:95:10;;:::i;400:102::-;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;400:102:10;-1:-1:-1;;;;;400:102:10;;:::i;193:96::-;249:9:14;:7;:9::i;:::-;241:43;;;;;-1:-1:-1;;;241:43:14;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;260:14:10::1;;::::0;;;277:4:::1;260:14;::::0;;;;;;;:21;;-1:-1:-1;;260:21:10::1;::::0;;::::1;::::0;;193:96::o;312:94:14:-;352:4;391:6;-1:-1:-1;;;;;391:6:14;377:10;:20;;312:94::o;297:95:10:-;249:9:14;:7;:9::i;:::-;241:43;;;;;-1:-1:-1;;;241:43:14;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;362:14:10::1;379:5;362:14:::0;;;:7:::1;:14;::::0;;;;:22;;-1:-1:-1;;362:22:10::1;::::0;;297:95::o;400:102::-;-1:-1:-1;;;;;480:14:10;457:4;480:14;;;:7;:14;;;;;;;;;400:102::o",
   "source": "// contracts/GLDToken.sol\r\n// SPDX-License-Identifier: MIT\r\npragma solidity ^0.6.2;\r\n\r\nimport \"./Ownable.sol\";\r\n\r\ncontract KycContract is Ownable{\r\n    mapping(address => bool) allowed;\r\n\r\n    function setKycCompleted(address _addr) public onlyOwner{\r\n        allowed[_addr] = true;\r\n    }\r\n\r\n    function setKycRevoked(address _addr) public onlyOwner{\r\n        allowed[_addr] = false;\r\n    }\r\n\r\n    function kycCompleted(address _addr) public view returns(bool){\r\n        return allowed[_addr];\r\n    }\r\n}",
   "sourcePath": "D:\\Quyen\\STUDY\\Blockchain\\BlockchainProject\\contracts\\KycContract.sol",
   "ast": {
@@ -94,7 +96,7 @@
         "id": 2141,
         "nodeType": "ImportDirective",
         "scope": 2189,
-        "sourceUnit": 2339,
+        "sourceUnit": 2347,
         "src": "87:23:10",
         "symbolAliases": [],
         "unitAlias": ""
@@ -109,10 +111,10 @@
               "id": 2142,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2338,
+              "referencedDeclaration": 2346,
               "src": "138:7:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$2338",
+                "typeIdentifier": "t_contract$_Ownable_$2346",
                 "typeString": "contract Ownable"
               }
             },
@@ -122,7 +124,7 @@
           }
         ],
         "contractDependencies": [
-          2338
+          2346
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -130,7 +132,7 @@
         "id": 2188,
         "linearizedBaseContracts": [
           2188,
-          2338
+          2346
         ],
         "name": "KycContract",
         "nodeType": "ContractDefinition",
@@ -282,7 +284,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2325,
+                  "referencedDeclaration": 2333,
                   "src": "240:9:10",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -444,7 +446,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2325,
+                  "referencedDeclaration": 2333,
                   "src": "342:9:10",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -675,7 +677,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 2339,
+          "SourceUnit": 2347,
           "absolutePath": "project:/contracts/Ownable.sol",
           "file": "./Ownable.sol",
           "scope": 2189,
@@ -692,14 +694,14 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            2338
+            2346
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             2188,
-            2338
+            2346
           ],
           "name": "KycContract",
           "scope": 2189
@@ -714,7 +716,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Ownable",
-                  "referencedDeclaration": 2338,
+                  "referencedDeclaration": 2346,
                   "type": "contract Ownable"
                 },
                 "id": 2142,
@@ -844,7 +846,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2325,
+                      "referencedDeclaration": 2333,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -1024,7 +1026,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2325,
+                      "referencedDeclaration": 2333,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -1302,12 +1304,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x7974c713a8B05763513d15cacf0Cb6Cc08c98ea6",
-      "transactionHash": "0x089f5574dbd5dcf2703ee165f4b082d1201a123151efccaf380e76852012b2b8"
+      "address": "0x4c28f29c11A7E337F62309aD900c7e1049434022",
+      "transactionHash": "0xccd44315bc111cf047a441d4715a575e4e2714095dc28e6f6ca2ca8d8be73537"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-12-06T08:17:27.815Z",
+  "updatedAt": "2022-12-08T03:29:24.266Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
