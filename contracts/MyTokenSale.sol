@@ -1,6 +1,6 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 import "./Crowdsale.sol";
 import "./KycContract.sol";
@@ -24,9 +24,5 @@ contract MyTokenSale is Crowdsale {
     {
         super._preValidatePurchase(beneficiary, weiAmount);
         require(kyc.kycCompleted(msg.sender), "KYC not completed, purchase not allowed");
-    }
-
-        function getTokens() public view returns(string memory){
-        return "hello world";
     }
 }

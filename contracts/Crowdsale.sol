@@ -1,12 +1,12 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract Crowdsale is Context, ReentrancyGuard {
     using SafeMath for uint256;
@@ -36,34 +36,26 @@ contract Crowdsale is Context, ReentrancyGuard {
      * @param amount amount of tokens purchased
      */
     event TokensPurchased(
-        address indexed purchaser,
-        address indexed beneficiary,
+        address purchaser,
+        address beneficiary,
         uint256 value,
         uint256 amount
     );
 
-    /**
-     * @param rate Number of token units a buyer gets per wei
-     * @dev The rate is the conversion between wei and the smallest and indivisible
-     * token unit. So, if you are using a rate of 1 with a ERC20Detailed token
-     * with 3 decimals called TOK, 1 wei will give you 1 unit, or 0.001 TOK.
-     * @param wallet Address where collected funds will be forwarded to
-     * @param token Address of the token being sold
-     */
     constructor(
-        uint256 rate,
-        address payable wallet,
-        IERC20 token
-    ) public {
-        require(rate > 0, "Crowdsale: rate is 0");
-        require(wallet != address(0), "Crowdsale: wallet is the zero address");
+        uint256 rateX,
+        address payable walletX,
+        IERC20 tokenX
+    ) {
+        require(rateX > 0, "Crowdsale: rate is 0");
+        require(walletX != address(0), "Crowdsale: wallet is the zero address");
         require(
-            address(token) != address(0),
+            address(tokenX) != address(0),
             "Crowdsale: token is the zero address"
         );
-        _rate = rate;
-        _wallet = wallet;
-        _token = token;
+        _rate = rateX;
+        _wallet = walletX;
+        _token = tokenX;
     }
 
     /**
