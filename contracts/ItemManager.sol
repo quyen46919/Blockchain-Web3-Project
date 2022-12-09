@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Ownable.sol";
+import "./MyOwnable.sol";
 import "./Item.sol";
 
-contract ItemManager is Ownable {
+contract ItemManager is MyOwnable{
     enum SupplyChainState {
         Created,
         Paid,

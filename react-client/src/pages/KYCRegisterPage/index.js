@@ -58,7 +58,6 @@ function KYCRegisterPage() {
     }, [tokenIns, tokenSaleInstance, kycInstance, account]);
 
     window.ethereum.on('accountsChanged', function (accounts) {
-        console.log('account change', accounts);
         setAccount(accounts[0]);
     });
 
@@ -74,7 +73,6 @@ function KYCRegisterPage() {
 
     const getUserToken = async () => {
         const tokenCount = await tokenIns.methods.balanceOf(account).call();
-        console.log('Your token count =', tokenCount);
         if (tokenCount) {
             setUserToken(tokenCount);
         }
@@ -96,7 +94,8 @@ function KYCRegisterPage() {
     };
 
     const handleBuyToken = async () => {
-        await tokenSaleInstance.methods.buyTokens(account).send({ from: account, value: web3Ins.utils.toWei('1', 'wei') });
+        await tokenSaleInstance.methods.buyTokens(account)
+            .send({ from: account, value: web3Ins.utils.toWei('1', 'wei') });
         getUserToken();
     };
 
