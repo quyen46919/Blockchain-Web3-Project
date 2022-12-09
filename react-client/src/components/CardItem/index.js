@@ -33,7 +33,7 @@ function CardItem(props) {
             <div className="card-item__line">
                 <div className="card-item__prices">
                     <span>Giá</span>
-                    <p>{parseFloat(Web3.utils.fromWei(item?.price.toString(), 'ether')).toFixed(6)} ether</p>
+                    {/* <p>{parseFloat(Web3.utils.fromWei(item?.price.toString(), 'ether')).toFixed(6)} ether</p> */}
                 </div>
                 <Button
                     variant="outlined"

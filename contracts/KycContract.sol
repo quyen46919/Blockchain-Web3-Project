@@ -1,17 +1,17 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
-import "./Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract KycContract is Ownable{
     mapping(address => bool) allowed;
 
-    function setKycCompleted(address _addr) public onlyOwner{
+    function setKycCompleted(address _addr) public {
         allowed[_addr] = true;
     }
 
-    function setKycRevoked(address _addr) public onlyOwner{
+    function setKycRevoked(address _addr) public {
         allowed[_addr] = false;
     }
 

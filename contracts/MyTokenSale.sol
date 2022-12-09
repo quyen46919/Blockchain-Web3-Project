@@ -1,6 +1,6 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 import "./Crowdsale.sol";
 import "./KycContract.sol";
@@ -13,7 +13,7 @@ contract MyTokenSale is Crowdsale {
         address payable wallet,
         IERC20 token,
         KycContract _kyc
-    ) Crowdsale(rate, wallet, token) public {
+    ) Crowdsale(rate, wallet, token) {
         kyc = _kyc;
     }
 
