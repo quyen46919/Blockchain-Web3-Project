@@ -13,10 +13,11 @@ contract ItemManager is MyOwnable{
     }
 
     struct S_Item {
-        address _owner;
+        address payable _owner;
         Item _item;
         string _identifier;
         uint256 _itemPrice;
+        uint256 _itemTokenPrice;
         ItemManager.SupplyChainState _state;
         string _otherInfos;
     }
@@ -38,17 +39,19 @@ contract ItemManager is MyOwnable{
         string _otherInfos
     );
 
-
     // FUNCTIONS
-    function createItem(address owner, string memory identifier, uint256 itemPrice, string memory otherInfos)
+    function createItem(
+        address payable owner, string memory identifier, uint256 itemPrice, 
+        uint256 itemTokenPrice, string memory otherInfos
+    )
         public
-        onlyOwner
     {
         Item item = new Item(this, itemPrice, itemIndex);
         items[itemIndex]._owner = owner;
         items[itemIndex]._item = item;
         items[itemIndex]._identifier = identifier;
         items[itemIndex]._itemPrice = itemPrice;
+        items[itemIndex]._itemTokenPrice = itemTokenPrice;
         items[itemIndex]._state = SupplyChainState.Created;
         items[itemIndex]._otherInfos = otherInfos;
 
@@ -60,6 +63,25 @@ contract ItemManager is MyOwnable{
         );
 
         itemIndex++;
+    }
+
+    function getItemInfor(uint256 _itemIndex) public view returns(S_Item memory) {
+        return items[_itemIndex];
+    }
+
+    function triggerPaymentWithToken(uint256 _itemIndex) public payable {
+        require(
+            items[_itemIndex]._state == SupplyChainState.Created,
+            "Item is further in the chain!"
+        );
+        items[_itemIndex]._state = SupplyChainState.Paid;
+    
+        emit SupplyChainStep(
+            _itemIndex,
+            uint256(items[_itemIndex]._state),
+            address(items[_itemIndex]._item),
+            items[_itemIndex]._otherInfos
+        );
     }
 
     function triggerPayment(uint256 _itemIndex) public payable {
@@ -96,7 +118,7 @@ contract ItemManager is MyOwnable{
         );
     }
 
-    function compareStrings(string memory a, string memory b) internal returns (bool) {
+    function compareStrings(string memory a, string memory b) internal pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 

@@ -3,10 +3,12 @@ import { CloudUpload } from '@mui/icons-material';
 import { Button, CircularProgress, FormHelperText, InputAdornment, MenuItem, OutlinedInput, TextField } from '@mui/material';
 import { green, grey, red } from '@mui/material/colors';
 import axios from 'axios';
+import NotificationDialog from 'components/NotificationDialog';
 import { AuthContext } from 'context/AuthContext';
 import ItemManagerContract from 'contracts/ItemManager.json';
 import { useSnackbar } from 'notistack';
 import React, { useContext, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -17,7 +19,6 @@ function PostItemPage() {
     const [files, setFiles] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
-    const [itemManagerContract, setItemManagerContract] = useState({});
     const [account, setAccount] = useState([]);
     const { user } = useContext(AuthContext);
     const { metamaskAddress, dispatch } = useContext(AuthContext);
@@ -30,6 +31,20 @@ function PostItemPage() {
         },
         maxFiles: 8
     });
+    const [showDialog, setShowDialog] = useState(false);
+    const itemManagerRef = useRef();
+
+    const handleShowDialog = () => {
+        setShowDialog(true);
+    };
+
+    const handleDialogClose = () => {
+        setShowDialog(false);
+    };
+
+    const handleAcceptDialog = () => {
+        history.go(0);
+    };
 
     useEffect(() => {
         files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -37,23 +52,11 @@ function PostItemPage() {
 
     const onInit = async () => {
         try {
-            const web3 = await getWeb3();
-            const accounts = await window.ethereum.send('eth_requestAccounts');
-            const networkId = await web3.eth.net.getId();
-            const itemManager = new web3.eth.Contract(
-                ItemManagerContract.abi,
-                ItemManagerContract.networks[networkId] && ItemManagerContract.networks[networkId].address
-            );
-
-            setAccount(accounts.result[0]);
-            setItemManagerContract(itemManager);
-            if (accounts.result[0].length > 1) {
-                dispatch({ type: 'CHANGE_METAMASK', payload: accounts.result[0] });
-            }
+            const { account, itemManager } = await getWeb3();
+            itemManagerRef.current = itemManager;
+            setAccount(account);
         } catch (error) {
-            enqueueSnackbar('Không tìm thấy web3 trong trình duyệt, vui lòng F5 và thử lại!', {
-                variant: 'error'
-            });
+            handleShowDialog();
         }
     };
 
@@ -98,6 +101,9 @@ function PostItemPage() {
     });
 
     const handleSubmit = async (values) => {
+        if (!itemManagerRef.current) {
+            handleShowDialog();
+        }
         if (files.length < 4) {
             enqueueSnackbar('Ít nhất phải tải lên 4 ảnh', {
                 variant: 'error'
@@ -131,13 +137,10 @@ function PostItemPage() {
                     description: values.description
                 });
 
-            const result = await itemManagerContract.methods.createItem(
-                metamaskAddress, values.identify, values.price.toString(), hashString.data
-            ).send({ from: metamaskAddress });
-
+            const result = await itemManagerRef.current.methods.createItem(
+                account, values.identify, values.price.toString(), values.price.toString(), hashString.data
+            ).send({ from: account });
             const newItem = result.events.SupplyChainStep.returnValues;
-            // console.log(newItem);
-
             const newItemToCreate = {
                 createUserId: user.user.id,
                 ownerId: account,
@@ -160,9 +163,7 @@ function PostItemPage() {
             setFiles([]);
 
         } catch (err) {
-            enqueueSnackbar('Có lỗi xảy ra, vui lòng f5 và thử lại!', {
-                variant: 'error'
-            });
+            handleShowDialog();
         } finally {
             setIsSubmitting(false);
         }
@@ -238,7 +239,7 @@ function PostItemPage() {
                         type="number"
                         { ...form.register('price') }
                         fullWidth
-                        endAdornment={<InputAdornment position="end">wei</InputAdornment>}
+                        endAdornment={<InputAdornment position="end">ECOMK Token</InputAdornment>}
                         sx={{
                             mt: 2,
                             '& .MuiInput-underline:after': { borderColor: green[600] },
@@ -283,6 +284,13 @@ function PostItemPage() {
                     </Button>
                 </section>
             </div>
+            {showDialog && (
+                <NotificationDialog
+                    showDialog={showDialog}
+                    handleDialogClose={handleDialogClose}
+                    handleAcceptDialog={handleAcceptDialog}
+                />
+            )}
         </form>
     );
 }

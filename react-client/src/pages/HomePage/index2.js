@@ -1,6 +1,6 @@
 import { Close, Search } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Button, IconButton, Slider } from '@mui/material';
+import { Button, IconButton, Slider, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import { green, grey } from '@mui/material/colors';
@@ -22,6 +22,7 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import Web3 from 'web3';
 import { marks } from 'utils/seed/marks';
+import noProduct from 'assets/images/noProduct.png';
 import './styles2.scss';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -385,17 +386,28 @@ function HomePage2() {
                         </Select>
                     </FormControl>
                 </div>
-                <div className="homepage2__list-item">
-                    {items
-                        .filter((item) => item.identify.includes(searchText))
-                        .map((item, index) => (
-                            <CardItem
-                                key={index}
-                                handleShowDetailPanel={handleShowDetailPanel}
-                                item={item}
-                            />
-                        ))}
-                </div>
+
+                {items.length > 0
+                    ?
+                    <div className="homepage2__list-item">
+                        {
+                            items
+                                .filter((item) => item.identify.includes(searchText))
+                                .map((item, index) => (
+                                    <CardItem
+                                        key={index}
+                                        handleShowDetailPanel={handleShowDetailPanel}
+                                        item={item}
+                                    />
+                                ))
+                        }
+                    </div>
+                    : <Stack width="100%" minHeight="500px" flexDirection="column" justifyContent="center" alignItems="center">
+                        <img src={noProduct} alt="" />
+                        <h4>Không có sản phẩm nào đang bán, ghé lại sau nhé!</h4>
+                    </Stack>
+                }
+
                 {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Button
                         variant='outlined'

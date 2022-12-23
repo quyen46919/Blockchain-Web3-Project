@@ -1,0 +1,5 @@
+Fonts used in this design:
+
+Font: Yanone Kaffeesatz
+Author: Yanone
+Url: http://www.fontsquirrel.com/fonts/yanone-kaffeesatz

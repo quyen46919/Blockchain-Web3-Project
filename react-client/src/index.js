@@ -1,3 +1,4 @@
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,22 +13,26 @@ import './index.css';
 //     }
 // };
 
+const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+
 ReactDOM.render(
     <React.StrictMode>
         {/* <DAppProvider config={config}> */}
-        <AuthContextProvider>
-            <SnackbarProvider
-                maxSnack={1}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                }}
-                transitionDuration={{ exit: 200 }}
-            >
-                <App />
-            </SnackbarProvider>
-        </AuthContextProvider>
-        {/* </DAppProvider> */}
+        <PayPalScriptProvider options={{ 'client-id': paypalClientId, currency: 'USD' }}>
+            <AuthContextProvider>
+                <SnackbarProvider
+                    maxSnack={1}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }}
+                    transitionDuration={{ exit: 200 }}
+                >
+                    <App />
+                </SnackbarProvider>
+            </AuthContextProvider>
+            {/* </DAppProvider> */}
+        </PayPalScriptProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

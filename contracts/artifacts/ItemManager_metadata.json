@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.0+commit.26b70077"
+		"version": "0.8.1+commit.df193b15"
 	},
 	"language": "Solidity",
 	"output": {
@@ -64,7 +64,7 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "address payable",
 						"name": "owner",
 						"type": "address"
 					},
@@ -79,6 +79,11 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
+						"name": "itemTokenPrice",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "otherInfos",
 						"type": "string"
@@ -87,6 +92,62 @@
 				"name": "createItem",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_itemIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "getItemInfor",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address payable",
+								"name": "_owner",
+								"type": "address"
+							},
+							{
+								"internalType": "contract Item",
+								"name": "_item",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_identifier",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_itemPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_itemTokenPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum ItemManager.SupplyChainState",
+								"name": "_state",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "_otherInfos",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ItemManager.S_Item",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -113,7 +174,7 @@
 				"name": "items",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "address payable",
 						"name": "_owner",
 						"type": "address"
 					},
@@ -130,6 +191,11 @@
 					{
 						"internalType": "uint256",
 						"name": "_itemPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_itemTokenPrice",
 						"type": "uint256"
 					},
 					{
@@ -178,6 +244,19 @@
 						"internalType": "uint256",
 						"name": "_itemIndex",
 						"type": "uint256"
+					}
+				],
+				"name": "triggerPaymentWithToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_itemIndex",
+						"type": "uint256"
 					},
 					{
 						"internalType": "string",
@@ -192,10 +271,14 @@
 			}
 		],
 		"devdoc": {
-			"methods": {}
+			"kind": "dev",
+			"methods": {},
+			"version": 1
 		},
 		"userdoc": {
-			"methods": {}
+			"kind": "user",
+			"methods": {},
+			"version": 1
 		}
 	},
 	"settings": {
@@ -215,24 +298,27 @@
 	},
 	"sources": {
 		"Item.sol": {
-			"keccak256": "0xde45be1ccffc6a726272c30b7ac0e37f41e88dd22552b047c4804bf9affbd020",
+			"keccak256": "0x199f5c2d5aff940cc9c3bfccf1145ee0a531547682bcc3aeb698cc081f05e032",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://71deccc16b1ca1dbde2d2cbc2097ae92a4775129cdaa5549f4e098413f7d40d8",
-				"dweb:/ipfs/QmRmo8jhPcCZyJq23jWrT5jPaXURfHpWKvJE4aVyy9pUwg"
+				"bzz-raw://75e98b6a3b02daeb624a35b34becf329d5fefe02d4f4f3e5d8ca163cfd5c2e3b",
+				"dweb:/ipfs/QmXXBKXfM3AERQJ8KjcjnGJfwdXz4X2PMrQpaTHLBJm9fw"
 			]
 		},
 		"ItemManager.sol": {
-			"keccak256": "0x3fce1db1359c9422be5fe2f9efdd99dd2ac09fe26d9e30ef749d3676a1ad7f13",
+			"keccak256": "0xb460ed4143025a3d7281f99bbf873f9d575458d540f5c6122c92700091130fac",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://77b1c2f06192cbd82b08493b49d9ce2616d7be737d3f3b8e0cd1c5f5ba54e60a",
-				"dweb:/ipfs/QmeGEKzfQyBe3jys1Cf8gzbAsVJZahvHg5dtfjdBrGz1Bo"
+				"bzz-raw://305cb5ae8aa8f90028bd2e63772d87343db160f98cd05d98a719119c54180788",
+				"dweb:/ipfs/QmNnpo2GXxFakLVkHzdrsHKcmg92zaEQu9tv2RGsgu89HP"
 			]
 		},
-		"Ownable.sol": {
-			"keccak256": "0xb668927b9b00d864752e565c4f06bfa4f089d85d087ccc160e8d43bdc9423a8f",
+		"MyOwnable.sol": {
+			"keccak256": "0xe713484ddf372a84137b36ee03e158f02e49625bd3ed295f8a115945ffedcd47",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://3db5b424e751597c4132d8badca6a76b43a93da323021b81b5f832838e0b029d",
-				"dweb:/ipfs/QmPgHjKZdfrjvVpLCTspJNN5ei9Zm7BHT4xcLYRFzw73xX"
+				"bzz-raw://ed32c204900cb1b8ca81b1ec7eb2fefa0e06d24e225899e1a4aa3bd0d6328a3c",
+				"dweb:/ipfs/QmYE7ZddfKwmFab4h1t68UniEts2azeYBrQSCBepmusqaW"
 			]
 		}
 	},
