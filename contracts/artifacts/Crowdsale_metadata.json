@@ -1,0 +1,312 @@
+{
+	"compiler": {
+		"version": "0.8.1+commit.df193b15"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "rateX",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address payable",
+						"name": "walletX",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20",
+						"name": "tokenX",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "purchaser",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "beneficiary",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "TokensPurchased",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ItemManager",
+						"name": "itemManager",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "itemIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "buyItemWithToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "beneficiary",
+						"type": "address"
+					}
+				],
+				"name": "buyTokens",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "token",
+				"outputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "wallet",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "weiRaised",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"TokensPurchased(address,address,uint256,uint256)": {
+					"params": {
+						"amount": "amount of tokens purchased",
+						"beneficiary": "who got the tokens",
+						"purchaser": "who paid for the tokens",
+						"value": "weis paid for purchase"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"buyTokens(address)": {
+					"details": "low level token purchase ***DO NOT OVERRIDE*** This function has a non-reentrancy guard, so it shouldn't be called by another `nonReentrant` function.",
+					"params": {
+						"beneficiary": "Recipient of the token purchase"
+					}
+				},
+				"rate()": {
+					"returns": {
+						"_0": "the number of token units a buyer gets per wei."
+					}
+				},
+				"token()": {
+					"returns": {
+						"_0": "the token being sold."
+					}
+				},
+				"wallet()": {
+					"returns": {
+						"_0": "the address where funds are collected."
+					}
+				},
+				"weiRaised()": {
+					"returns": {
+						"_0": "the amount of wei raised."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"TokensPurchased(address,address,uint256,uint256)": {
+					"notice": "Event for token purchase logging"
+				}
+			},
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Crowdsale.sol": "Crowdsale"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+			"keccak256": "0x190dd6f8d592b7e4e930feb7f4313aeb8e1c4ad3154c27ce1cf6a512fc30d8cc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4ce8dfb62d0c4fa260d6eec8f1cd47f5f2a044e11bde5b31d18072fa6e7d9010",
+				"dweb:/ipfs/QmTyFztU3tLEcEDnqqiaW4UJetqsU77LXc6pjc9oTXCK5u"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
+			"keccak256": "0xf41ca991f30855bf80ffd11e9347856a517b977f0a6c2d52e6421a99b7840329",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b2717fd2bdac99daa960a6de500754ea1b932093c946388c381da48658234b95",
+				"dweb:/ipfs/QmP6QVMn6UeA3ByahyJbYQr5M6coHKBKsf3ySZSfbyA8R7"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+			"keccak256": "0x9b72f93be69ca894d8492c244259615c4a742afc8d63720dbc8bb81087d9b238",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f5a7b96e511be78d5cdf635c784e6ab8cdd38625bb8cafb8a80914a1c89cf0f6",
+				"dweb:/ipfs/QmVzTCwJxQAkjRQHboT5QrvsVJGWQHgfEjeTbvyxoKBrds"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0xf96f969e24029d43d0df89e59d365f277021dac62b48e1c1e3ebe0acdd7f1ca1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ec772b45a624be516f1c81970caa8a2e144301e9d0921cbc1a2789fef39a1269",
+				"dweb:/ipfs/QmNyjwxCrGhQMyzLD93oUobJXVe9ceJvRvfXwbEtuxPiEj"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SafeMath.sol": {
+			"keccak256": "0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://864a40efcffdf408044c332a5aa38ec5618ed7b4eecb8f65faf45671bd6cdc65",
+				"dweb:/ipfs/QmQJquTMtc6fgm5JQzGdsGpA2fqBe3MHWEdt2qzaLySMdN"
+			]
+		},
+		"Crowdsale.sol": {
+			"keccak256": "0x98c981f9649cd15f59ff4561c40eecade4cf84c57261784d1953696e28ffe943",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://792d09a67fe04994f5971673a9196ca9107cf552a966428bee68cf1cfc6ad57f",
+				"dweb:/ipfs/QmQUxmXsLqb74gd4ygbmgsSg4R6QaGQBghfCUX4YVMZQDQ"
+			]
+		},
+		"Item.sol": {
+			"keccak256": "0x199f5c2d5aff940cc9c3bfccf1145ee0a531547682bcc3aeb698cc081f05e032",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://75e98b6a3b02daeb624a35b34becf329d5fefe02d4f4f3e5d8ca163cfd5c2e3b",
+				"dweb:/ipfs/QmXXBKXfM3AERQJ8KjcjnGJfwdXz4X2PMrQpaTHLBJm9fw"
+			]
+		},
+		"ItemManager.sol": {
+			"keccak256": "0xb460ed4143025a3d7281f99bbf873f9d575458d540f5c6122c92700091130fac",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://305cb5ae8aa8f90028bd2e63772d87343db160f98cd05d98a719119c54180788",
+				"dweb:/ipfs/QmNnpo2GXxFakLVkHzdrsHKcmg92zaEQu9tv2RGsgu89HP"
+			]
+		},
+		"MyOwnable.sol": {
+			"keccak256": "0xe713484ddf372a84137b36ee03e158f02e49625bd3ed295f8a115945ffedcd47",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ed32c204900cb1b8ca81b1ec7eb2fefa0e06d24e225899e1a4aa3bd0d6328a3c",
+				"dweb:/ipfs/QmYE7ZddfKwmFab4h1t68UniEts2azeYBrQSCBepmusqaW"
+			]
+		}
+	},
+	"version": 1
+}

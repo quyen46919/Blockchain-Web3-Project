@@ -1,0 +1,170 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.welcome-page {
+    width: 100%;
+    height: calc(100vh - #{$headerHeight});
+    @include displayFlex();
+
+    &__container {
+        width: 80%;
+        height: 90%;
+        background-color: #f8f8f8;
+        border-radius: 10px;
+
+        @include displayFlex($direc: row, $wrap: nowrap, $justy: center, $align: center);
+        gap: 50px;
+
+        @include maxWidth($lg) {
+            width: 95%;
+        }
+    }
+
+    &__direction {
+        width: 36%;
+        height: 70%;
+        overflow: hidden;
+        @include displayFlex(
+            $direc: column,
+            $wrap: nowrap,
+            $justy: flex-start,
+            $align: flex-start
+        );
+        gap: 10px;
+        h4 {
+            text-transform: uppercase;
+            color: $cyan-green;
+            font-weight: 600;
+            line-height: inherit;
+            margin: 0;
+        }
+        h1 {
+            font-weight: 600;
+            line-height: inherit;
+            margin: 0;
+            padding-bottom: 20px;
+        }
+        &--cover {
+            width: 100%;
+            @include displayFlex(
+                $direc: column,
+                $wrap: nowrap,
+                $justy: space-between,
+                $align: flex-start
+            );
+            svg {
+                cursor: pointer;
+                color: $black;
+            }
+            p {
+                font-size: 14px;
+                color: #646464;
+                margin: 0;
+                @include multipleLineTextOverflow($line: 4);
+            }
+        }
+        &--collapse {
+            width: 96%;
+            @include displayFlex(
+                $direc: row,
+                $wrap: nowrap,
+                $justy: space-between,
+                $align: center
+            );
+            button {
+                margin: 0;
+            }
+        }
+        &--title {
+            font-weight: 600;
+            line-height: inherit;
+            color: $main-text-color;
+            font-size: 17px;
+        }
+    }
+
+    &__options {
+        width: 40%;
+        height: 70%;
+        @include displayFlex(
+            $direc: column,
+            $wrap: nowrap,
+            $justy: flex-start,
+            $align: center
+        );
+        gap: 10px;
+        &--select {
+            width: 100%;
+            height: 90px;
+            border-radius: 10px;
+            background-color: $white;
+            position: relative;
+            @include padding(15px);
+            @include displayFlex(
+                $direc: row,
+                $wrap: nowrap,
+                $justy: flex-start,
+                $align: flex-start
+            );
+            h4 {
+                margin: 0;
+            }
+            p {
+                margin: 0;
+                @include multipleLineTextOverflow($line: 2);
+            }
+        }
+        &--text {
+            height: 100%;
+            width: 70%;
+            overflow: hidden;
+            @include displayFlex(
+                $direc: column,
+                $wrap: nowrap,
+                $justy: flex-start,
+                $align: flex-start
+            );
+            gap: 5px;
+            h4 {
+                color: $main-text-color;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            p {
+                font-size: 14px;
+                font-weight: 500;
+                color: $gray-text-color-2;
+            }
+        }
+        &--price {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            color: $main-text-color;
+            @include oneLineTextOverflow($maxWidth: 400px);
+        }
+    }
+}
+.MuiFormGroup-root {
+    @include displayFlex(
+        $direc: column,
+        $wrap: nowrap,
+        $justy: space-between,
+        $align: flex-start
+    );
+    gap: 10px;
+}
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root {
+    color: $cyan-green !important;
+}
+.Mui-checked > .welcome-page__options--select {
+    background-color: red !important;
+}
+.MuiCardContent-root.css-46bh2p-MuiCardContent-root {
+    padding: 0 !important;
+}
+.MuiCollapse-wrapperInner.MuiCollapse-vertical.css-9l5vo-MuiCollapse-wrapperInner {
+    width: 85%;
+}

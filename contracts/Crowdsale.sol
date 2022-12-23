@@ -1,12 +1,13 @@
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "./ItemManager.sol";
 
 contract Crowdsale is Context, ReentrancyGuard {
     using SafeMath for uint256;
@@ -28,6 +29,8 @@ contract Crowdsale is Context, ReentrancyGuard {
     // Amount of wei raised
     uint256 private _weiRaised;
 
+    ItemManager private _itemManager;
+
     /**
      * Event for token purchase logging
      * @param purchaser who paid for the tokens
@@ -45,7 +48,8 @@ contract Crowdsale is Context, ReentrancyGuard {
     constructor(
         uint256 rateX,
         address payable walletX,
-        IERC20 tokenX
+        IERC20 tokenX,
+        ItemManager itemManagerX
     ) {
         require(rateX > 0, "Crowdsale: rate is 0");
         require(walletX != address(0), "Crowdsale: wallet is the zero address");
@@ -56,6 +60,7 @@ contract Crowdsale is Context, ReentrancyGuard {
         _rate = rateX;
         _wallet = walletX;
         _token = tokenX;
+        _itemManager = itemManagerX;
     }
 
     /**
@@ -104,7 +109,6 @@ contract Crowdsale is Context, ReentrancyGuard {
      */
 
     function buyTokens(address beneficiary) public payable nonReentrant {
-        // gọi weiAmount là số lượng ether msg gửi vào để mua ether
         uint256 weiAmount = msg.value;
         _preValidatePurchase(beneficiary, weiAmount);
 
@@ -120,6 +124,13 @@ contract Crowdsale is Context, ReentrancyGuard {
         _forwardFunds();
 
         _postValidatePurchase(beneficiary, weiAmount);
+    }
+
+    function buyTokensPaypal(address beneficiary, uint256 amount) public payable nonReentrant {
+        _weiRaised = _weiRaised.add(amount);
+
+        _processPurchase(beneficiary, amount);
+        emit TokensPurchased(_msgSender(), beneficiary, _weiRaised, amount);
     }
 
     /**

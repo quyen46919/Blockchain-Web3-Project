@@ -239,7 +239,7 @@ function DetailProduct() {
                                 fontWeight: 600
                             }}
                         >
-                            Giá: {item?.price} wei
+                            Giá: {item?.price} ECOMK
                         </Typography>
                     </div>
                     <Button variant="contained" disableElevation

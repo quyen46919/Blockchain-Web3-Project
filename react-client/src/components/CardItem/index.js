@@ -32,7 +32,8 @@ function CardItem(props) {
             </div>
             <div className="card-item__line">
                 <div className="card-item__prices">
-                    <span>Giá</span>
+                    <span>Giá (ECOMK)</span>
+                    <p>{item?.price}</p>
                     {/* <p>{parseFloat(Web3.utils.fromWei(item?.price.toString(), 'ether')).toFixed(6)} ether</p> */}
                 </div>
                 <Button

@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "./Crowdsale.sol";
 import "./KycContract.sol";
+import "./ItemManager.sol";
 
 contract MyTokenSale is Crowdsale {
     KycContract kyc;
@@ -12,8 +13,9 @@ contract MyTokenSale is Crowdsale {
         uint256 rate, // rate in TKNbits
         address payable wallet,
         IERC20 token,
-        KycContract _kyc
-    ) Crowdsale(rate, wallet, token) {
+        KycContract _kyc,
+        ItemManager itemManager
+    ) Crowdsale(rate, wallet, token, itemManager) {
         kyc = _kyc;
     }
 

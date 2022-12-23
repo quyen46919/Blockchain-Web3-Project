@@ -1,72 +1,69 @@
-
 // DECLARE COLOR GLOBAL VARIABLE
 $white: #ffffff;
-$silver: #E8EEF9;
-$light-silver:#E5E5E5;
-$light-silver-1: #F5F9FF;
-$light-silver-2: #F9F8FF;
-$light-blue:#51B3F2;
-$light-blue-1: #9BD5FD;
-$blue: #18A0FB;
-$medium-blue: #4EA4DC;
-$medium-blue-2: #366FB2;
-$cyan-blue-1: #3DDDF3;
-$dark-blue: #303F65;
-$dark-blue-1: #1C1541;
-$cyan: #00C4D4;
-$yellow:#FFCF4D;
-$light-orange-1:#F99E4A;
-$light-orange-2: #FF9922;
-$orange: #FF8A00;
-$red-orange: #FE725D;
+$silver: #e8eef9;
+$light-silver: #e5e5e5;
+$light-silver-1: #f5f9ff;
+$light-silver-2: #f9f8ff;
+$light-blue: #51b3f2;
+$light-blue-1: #9bd5fd;
+$blue: #18a0fb;
+$medium-blue: #4ea4dc;
+$medium-blue-2: #366fb2;
+$cyan-blue-1: #3dddf3;
+$dark-blue: #303f65;
+$dark-blue-1: #1c1541;
+$cyan: #00c4d4;
+$yellow: #ffcf4d;
+$light-orange-1: #f99e4a;
+$light-orange-2: #ff9922;
+$orange: #ff8a00;
+$red-orange: #fe725d;
 $dark-red-orange: #c95b4a;
-$purple: #9DA6FF;
-$light-green: #90EB9E;
-$green: #47A359;
-$dark-green:#4DA85C;
+$purple: #9da6ff;
+$light-green: #90eb9e;
+$green: #47a359;
+$dark-green: #4da85c;
 $MUIgreen600: #43a047;
-$cyan-green:#42BF8A;
+$cyan-green: #42bf8a;
 $black: #373737;
-$silver-background: #F8F8F8;
-$silver-background-1: #EDEDF0;
-$silver-background-2: #FAFAFE;
-$silver-background-3: #FAFAFB;
-$silver-background-4: #F6F5F8;
+$silver-background: #f8f8f8;
+$silver-background-1: #ededf0;
+$silver-background-2: #fafafe;
+$silver-background-3: #fafafb;
+$silver-background-4: #f6f5f8;
+$silver-background-5: #dfdddd;
 $silver-border: rgb(221, 224, 229);
 
-
 // FONT COLOR
-$gray-text-color: #A4ACB8;
+$gray-text-color: #a4acb8;
 $subtitle-text-color: #878691;
-$main-text-color: #5B556D;
+$main-text-color: #5b556d;
 
-$gray-text-color-2:#a2a3a5;
+$gray-text-color-2: #a2a3a5;
 
-$header-unactive-link-color: #DADADA;
+$header-unactive-link-color: #dadada;
 $header-active-link-color: #535656;
 
-
 // TRANSITION
-$primary-transition: all .25s ease;
-
+$primary-transition: all 0.25s ease;
 
 $primary-box-shadow: rgba(197, 202, 206, 0.2) 0px 8px 24px;
 $secondary-box-shadow: rgba(131, 136, 141, 0.2) 0px 8px 24px;
 
 // DECLARE SIZE GLOBAL VARIABLE
 $xs: 0px;
-$vsd: 320px;        // very small devices
-$phone: 480px;      
+$vsd: 320px; // very small devices
+$phone: 480px;
 $sm: 575px;
 $md: 767px;
 $lg: 1023px;
 $xl: 1199px;
 $xxl: 1439px;
-$els: 1919px;       // extra large screens
+$els: 1919px; // extra large screens
 
 // COMPONENTS FIXED SIZE
 $headerHeight: 60px;
 
-//BORDER    
+//BORDER
 
 $gray-border-color: #d1d6dd;

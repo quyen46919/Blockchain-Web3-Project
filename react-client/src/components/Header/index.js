@@ -42,10 +42,16 @@ function Header() {
                 {
                     user && <>
                         <NavLink to="/admin" exact>
-                        Quản lí sản phẩm
+                            Quản lí sản phẩm
                         </NavLink>
                         <NavLink to="/post" exact>
-                    Đăng sản phẩm
+                            Đăng sản phẩm
+                        </NavLink>
+                        <NavLink to="/kyc" exact>
+                            KYC
+                        </NavLink>
+                        <NavLink to="/token" exact>
+                            Token
                         </NavLink>
                     </>
                 }
@@ -136,7 +142,7 @@ function Header() {
                                     </ListItemIcon>
                                     <Typography>Cài đặt</Typography>
                                 </MenuItem>
-                                <Link exact="true" to="/account" onClick={handleLogout}>
+                                <Link exact="true" to="/login" onClick={handleLogout}>
                                     <MenuItem >
                                         <ListItemIcon>
                                             <Logout fontSize="small" />
@@ -150,7 +156,7 @@ function Header() {
                             <Button variant="outlined" color="success"
                                 sx={{ textTransform: 'initial', '& a': { textDecoration: 'none', color: 'inherit' } }}
                             >
-                                <Link exact="true" to="/account">
+                                <Link exact="true" to="/login">
                                     Đi tới đăng nhập
                                 </Link>
                             </Button>

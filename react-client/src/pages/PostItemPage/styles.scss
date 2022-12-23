@@ -1,14 +1,18 @@
 @import 'assets/scss/variables';
 @import 'assets/scss/mixins';
 
-.post-item-page{
+.post-item-page {
     width: 100%;
-    height:calc(100vh - #{$headerHeight});
+    height: calc(100vh - #{$headerHeight});
     background-color: $silver-background-4;
     overflow-y: scroll;
     overflow-x: hidden;
     @include padding(2rem);
     @include customScrollBar();
+
+    @include maxWidth($lg) {
+        @include padding(2rem 0);
+    }
 
     &__container {
         width: 70%;
@@ -19,6 +23,10 @@
         @include padding(2rem);
         @include displayFlex(row, nowrap, space-between, flex-start);
         gap: 1rem;
+
+        @include maxWidth($lg) {
+            width: 95%;
+        }
     }
 
     &__upload-image {

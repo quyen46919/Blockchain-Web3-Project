@@ -73,7 +73,7 @@ function Product(props) {
             </div>
             <div className="cart-item-page__title">
                 <h5>{identify}</h5>
-                <h3>Giá: {price} wei</h3>
+                <h3>Giá: {price} ECOMK</h3>
                 <p>Mô tả: {description}</p>
                 <div className="cart-item-page__date">
                     <p>Ngày tải lên: {created_at}</p>
@@ -111,7 +111,7 @@ function Product(props) {
                 }}
             >
                 <Button onClick={handleRemoveItem}>Xóa</Button>
-                <Button onClick={handleBuyItem}>Mua hàng</Button>
+                {/* <Button onClick={handleBuyItem}>Mua hàng</Button> */}
             </Box>
         </div>
     );

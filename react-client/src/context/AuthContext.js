@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     user: JSON.parse(localStorage.getItem('user')) || null,
     shoppingCart: JSON.parse(localStorage.getItem('shoppingCart')) || [],
     metamaskAddress: JSON.parse(localStorage.getItem('metamaskAddress')) || [],
+    isKycCompleted: JSON.parse(localStorage.getItem('isKycCompleted')) || false,
     isFetching: false,
     error: false
 };
@@ -26,6 +27,10 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('metamaskAddress', JSON.stringify(state.metamaskAddress));
     }, [state.metamaskAddress]);
 
+    useEffect(() => {
+        localStorage.setItem('isKycCompleted', JSON.stringify(state.isKycCompleted));
+    }, [state.isKycCompleted]);
+
     return (
         <AuthContext.Provider
             value={{
@@ -34,6 +39,7 @@ export const AuthContextProvider = ({ children }) => {
                 error: state.error,
                 shoppingCart: state.shoppingCart,
                 metamaskAddress: state.metamaskAddress,
+                isKycCompleted: state.isKycCompleted,
                 dispatch
             }}
         >

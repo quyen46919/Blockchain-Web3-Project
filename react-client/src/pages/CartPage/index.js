@@ -2,7 +2,6 @@ import React from 'react';
 import './styles.scss';
 import { motion } from 'framer-motion/dist/framer-motion';
 import noProduct from 'assets/images/noProduct.png';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Product from 'components/Product';
 import { green } from '@mui/material/colors';
@@ -10,21 +9,103 @@ import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Web3 from 'web3';
-
+import getWeb3 from 'getWeb3';
+import MyToken from 'contracts/MyToken.json';
+import MyTokenSale from 'contracts/MyTokenSale.json';
+import ItemManager from 'contracts/ItemManager.json';
+import { Stack, Typography } from '@mui/material';
+import axios from 'axios';
+import { useRef } from 'react';
+import NotificationDialog from 'components/NotificationDialog';
 
 function CartPage() {
-    const { shoppingCart } = useContext(AuthContext);
+    const { shoppingCart, dispatch } = useContext(AuthContext);
     const [totalPrice, setTotalPrice] = useState();
+    const [tokenIns, setTokenInstance] = useState();
+    const [account, setAccount] = useState('');
+    const [userTokens, setUserToken] = useState(0);
+    const tokenRef = useRef();
+    const tokenSaleRef = useRef();
+    const itemManagerRef = useRef();
+    const [showDialog, setShowDialog] = useState(false);
+
+    const handleShowDialog = () => {
+        setShowDialog(true);
+    };
+
+    const handleDialogClose = () => {
+        setShowDialog(false);
+    };
+
+    const handleAcceptDialog = () => {
+        history.go(0);
+    };
+
+    const initLoad = async () => {
+        try {
+            const { account, tokenInstance, tokenSaleInstance, itemManager } = await getWeb3();
+            tokenRef.current = tokenInstance;
+            tokenSaleRef.current = tokenSaleInstance;
+            itemManagerRef.current = itemManager;
+            setAccount(account);
+        } catch (err) {
+            handleShowDialog();
+        }
+    };
+
+    useEffect(() => {
+        initLoad();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (tokenRef.current) {
+            getUserToken();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tokenRef.current, account]);
 
     useEffect(() => {
         let sum = 0;
         shoppingCart.forEach((item) => {
             sum += item.price;
         });
-        setTotalPrice(Web3.utils.fromWei(sum.toString(), 'ether'));
+        setTotalPrice(sum);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const getUserToken = async () => {
+        const tokenCount = await tokenRef.current.methods.balanceOf(account).call();
+        if (tokenCount) {
+            setUserToken(tokenCount);
+        }
+    };
+
+    const handleBuyAllItems = async () => {
+        try {
+            if (itemManagerRef.current?.methods || tokenRef.current?.methods || tokenSaleRef.current?.methods) {
+                const promises = shoppingCart.map(async (item) => {
+                    await itemManagerRef.current.methods
+                        .triggerPaymentWithToken(item.itemIndex)
+                        .send({ from: account });
+                    await tokenRef.current.methods.burn(account, totalPrice).send({ from: account });
+                    await tokenSaleRef.current.methods.buyTokensPaypal(item.ownerId, item.price).send({ from: account });
+                });
+                await Promise.all(promises).then(async () => {
+                    getUserToken();
+                    setTotalPrice(0);
+                    shoppingCart.forEach(async (item) => {
+                        dispatch({ type: 'REMOVE_ITEM_IN_CART', payload: item?.id });
+                        await axios.put(`${process.env.REACT_APP_SERVER_URL}/v1/items/${item?.id}`, { state: 1 });
+                    });
+                });
+            }
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error('err', err);
+            handleShowDialog();
+        }
+    };
 
     return (
         <>
@@ -36,7 +117,7 @@ function CartPage() {
                     transition = {{ delay: .2 }}
                     className="cart-page__empty">
                     <img src={noProduct} alt="" />
-                    <h1>Hiện bạn chưa có sản phẩm nào trong giỏ hàng!</h1>
+                    <Typography sx={{ color: green[600] }}>Hiện bạn chưa có sản phẩm nào trong giỏ hàng!</Typography>
                 </motion.div>
                 :<motion.div
                     exit={{ opacity: 0 }}
@@ -58,57 +139,37 @@ function CartPage() {
                                 </div>
                                 <div className="cart-page__right">
                                     <h4>Tổng</h4>
-                                    <h1>{totalPrice} ethers</h1>
+                                    <h1>{totalPrice} ECOMK Token</h1>
                                     <Button
                                         fullWidth
                                         sx={{
                                             textTransform: 'initial',
-                                            height: '60px',
+                                            height: '50px',
                                             fontSize: '20px',
                                             fontWeight: '600',
                                             borderRadius: 0,
                                             backgroundColor: `${green[600]}!important`,
                                             color: 'white'
                                         }}
+                                        onClick={handleBuyAllItems}
                                     >
                                         Thanh Toán
                                     </Button>
-                                    <h5>Khuyến mãi</h5>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent:'space-between',
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            flex: 5,
-                                            '& input':{
-                                                flex: 4,
-                                                height: '31px',
-                                                border: '1px solid black',
-                                                borderRadius: 0
-                                            },
-                                            '& button':{
-                                                flex: 1,
-                                                backgroundColor: `${green[600]}!important`,
-                                                height: '35px',
-                                                cursor: 'pointer'
-                                            }
-                                        }}>
-                                        <input type="text" placeholder='Nhập mã giảm giá' />
-                                        <Button
-                                            sx={{
-                                                textTransform: 'initial',
-                                                fontWeight: '600',
-                                                backgroundColor: 'green[600]!important',
-                                                borderRadius: 0,
-                                                color: 'white'
-                                            }}
-                                        >Áp dụng</Button>
-                                    </Box>
+                                    <Stack mt={2}>
+                                        <Typography>Số dư hiện tại của bạn</Typography>
+                                        <Typography>{userTokens} ECOMK</Typography>
+                                    </Stack>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {showDialog && (
+                        <NotificationDialog
+                            showDialog={showDialog}
+                            handleDialogClose={handleDialogClose}
+                            handleAcceptDialog={handleAcceptDialog}
+                        />
+                    )}
                 </motion.div>
             }
         </>
